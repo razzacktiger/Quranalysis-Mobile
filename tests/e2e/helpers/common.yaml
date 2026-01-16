@@ -1,0 +1,28 @@
+# Common test helpers for Maestro E2E tests
+# Import with: - runFlow: tests/e2e/helpers/common.yaml
+
+# Helper: Wait for app to be ready
+appId: com.quranalysis.mobile
+---
+# Wait for main content to load
+- extendedWaitUntil:
+    visible: ".*"
+    timeout: 10000
+
+# Helper flows can be called from other test files:
+#
+# Navigate to tab:
+#   - tapOn: "Sessions"
+#   - tapOn: "Dashboard"
+#   - tapOn: "Profile"
+#
+# Login flow (when auth is implemented):
+#   - tapOn: "Sign in with Google"
+#   - Wait for OAuth redirect...
+#
+# Add session (when form is implemented):
+#   - tapOn: "Add Session"
+#   - inputText:
+#       id: "duration-input"
+#       text: "30"
+#   - tapOn: "Create Session"

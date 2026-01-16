@@ -1,0 +1,5 @@
+appId: com.quranalysis.mobile
+name: Smoke Test - App Launches
+---
+- launchApp
+- assertVisible: ".*"
