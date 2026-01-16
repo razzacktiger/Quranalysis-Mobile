@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../supabase';
-import type { AuthUser, AuthState, AuthContextValue } from '@/types';
+import { signInWithGoogle } from './googleAuth';
+import type { AuthUser, AuthContextValue } from '@/types';
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
@@ -45,8 +46,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async () => {
-    // Will be implemented in Task 1.2.1
-    setError('Sign in not yet implemented');
+    try {
+      setIsLoading(true);
+      setError(null);
+      await signInWithGoogle();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Sign in failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const signOut = async () => {
