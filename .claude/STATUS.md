@@ -12,7 +12,7 @@
 |------|--------|----------|
 | EPIC-0: Setup | ✅ Complete | 9/9 |
 | EPIC-1: Auth | ✅ Complete | 8/8 |
-| EPIC-2: Sessions | 🟡 In Progress | 7/19 |
+| EPIC-2: Sessions | 🟡 In Progress | 8/19 |
 | EPIC-3: Dashboard | ⬜ Not Started | 0/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
 | EPIC-5: Profile | ⬜ Not Started | 0/5 |
@@ -30,7 +30,7 @@
 | 2.3.2 | Create Surah Picker Component | M | ✅ | typecheck | Searchable 114 surahs |
 | 2.3.3 | Create Portion Form Component | L | ✅ | typecheck | Auto-calc juz/pages |
 | 2.3.4 | Create Mistake Form Component | L | ✅ | typecheck | Category filtering |
-| 2.3.5 | E2E Test - Form Components | S | ⬜ | - | - |
+| 2.3.5 | E2E Test - Form Components | S | ✅ | maestro | Needs 2.4.1 to run |
 | 2.4.1 | Create Session Form Screen | XL | ⬜ | - | - |
 | 2.4.2 | E2E Test - Create Session | M | ⬜ | - | - |
 | 2.4.3 | E2E Test - Create with Mistakes | M | ⬜ | - | - |
@@ -109,15 +109,15 @@
 ## Metrics
 
 ### Completed This Session (EPIC-2)
-- Tasks: 7
-- Files Created: 12 (quran-data.ts, sessions.ts, useSessions.ts, useSessions.test.ts, jest.setup.js, Input.tsx, Select.tsx, Slider.tsx, DatePicker.tsx, SurahPicker.tsx, PortionForm.tsx, MistakeForm.tsx)
+- Tasks: 8
+- Files Created: 13 (quran-data.ts, sessions.ts, useSessions.ts, useSessions.test.ts, jest.setup.js, Input.tsx, Select.tsx, Slider.tsx, DatePicker.tsx, SurahPicker.tsx, PortionForm.tsx, MistakeForm.tsx, components.yaml)
 - Files Modified: 7 (constants/index.ts, lib/api/index.ts, lib/hooks/index.ts, jest.config.js, components/ui/index.ts, package.json, components/forms/index.ts)
 
 ### Cumulative
-- Tasks Completed: 24
+- Tasks Completed: 25
 - EPIC-0: 9 tasks ✅
 - EPIC-1: 8 tasks ✅
-- EPIC-2: 7 tasks (12 remaining)
+- EPIC-2: 8 tasks (11 remaining)
 
 ---
 
