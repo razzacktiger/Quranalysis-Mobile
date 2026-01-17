@@ -783,3 +783,112 @@ Option 3: Pair on same session (one drives)
 - [ ] Adding learnings with name/date
 - [ ] Syncing main before starting new epic
 - [ ] Waiting for dependency epics to merge first
+
+---
+
+## 12. Bug Handling & Quality Gates
+
+### Pre-Commit Quality Checklist
+
+Before committing any task, verify:
+
+```
+✓ TypeScript compiles (npm run typecheck)
+✓ Related tests pass (npm test)
+✓ Manual smoke test of affected UI
+✓ Form inputs validate within valid ranges
+✓ Error states are handled gracefully
+```
+
+**Goal:** Catch bugs before they're committed, not during Human QA.
+
+### Bug Discovery Categories
+
+| When Discovered | Action | Priority |
+|-----------------|--------|----------|
+| During implementation | Fix immediately, don't commit broken code | Immediate |
+| During Human QA (same epic) | Fix immediately before moving on | High |
+| During Human QA (different epic) | Add to Bugs Epic or current epic backlog | Medium |
+| Production/later testing | Add to Bugs Epic with severity | Based on severity |
+
+### Decision Tree: Fix Now vs Defer
+
+```
+Bug discovered during QA
+├── Is it blocking the current feature?
+│   └── YES → Fix immediately
+├── Is it small (<15 min fix)?
+│   └── YES → Fix immediately
+├── Is it related to current epic?
+│   └── YES → Fix before epic completion
+└── Otherwise → Add to Bugs Epic, prioritize later
+```
+
+### Adding a Bugs Epic
+
+Create `epics/EPIC-B-BUGS.md` for deferred bugs:
+
+```markdown
+# EPIC-B: Bug Fixes
+
+**Priority:** Ongoing (work between epics or when blocking)
+
+## Bug Backlog
+
+| ID | Description | Severity | Found In | Status |
+|----|-------------|----------|----------|--------|
+| B.1 | [Description] | High/Med/Low | EPIC-2 | ⬜ |
+| B.2 | [Description] | High/Med/Low | EPIC-3 | ⬜ |
+```
+
+**Severity Guide:**
+- **High:** Blocks user flow, data loss risk, security issue
+- **Medium:** Feature works but with issues, UX problems
+- **Low:** Cosmetic, edge cases, nice-to-have fixes
+
+### STATUS.md Bug Tracking
+
+Add bugs section when discovered:
+
+```markdown
+## Known Bugs (Current Epic)
+
+| Bug | Severity | Status | Notes |
+|-----|----------|--------|-------|
+| Ayah end exceeds surah limit | Med | ✅ Fixed | Added validation |
+| DatePicker only saves date | Med | ✅ Fixed | Now saves datetime |
+```
+
+### Pre-Epic-Completion Bug Sweep
+
+Before marking an epic complete:
+
+1. Run all E2E tests for the epic
+2. Manual smoke test all new features
+3. Verify all form inputs have proper validation
+4. Check error states and edge cases
+5. Review any "TODO" comments added during development
+6. Fix all High/Medium bugs discovered
+7. Document Low bugs in Bugs Epic if deferring
+
+### Common Bug Categories to Watch
+
+| Category | Example | Prevention |
+|----------|---------|------------|
+| Input validation | Ayah > surah max | Always validate against bounds |
+| Data format | Date-only vs datetime | Verify schema expectations |
+| Missing providers | No QueryClient error | Check app wrappers |
+| Native module issues | uuid crypto error | Test on device, not just typecheck |
+| State management | Stale data after mutation | Invalidate queries properly |
+
+### LEARNINGS.md Bug Documentation
+
+Always document bugs in LEARNINGS.md to prevent recurrence:
+
+```markdown
+## Bug: [Brief Description]
+**Symptom:** What the user saw
+**Cause:** Root cause analysis
+**Fix:** How it was fixed
+**Prevention:** How to avoid in future tasks
+```

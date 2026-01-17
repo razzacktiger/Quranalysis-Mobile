@@ -120,7 +120,15 @@ z.enum(VALUES, { message: 'Invalid' })
 
 ## Build Issues
 
-_No entries yet_
+### Expo Router rejects dynamic routes that don't exist yet
+**Symptom:** TypeScript error "Argument of type '`/session/${string}`' is not assignable to parameter of type..."
+**Cause:** Expo Router generates strict types based on existing route files - if the route file doesn't exist yet, the path is rejected
+**Fix:** Cast the path to `Href` type:
+```typescript
+import { type Href } from 'expo-router';
+router.push(`/session/${id}` as Href);
+```
+**Prevention:** When building components that reference future routes, cast paths to `Href` until the route file is created
 
 ---
 
@@ -162,7 +170,49 @@ jest.mock('@/lib/api/sessions', () => ({
 
 ## Common Mistakes
 
-_No entries yet_
+### Numeric inputs without bounds validation
+**Symptom:** User enters value outside valid range (e.g., ayah 999 in a 7-ayah surah), database rejects
+**Cause:** Relied on database validation instead of frontend validation
+**Fix:** Add bounds checking in change handlers:
+```typescript
+if (value > maxValue) value = maxValue;
+if (value < minValue) value = minValue;
+```
+**Prevention:** Always validate numeric inputs against known bounds at input time, not just form submission
+
+### DatePicker datetime mode only captures date
+**Symptom:** DateTime picker shows date only, time portion is midnight
+**Cause:** React Native DateTimePicker doesn't support true datetime mode - need two-step (date then time)
+**Fix:** Implement two-step picker flow:
+1. Show date picker first
+2. On date confirm, show time picker
+3. Combine date + time for final value
+**Prevention:** When using datetime, always implement as two-step flow on mobile
+
+### uuid library fails in React Native
+**Symptom:** `crypto.getRandomValues is not a function` error
+**Cause:** React Native doesn't include Web Crypto API polyfill
+**Fix:** Install and import polyfill at app entry point:
+```bash
+npx expo install react-native-get-random-values
+```
+```typescript
+// At top of app/_layout.tsx (before any uuid imports)
+import 'react-native-get-random-values';
+```
+**Prevention:** Check library requirements for React Native compatibility before using
+
+### Missing QueryClientProvider
+**Symptom:** "No QueryClient set, use QueryClientProvider to set one" error
+**Cause:** React Query hooks used without provider wrapper in app root
+**Fix:** Wrap app in QueryClientProvider in root layout:
+```typescript
+const queryClient = new QueryClient();
+<QueryClientProvider client={queryClient}>
+  <App />
+</QueryClientProvider>
+```
+**Prevention:** Add QueryClientProvider when installing @tanstack/react-query
 
 <!-- Example:
 ### Forgetting to handle loading state

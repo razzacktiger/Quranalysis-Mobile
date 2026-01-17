@@ -25,12 +25,32 @@ export function DatePicker({
 }: DatePickerProps) {
   const [show, setShow] = useState(false);
   const [tempDate, setTempDate] = useState(value);
+  // For datetime mode, track which step we're on
+  const [pickerStep, setPickerStep] = useState<'date' | 'time'>('date');
 
   const handleChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     if (Platform.OS === 'android') {
       setShow(false);
       if (event.type === 'set' && selectedDate) {
-        onChange?.(selectedDate);
+        if (mode === 'datetime' && pickerStep === 'date') {
+          // Date selected, now show time picker
+          setTempDate(selectedDate);
+          setPickerStep('time');
+          setShow(true);
+        } else if (mode === 'datetime' && pickerStep === 'time') {
+          // Time selected, combine with date and finish
+          const finalDate = new Date(tempDate);
+          finalDate.setHours(selectedDate.getHours());
+          finalDate.setMinutes(selectedDate.getMinutes());
+          onChange?.(finalDate);
+          setPickerStep('date');
+        } else {
+          // Simple date or time mode
+          onChange?.(selectedDate);
+        }
+      } else {
+        // Cancelled - reset step
+        setPickerStep('date');
       }
     } else {
       // iOS - update temp date while picker is open
@@ -41,13 +61,21 @@ export function DatePicker({
   };
 
   const handleDone = () => {
-    setShow(false);
-    onChange?.(tempDate);
+    if (mode === 'datetime' && pickerStep === 'date') {
+      // Move to time picker
+      setPickerStep('time');
+    } else {
+      // Finish selection
+      setShow(false);
+      onChange?.(tempDate);
+      setPickerStep('date');
+    }
   };
 
   const handleCancel = () => {
     setShow(false);
     setTempDate(value);
+    setPickerStep('date');
   };
 
   const formatDate = (date: Date) => {
@@ -60,6 +88,27 @@ export function DatePicker({
     return date.toLocaleDateString();
   };
 
+  const getCurrentPickerMode = (): 'date' | 'time' => {
+    if (mode === 'datetime') {
+      return pickerStep;
+    }
+    return mode === 'time' ? 'time' : 'date';
+  };
+
+  const getPickerTitle = (): string => {
+    if (mode === 'datetime') {
+      return pickerStep === 'date' ? 'Select Date' : 'Select Time';
+    }
+    return mode === 'time' ? 'Select Time' : 'Select Date';
+  };
+
+  const getDoneButtonText = (): string => {
+    if (mode === 'datetime' && pickerStep === 'date') {
+      return 'Next';
+    }
+    return 'Done';
+  };
+
   return (
     <View className="mb-4">
       {label && (
@@ -69,6 +118,7 @@ export function DatePicker({
         testID={testID}
         onPress={() => {
           setTempDate(value);
+          setPickerStep('date');
           setShow(true);
         }}
         className={`
@@ -87,22 +137,25 @@ export function DatePicker({
 
       {show && Platform.OS === 'ios' && (
         <View className="bg-white border border-gray-200 rounded-lg mt-2">
-          <View className="flex-row justify-between px-4 py-2 border-b border-gray-200">
+          <View className="flex-row justify-between items-center px-4 py-2 border-b border-gray-200">
             <Pressable onPress={handleCancel}>
               <Text className="text-gray-500 font-medium">Cancel</Text>
             </Pressable>
+            <Text className="text-gray-700 font-medium">{getPickerTitle()}</Text>
             <Pressable onPress={handleDone}>
-              <Text className="text-primary font-medium">Done</Text>
+              <Text className="text-primary font-medium">{getDoneButtonText()}</Text>
             </Pressable>
           </View>
           <DateTimePicker
             testID={`${testID}-picker`}
             value={tempDate}
-            mode={mode === 'datetime' ? 'date' : mode}
+            mode={getCurrentPickerMode()}
             display="spinner"
             onChange={handleChange}
             maximumDate={maximumDate}
             minimumDate={minimumDate}
+            textColor="#111827"
+            themeVariant="light"
           />
         </View>
       )}
@@ -110,8 +163,8 @@ export function DatePicker({
       {show && Platform.OS === 'android' && (
         <DateTimePicker
           testID={`${testID}-picker`}
-          value={value}
-          mode={mode === 'datetime' ? 'date' : mode}
+          value={pickerStep === 'time' ? tempDate : value}
+          mode={getCurrentPickerMode()}
           display="default"
           onChange={handleChange}
           maximumDate={maximumDate}

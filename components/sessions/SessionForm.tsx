@@ -180,9 +180,10 @@ export function SessionForm({ testID }: SessionFormProps) {
         render={({ field: { value, onChange } }) => (
           <DatePicker
             testID="date-picker"
-            label="Session Date"
+            label="Session Date & Time"
+            mode="datetime"
             value={new Date(value)}
-            onChange={(date) => onChange(date.toISOString().split('T')[0])}
+            onChange={(date) => onChange(date.toISOString())}
             maximumDate={new Date()}
             error={errors.session_date?.message}
           />

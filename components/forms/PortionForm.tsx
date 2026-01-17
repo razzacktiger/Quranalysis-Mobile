@@ -68,7 +68,14 @@ export function PortionForm({
   };
 
   const handleAyahStartChange = (text: string) => {
-    const ayah_start = text ? parseInt(text, 10) : undefined;
+    let ayah_start = text ? parseInt(text, 10) : undefined;
+
+    // Validate against surah bounds
+    if (selectedSurah && ayah_start !== undefined) {
+      if (ayah_start < 1) ayah_start = 1;
+      if (ayah_start > selectedSurah.ayah_count) ayah_start = selectedSurah.ayah_count;
+    }
+
     const newData = { ...data, ayah_start };
 
     // Update calculated values
@@ -85,7 +92,14 @@ export function PortionForm({
   };
 
   const handleAyahEndChange = (text: string) => {
-    const ayah_end = text ? parseInt(text, 10) : undefined;
+    let ayah_end = text ? parseInt(text, 10) : undefined;
+
+    // Validate against surah bounds
+    if (selectedSurah && ayah_end !== undefined) {
+      if (ayah_end < 1) ayah_end = 1;
+      if (ayah_end > selectedSurah.ayah_count) ayah_end = selectedSurah.ayah_count;
+    }
+
     const newData = { ...data, ayah_end };
 
     // Update calculated values
