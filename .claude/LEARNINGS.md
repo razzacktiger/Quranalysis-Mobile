@@ -42,7 +42,30 @@ rm -rf ../temp-dir
 
 ## Authentication Issues
 
-_No entries yet_
+### Google OAuth redirect fails in Expo Go
+**Symptom:** After Google sign-in, redirects to web app instead of mobile app
+**Cause:** Expo Go doesn't support custom URL schemes (quranalysis://), only exp://. Supabase doesn't redirect to exp:// URLs properly.
+**Fix:** Use a development build instead of Expo Go:
+```bash
+npx expo install expo-dev-client
+npx expo prebuild --platform ios
+npx expo run:ios
+```
+**Prevention:** Always use development builds for OAuth testing, not Expo Go
+
+### Auth state causes infinite render loop
+**Symptom:** App flickers between loading spinner and login screen repeatedly
+**Cause:** Using `<Redirect />` component causes AuthProvider to remount, resetting isLoading to true
+**Fix:** Use `router.replace()` in a useEffect instead of rendering `<Redirect />`:
+```typescript
+useEffect(() => {
+  if (isLoading) return;
+  if (!user && !inAuthGroup) {
+    router.replace('/(auth)/login');
+  }
+}, [user, isLoading]);
+```
+**Prevention:** Never use `<Redirect />` that could cause parent context to remount
 
 ---
 
@@ -89,7 +112,17 @@ _No entries yet_
 
 ## Test Issues
 
-_No entries yet_
+### E2E tests require matching UI components
+**Symptom:** Maestro tests fail because expected elements don't exist
+**Cause:** E2E tests were written for UI that wasn't implemented yet (e.g., logout test expects Profile tab)
+**Fix:** Either implement the UI first, or create minimal placeholder UI with correct testIDs:
+```typescript
+// Minimal component with testID for E2E testing
+<Pressable testID="sign-out-button" onPress={signOut}>
+  <Text>Sign Out</Text>
+</Pressable>
+```
+**Prevention:** Write E2E tests alongside UI implementation, not before
 
 ---
 

@@ -1,0 +1,18 @@
+appId: com.quranalysis.mobile
+name: Auth - Sign Out Flow
+# Note: This test requires a Profile tab with Sign Out button to be implemented
+# The test assumes the user is already authenticated (may need setup/mocking)
+---
+- launchApp
+
+# Navigate to Profile tab (assumes authenticated state)
+- tapOn: "Profile"
+
+# Tap the sign out button
+- tapOn:
+    id: "sign-out-button"
+
+# Verify we're returned to the login screen
+- assertVisible: "Sign in with Google"
+- assertVisible:
+    id: "login-screen"

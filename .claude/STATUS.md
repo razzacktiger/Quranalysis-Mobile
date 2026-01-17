@@ -1,8 +1,8 @@
 # Sprint Status
 
-**Current Epic:** EPIC-0-SETUP
+**Current Epic:** EPIC-1-AUTH
 **Started:** 2025-01-15
-**Last Updated:** 2025-01-15
+**Last Updated:** 2025-01-16
 
 ---
 
@@ -11,7 +11,7 @@
 | Epic | Status | Progress |
 |------|--------|----------|
 | EPIC-0: Setup | ✅ Complete | 9/9 |
-| EPIC-1: Auth | ⬜ Not Started | 0/8 |
+| EPIC-1: Auth | ✅ Complete | 8/8 |
 | EPIC-2: Sessions | ⬜ Not Started | 0/19 |
 | EPIC-3: Dashboard | ⬜ Not Started | 0/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
@@ -19,7 +19,22 @@
 
 ---
 
-## Current Sprint Tasks
+## Current Sprint Tasks (EPIC-1: Auth)
+
+| ID | Task | Size | Status | Tests | Notes |
+|----|------|------|--------|-------|-------|
+| 1.2.2 | Configure App Scheme | S | ✅ | - | Already in app.json |
+| 1.1.1 | Create Auth Types | S | ✅ | typecheck | AuthUser, AuthState, AuthContextValue |
+| 1.1.2 | Create Auth Context | M | ✅ | typecheck | AuthProvider + useAuth |
+| 1.2.1 | Implement Google Sign-In | L | ✅ | manual | OAuth flow working |
+| 1.3.1 | Create Login Screen | M | ✅ | typecheck | NativeWind + testIDs |
+| 1.3.2 | Auth Navigation Guard | M | ✅ | manual | router.replace approach |
+| 1.4.1 | Implement Sign Out | S | ✅ | - | In AuthContext |
+| 1.3.3 | E2E Tests - Auth Flow | M | ✅ | maestro | login.yaml, logout.yaml |
+
+---
+
+## Past Sprint Tasks (EPIC-0: Setup)
 
 | ID | Task | Size | Status | Tests | Notes |
 |----|------|------|--------|-------|-------|
@@ -59,21 +74,21 @@
 | Feature | Status | Notes |
 |---------|--------|-------|
 | EPIC-0 Complete | ⬜ Pending | Run `npx expo start --ios` to verify |
+| EPIC-1 Complete | ⬜ Pending | Test full auth flow: login, persist, logout |
 
 ---
 
 ## Metrics
 
-### Completed This Session
-- Tasks: 9
-- Tokens Used: ~23,000 (estimated)
-- Files Created: 25+
-- Files Modified: 5
+### Completed This Session (EPIC-1)
+- Tasks: 8
+- Files Created: 7 (auth types, context, googleAuth, login screen, auth layout, login.yaml, logout.yaml)
+- Files Modified: 5 (_layout, supabase, index exports, two.tsx → Profile)
 
 ### Cumulative
-- Tasks Completed: 9
-- Total Tokens Used: ~23,000
-- Average Tokens/Task: ~2,555
+- Tasks Completed: 17
+- EPIC-0: 9 tasks
+- EPIC-1: 8 tasks ✅
 
 ---
 
@@ -82,5 +97,6 @@
 - Expo SDK 54 with React Native 0.81.5
 - NativeWind 4.x configured with Tailwind
 - Zod v4 (new API - uses `message` not `errorMap`)
-- All 17 expo-doctor checks pass
-- 16 validation tests pass
+- Google OAuth requires development build (not Expo Go)
+- Custom scheme: quranalysis://google-auth
+- Supabase env var: EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY

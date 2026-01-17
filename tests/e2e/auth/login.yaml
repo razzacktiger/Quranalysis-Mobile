@@ -1,0 +1,20 @@
+appId: com.quranalysis.mobile
+name: Auth - Login Screen Visible
+---
+# Fresh app launch should show login screen for unauthenticated users
+- launchApp:
+    clearState: true
+
+# Verify app branding is visible
+- assertVisible: "Quranalysis"
+
+# Verify the login screen container is present
+- assertVisible:
+    id: "login-screen"
+
+# Verify sign in button is visible and shows correct text
+- assertVisible: "Sign in with Google"
+
+# Verify the button element exists and is tappable
+- assertVisible:
+    id: "google-sign-in-button"
