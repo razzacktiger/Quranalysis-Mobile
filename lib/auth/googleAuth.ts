@@ -1,11 +1,12 @@
 import * as WebBrowser from 'expo-web-browser';
-import { makeRedirectUri } from 'expo-auth-session';
 import { supabase } from '../supabase';
 
 // Required for web browser auth session
 WebBrowser.maybeCompleteAuthSession();
 
-const redirectUri = makeRedirectUri({ scheme: 'quranalysis' });
+// Use custom scheme for development/production builds
+const redirectUri = 'quranalysis://google-auth';
+
 
 export async function signInWithGoogle(): Promise<void> {
   try {

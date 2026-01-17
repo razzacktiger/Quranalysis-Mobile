@@ -11,38 +11,54 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        setUser({
-          id: session.user.id,
-          email: session.user.email ?? '',
-          name: session.user.user_metadata?.full_name ?? null,
-          avatar_url: session.user.user_metadata?.avatar_url ?? null,
-        });
-      }
-      setIsLoading(false);
-    });
+    let isMounted = true;
+    let initialCheckDone = false;
 
-    // Listen to auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (session?.user) {
-          setUser({
-            id: session.user.id,
-            email: session.user.email ?? '',
-            name: session.user.user_metadata?.full_name ?? null,
-            avatar_url: session.user.user_metadata?.avatar_url ?? null,
-          });
-        } else {
-          setUser(null);
+    const setAuthUser = (supabaseUser: { id: string; email?: string; user_metadata?: Record<string, unknown> } | null) => {
+      if (supabaseUser) {
+        setUser({
+          id: supabaseUser.id,
+          email: supabaseUser.email ?? '',
+          name: (supabaseUser.user_metadata?.full_name as string) ?? null,
+          avatar_url: (supabaseUser.user_metadata?.avatar_url as string) ?? null,
+        });
+      } else {
+        setUser(null);
+      }
+    };
+
+    // Check initial session
+    const checkSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (isMounted) {
+          setAuthUser(session?.user ?? null);
+          setIsLoading(false);
+          initialCheckDone = true;
         }
-        setIsLoading(false);
+      } catch {
+        if (isMounted) {
+          setIsLoading(false);
+          initialCheckDone = true;
+        }
+      }
+    };
+
+    checkSession();
+
+    // Listen to auth changes (for subsequent updates only)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (!isMounted || !initialCheckDone) return;
+        setAuthUser(session?.user ?? null);
         setError(null);
       }
     );
 
-    return () => subscription.unsubscribe();
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = async () => {
