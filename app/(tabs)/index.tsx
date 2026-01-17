@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, RefreshControl } from 'react-native';
 import { useAuth } from '@/lib/auth';
-import { StatsGrid } from '@/components/analytics';
+import { StatsGrid, ActivityHeatmap } from '@/components/analytics';
 import { useSessions } from '@/lib/hooks';
 
 export default function DashboardScreen() {
@@ -42,19 +42,12 @@ export default function DashboardScreen() {
         <StatsGrid testID="stats-grid" />
       </View>
 
-      {/* Activity Heatmap Placeholder */}
+      {/* Activity Heatmap */}
       <View className="mb-6">
         <Text className="text-lg font-semibold text-gray-800 mb-3">
           Activity
         </Text>
-        <View
-          testID="activity-heatmap-placeholder"
-          className="bg-white rounded-xl p-6 border border-gray-100 items-center justify-center"
-        >
-          <Text className="text-gray-400 text-sm">
-            📅 Activity Heatmap coming soon...
-          </Text>
-        </View>
+        <ActivityHeatmap testID="activity-heatmap" />
       </View>
 
       {/* Performance Chart Placeholder */}
