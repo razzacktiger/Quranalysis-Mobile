@@ -124,6 +124,26 @@ _No entries yet_
 ```
 **Prevention:** Write E2E tests alongside UI implementation, not before
 
+### Jest tests fail with AsyncStorage/Supabase errors
+**Symptom:** "NativeModule: AsyncStorage is null" or "supabaseUrl is required"
+**Cause:** Jest tries to load real modules that depend on native code or env vars
+**Fix:**
+1. Create `jest.setup.js` with AsyncStorage mock:
+```javascript
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock')
+);
+```
+2. Add to jest.config.js: `setupFilesAfterEnv: ['<rootDir>/jest.setup.js']`
+3. Mock API modules BEFORE imports in test files:
+```typescript
+jest.mock('@/lib/api/sessions', () => ({
+  fetchSessions: jest.fn(),
+  // ... other functions
+}));
+```
+**Prevention:** Always mock native modules and API layers that depend on env vars
+
 ---
 
 ## Common Mistakes

@@ -12,7 +12,7 @@
 |------|--------|----------|
 | EPIC-0: Setup | ✅ Complete | 9/9 |
 | EPIC-1: Auth | ✅ Complete | 8/8 |
-| EPIC-2: Sessions | 🟡 In Progress | 2/19 |
+| EPIC-2: Sessions | 🟡 In Progress | 3/19 |
 | EPIC-3: Dashboard | ⬜ Not Started | 0/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
 | EPIC-5: Profile | ⬜ Not Started | 0/5 |
@@ -25,7 +25,7 @@
 |----|------|------|--------|-------|-------|
 | 2.2.1 | Create Surah Data File | M | ✅ | typecheck | 114 surahs + helpers |
 | 2.1.1 | Create Session API Functions | L | ✅ | typecheck | CRUD + rollback |
-| 2.1.2 | Create Session Hooks | M | ⬜ | - | - |
+| 2.1.2 | Create Session Hooks | M | ✅ | 8 pass | React Query hooks |
 | 2.3.1 | Create Base Form Components | M | ⬜ | - | - |
 | 2.3.2 | Create Surah Picker Component | M | ⬜ | - | - |
 | 2.3.3 | Create Portion Form Component | L | ⬜ | - | - |
@@ -109,15 +109,15 @@
 ## Metrics
 
 ### Completed This Session (EPIC-2)
-- Tasks: 2
-- Files Created: 2 (quran-data.ts, sessions.ts)
-- Files Modified: 2 (constants/index.ts, lib/api/index.ts)
+- Tasks: 3
+- Files Created: 5 (quran-data.ts, sessions.ts, useSessions.ts, useSessions.test.ts, jest.setup.js)
+- Files Modified: 4 (constants/index.ts, lib/api/index.ts, lib/hooks/index.ts, jest.config.js)
 
 ### Cumulative
-- Tasks Completed: 19
+- Tasks Completed: 20
 - EPIC-0: 9 tasks ✅
 - EPIC-1: 8 tasks ✅
-- EPIC-2: 2 tasks (17 remaining)
+- EPIC-2: 3 tasks (16 remaining)
 
 ---
 
