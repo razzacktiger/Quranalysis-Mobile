@@ -12,7 +12,7 @@
 |------|--------|----------|
 | EPIC-0: Setup | ✅ Complete | 9/9 |
 | EPIC-1: Auth | ✅ Complete | 8/8 |
-| EPIC-2: Sessions | 🟡 In Progress | 20/21 |
+| EPIC-2: Sessions | ✅ Complete | 21/21 |
 | EPIC-3: Dashboard | ⬜ Not Started | 0/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
 | EPIC-5: Profile | ⬜ Not Started | 0/5 |
@@ -43,7 +43,7 @@
 | 2.7.1 | Create Edit Session Screen | L | ✅ | typecheck | Form pre-fill, unsaved warning |
 | 2.7.2 | E2E Test - Edit Session | M | ✅ | maestro | Pre-fill, save flow |
 | 2.8.1 | Implement Delete Confirmation | S | ✅ | typecheck | Reusable ConfirmDialog |
-| 2.8.2 | E2E Test - Delete Session | S | ⬜ | - | - |
+| 2.8.2 | E2E Test - Delete Session | S | ✅ | maestro | Cancel + confirm flow |
 
 ---
 
@@ -109,15 +109,15 @@
 ## Metrics
 
 ### Completed This Session (EPIC-2)
-- Tasks: 20
-- Files Created: 26 (quran-data.ts, sessions.ts, useSessions.ts, useSessions.test.ts, jest.setup.js, Input.tsx, Select.tsx, Slider.tsx, DatePicker.tsx, SurahPicker.tsx, PortionForm.tsx, MistakeForm.tsx, components.yaml, SessionForm.tsx, add.tsx, create.yaml, create-with-mistakes.yaml, SessionCard.tsx, sessions.tsx, SessionFilters.tsx, list.yaml, [id].tsx, detail.yaml, edit/[id].tsx, edit.yaml, ConfirmDialog.tsx)
+- Tasks: 21
+- Files Created: 27 (quran-data.ts, sessions.ts, useSessions.ts, useSessions.test.ts, jest.setup.js, Input.tsx, Select.tsx, Slider.tsx, DatePicker.tsx, SurahPicker.tsx, PortionForm.tsx, MistakeForm.tsx, components.yaml, SessionForm.tsx, add.tsx, create.yaml, create-with-mistakes.yaml, SessionCard.tsx, sessions.tsx, SessionFilters.tsx, list.yaml, [id].tsx, detail.yaml, edit/[id].tsx, edit.yaml, ConfirmDialog.tsx, delete.yaml)
 - Files Modified: 15 (constants/index.ts, lib/api/index.ts, lib/hooks/index.ts, jest.config.js, components/ui/index.ts, package.json, components/forms/index.ts, components/sessions/index.ts, app/(tabs)/_layout.tsx, app/_layout.tsx, PortionForm.tsx, SessionForm.tsx, DatePicker.tsx, app/session/[id].tsx x2)
 
 ### Cumulative
-- Tasks Completed: 37
+- Tasks Completed: 38
 - EPIC-0: 9 tasks ✅
 - EPIC-1: 8 tasks ✅
-- EPIC-2: 20 tasks (1 remaining)
+- EPIC-2: 21 tasks ✅ **COMPLETE!**
 
 ---
 
