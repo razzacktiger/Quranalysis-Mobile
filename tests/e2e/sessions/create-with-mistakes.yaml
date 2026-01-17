@@ -1,0 +1,98 @@
+# Create Session with Mistakes E2E Test
+# Run with: maestro test tests/e2e/sessions/create-with-mistakes.yaml
+appId: com.quranalysis.mobile
+name: Sessions - Create Session with Mistakes
+---
+- launchApp
+
+# Navigate to Add Session tab
+- tapOn: "Add Session"
+
+# Verify form loaded
+- assertVisible:
+    id: "session-form"
+
+# Fill session metadata
+- tapOn:
+    id: "session-type-picker"
+- tapOn: "Memorization"
+
+- tapOn:
+    id: "duration-input"
+- clearText
+- inputText: "30"
+
+# Add portion - one exists by default
+# Select Surah
+- tapOn:
+    id: "portion-0-surah"
+- tapOn:
+    id: "portion-0-surah-search"
+- inputText: "Fatiha"
+- tapOn: "Al-Fatihah"
+
+# Enter ayah range
+- tapOn:
+    id: "portion-0-ayah-start"
+- inputText: "1"
+
+- tapOn:
+    id: "portion-0-ayah-end"
+- inputText: "7"
+
+# Set recency
+- tapOn:
+    id: "portion-0-recency"
+- tapOn: "New"
+
+# Now add a mistake
+- tapOn:
+    id: "add-mistake-btn"
+
+# Verify mistake form appeared
+- assertVisible:
+    id: "mistake-0"
+
+# Select portion for mistake
+- tapOn:
+    id: "mistake-0-portion"
+- tapOn: "Al-Fatihah"
+
+# Select error category
+- tapOn:
+    id: "mistake-0-category"
+- tapOn: "Tajweed"
+
+# Select subcategory (filtered by Tajweed)
+- tapOn:
+    id: "mistake-0-subcategory"
+- assertVisible: "Ghunna"
+- assertVisible: "Qalqalah"
+- assertVisible: "Madd"
+- tapOn: "Ghunna"
+
+# Severity slider is already at default (3)
+- assertVisible:
+    id: "mistake-0-severity"
+
+# Enter ayah number
+- tapOn:
+    id: "mistake-0-ayah"
+- clearText
+- inputText: "3"
+
+# Add optional notes
+- tapOn:
+    id: "mistake-0-notes"
+- inputText: "Need to work on nasal sound"
+
+# Submit the form
+- tapOn:
+    id: "create-session-btn"
+
+# Verify success
+- assertVisible: "Success"
+- assertVisible: "Session created"
+
+# Dismiss alert
+- tapOn: "OK"
