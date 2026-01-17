@@ -1,0 +1,80 @@
+# Create Basic Session E2E Test
+# Run with: maestro test tests/e2e/sessions/create.yaml
+appId: com.quranalysis.mobile
+name: Sessions - Create Basic Session
+---
+- launchApp
+
+# Navigate to Add Session tab
+- tapOn: "Add Session"
+
+# Verify form loaded
+- assertVisible:
+    id: "session-form"
+
+# Fill session metadata
+# Session Type
+- tapOn:
+    id: "session-type-picker"
+- tapOn: "Memorization"
+
+# Duration
+- tapOn:
+    id: "duration-input"
+- clearText
+- inputText: "30"
+
+# Performance slider is already set to default (7)
+- assertVisible:
+    id: "performance-slider"
+
+# Session Goal (optional)
+- tapOn:
+    id: "session-goal-input"
+- inputText: "Memorize first page of Al-Baqarah"
+
+# Add a portion (one already exists by default)
+# Select Surah
+- tapOn:
+    id: "portion-0-surah"
+- tapOn:
+    id: "portion-0-surah-search"
+- inputText: "Fatiha"
+- tapOn: "Al-Fatihah"
+
+# Enter ayah range
+- tapOn:
+    id: "portion-0-ayah-start"
+- inputText: "1"
+
+- tapOn:
+    id: "portion-0-ayah-end"
+- inputText: "7"
+
+# Verify calculated values appear
+- assertVisible:
+    id: "portion-0-juz"
+- assertVisible:
+    id: "portion-0-pages"
+
+# Set repetitions
+- tapOn:
+    id: "portion-0-repetition"
+- clearText
+- inputText: "3"
+
+# Set recency
+- tapOn:
+    id: "portion-0-recency"
+- tapOn: "New"
+
+# Submit the form
+- tapOn:
+    id: "create-session-btn"
+
+# Verify success - should show alert
+- assertVisible: "Success"
+- assertVisible: "Session created"
+
+# Tap OK to dismiss alert
+- tapOn: "OK"

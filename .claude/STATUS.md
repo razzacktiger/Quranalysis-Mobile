@@ -12,7 +12,7 @@
 |------|--------|----------|
 | EPIC-0: Setup | ✅ Complete | 9/9 |
 | EPIC-1: Auth | ✅ Complete | 8/8 |
-| EPIC-2: Sessions | 🟡 In Progress | 8/19 |
+| EPIC-2: Sessions | 🟡 In Progress | 9/19 |
 | EPIC-3: Dashboard | ⬜ Not Started | 0/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
 | EPIC-5: Profile | ⬜ Not Started | 0/5 |
@@ -31,7 +31,7 @@
 | 2.3.3 | Create Portion Form Component | L | ✅ | typecheck | Auto-calc juz/pages |
 | 2.3.4 | Create Mistake Form Component | L | ✅ | typecheck | Category filtering |
 | 2.3.5 | E2E Test - Form Components | S | ✅ | maestro | Needs 2.4.1 to run |
-| 2.4.1 | Create Session Form Screen | XL | ⬜ | - | - |
+| 2.4.1 | Create Session Form Screen | XL | ✅ | typecheck | RHF + Zod + mutation |
 | 2.4.2 | E2E Test - Create Session | M | ⬜ | - | - |
 | 2.4.3 | E2E Test - Create with Mistakes | M | ⬜ | - | - |
 | 2.5.1 | Create Session Card Component | M | ⬜ | - | - |
@@ -109,15 +109,15 @@
 ## Metrics
 
 ### Completed This Session (EPIC-2)
-- Tasks: 8
-- Files Created: 13 (quran-data.ts, sessions.ts, useSessions.ts, useSessions.test.ts, jest.setup.js, Input.tsx, Select.tsx, Slider.tsx, DatePicker.tsx, SurahPicker.tsx, PortionForm.tsx, MistakeForm.tsx, components.yaml)
-- Files Modified: 7 (constants/index.ts, lib/api/index.ts, lib/hooks/index.ts, jest.config.js, components/ui/index.ts, package.json, components/forms/index.ts)
+- Tasks: 9
+- Files Created: 15 (quran-data.ts, sessions.ts, useSessions.ts, useSessions.test.ts, jest.setup.js, Input.tsx, Select.tsx, Slider.tsx, DatePicker.tsx, SurahPicker.tsx, PortionForm.tsx, MistakeForm.tsx, components.yaml, SessionForm.tsx, add.tsx)
+- Files Modified: 9 (constants/index.ts, lib/api/index.ts, lib/hooks/index.ts, jest.config.js, components/ui/index.ts, package.json, components/forms/index.ts, components/sessions/index.ts, app/(tabs)/_layout.tsx)
 
 ### Cumulative
-- Tasks Completed: 25
+- Tasks Completed: 26
 - EPIC-0: 9 tasks ✅
 - EPIC-1: 8 tasks ✅
-- EPIC-2: 8 tasks (11 remaining)
+- EPIC-2: 9 tasks (10 remaining)
 
 ---
 
