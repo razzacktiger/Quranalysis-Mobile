@@ -332,6 +332,68 @@ additional_notes: session.additional_notes ?? undefined,
 ```
 **Prevention:** Add QueryClientProvider when installing @tanstack/react-query
 
+### NativeWind flex-wrap doesn't constrain height properly
+**Symptom:** Grid items using `flex-wrap` overflow and overlap with content below
+**Cause:** `flex-row flex-wrap` with `flex-1 min-w-[45%]` doesn't create proper row breaks in React Native
+**Fix:** Use explicit row containers instead of flex-wrap:
+```typescript
+// BAD - causes overlap
+<View className="flex-row flex-wrap gap-3">
+  <View className="flex-1 min-w-[45%]">...</View>
+  <View className="flex-1 min-w-[45%]">...</View>
+  ...
+</View>
+
+// GOOD - explicit rows
+<View>
+  <View className="flex-row gap-3 mb-3">
+    <View className="flex-1">...</View>
+    <View className="flex-1">...</View>
+  </View>
+  <View className="flex-row gap-3">
+    <View className="flex-1">...</View>
+    <View className="flex-1">...</View>
+  </View>
+</View>
+```
+**Prevention:** For 2x2 or grid layouts in React Native, use explicit row containers rather than flex-wrap
+
+### Custom Views can replace chart libraries for simple visualizations
+**Symptom:** Need a heatmap/contribution graph but chart libraries are heavy
+**Cause:** Libraries like victory-native or react-native-chart-kit add significant bundle size
+**Fix:** Build simple visualizations (heatmaps, progress bars, grids) using just View components with NativeWind colors:
+```typescript
+function getIntensityColor(count: number): string {
+  if (count === 0) return 'bg-gray-100';
+  if (count === 1) return 'bg-green-200';
+  if (count === 2) return 'bg-green-400';
+  return 'bg-green-600';
+}
+// Then use: <View className={`w-2.5 h-2.5 rounded-sm ${getIntensityColor(count)}`} />
+```
+**Prevention:** Before adding a chart library, consider if the visualization can be built with styled Views
+
+### Form default date loses time portion
+**Symptom:** DateTime picker shows midnight instead of current time
+**Cause:** Using `new Date().toISOString().split('T')[0]` only keeps the date, loses time
+**Fix:** Store full ISO string: `new Date().toISOString()`
+**Prevention:** When storing datetime values, always use full ISO string unless you explicitly only need the date
+
+### Form values don't refresh on tab navigation
+**Symptom:** Navigating back to a form shows stale data (e.g., old timestamp)
+**Cause:** React Hook Form `defaultValues` only set on initial mount, not on re-focus
+**Fix:** Use `useFocusEffect` to update values when screen gains focus:
+```typescript
+import { useFocusEffect } from '@react-navigation/native';
+
+useFocusEffect(
+  useCallback(() => {
+    setValue('session_date', new Date().toISOString());
+  }, [setValue])
+);
+```
+**Prevention:** For time-sensitive fields, always add focus effect to refresh on navigation
+
 <!-- Example:
 ### Forgetting to handle loading state
 **Symptom:** UI flashes or shows undefined

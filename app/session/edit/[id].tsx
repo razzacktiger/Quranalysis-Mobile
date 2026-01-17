@@ -161,7 +161,7 @@ export default function EditSessionScreen() {
   } = useForm<SessionFormSchemaType>({
     resolver: zodResolver(sessionFormSchema),
     defaultValues: {
-      session_date: new Date().toISOString().split('T')[0],
+      session_date: new Date().toISOString(),
       session_type: 'memorization',
       duration_minutes: 30,
       performance_score: 7,
