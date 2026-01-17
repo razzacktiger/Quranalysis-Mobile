@@ -12,7 +12,7 @@
 |------|--------|----------|
 | EPIC-0: Setup | ✅ Complete | 9/9 |
 | EPIC-1: Auth | ✅ Complete | 8/8 |
-| EPIC-2: Sessions | 🟡 In Progress | 12/19 |
+| EPIC-2: Sessions | 🟡 In Progress | 14/19 |
 | EPIC-3: Dashboard | ⬜ Not Started | 0/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
 | EPIC-5: Profile | ⬜ Not Started | 0/5 |
@@ -35,8 +35,8 @@
 | 2.4.2 | E2E Test - Create Session | M | ✅ | maestro | Basic session flow |
 | 2.4.3 | E2E Test - Create with Mistakes | M | ✅ | maestro | With mistake flow |
 | 2.5.1 | Create Session Card Component | M | ✅ | typecheck | Score badge + actions |
-| 2.5.2 | Create Session List Screen | M | ⬜ | - | - |
-| 2.5.3 | Add Filters and Search | M | ⬜ | - | - |
+| 2.5.2 | Create Session List Screen | M | ✅ | typecheck | FlatList + bug fixes |
+| 2.5.3 | Add Filters and Search | M | ✅ | typecheck | 7 filter types + search |
 | 2.5.4 | E2E Test - Session List | M | ⬜ | - | - |
 | 2.6.1 | Create Session Detail Screen | L | ⬜ | - | - |
 | 2.6.2 | E2E Test - Session Detail | S | ⬜ | - | - |
@@ -109,15 +109,15 @@
 ## Metrics
 
 ### Completed This Session (EPIC-2)
-- Tasks: 12
-- Files Created: 18 (quran-data.ts, sessions.ts, useSessions.ts, useSessions.test.ts, jest.setup.js, Input.tsx, Select.tsx, Slider.tsx, DatePicker.tsx, SurahPicker.tsx, PortionForm.tsx, MistakeForm.tsx, components.yaml, SessionForm.tsx, add.tsx, create.yaml, create-with-mistakes.yaml, SessionCard.tsx)
-- Files Modified: 9 (constants/index.ts, lib/api/index.ts, lib/hooks/index.ts, jest.config.js, components/ui/index.ts, package.json, components/forms/index.ts, components/sessions/index.ts, app/(tabs)/_layout.tsx)
+- Tasks: 14
+- Files Created: 20 (quran-data.ts, sessions.ts, useSessions.ts, useSessions.test.ts, jest.setup.js, Input.tsx, Select.tsx, Slider.tsx, DatePicker.tsx, SurahPicker.tsx, PortionForm.tsx, MistakeForm.tsx, components.yaml, SessionForm.tsx, add.tsx, create.yaml, create-with-mistakes.yaml, SessionCard.tsx, sessions.tsx, SessionFilters.tsx)
+- Files Modified: 13 (constants/index.ts, lib/api/index.ts, lib/hooks/index.ts, jest.config.js, components/ui/index.ts, package.json, components/forms/index.ts, components/sessions/index.ts, app/(tabs)/_layout.tsx, app/_layout.tsx, PortionForm.tsx, SessionForm.tsx, DatePicker.tsx)
 
 ### Cumulative
-- Tasks Completed: 29
+- Tasks Completed: 31
 - EPIC-0: 9 tasks ✅
 - EPIC-1: 8 tasks ✅
-- EPIC-2: 12 tasks (7 remaining)
+- EPIC-2: 14 tasks (5 remaining)
 
 ---
 

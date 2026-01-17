@@ -1,14 +1,20 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 import {
   View,
   Text,
   FlatList,
   RefreshControl,
-  ActivityIndicator,
 } from 'react-native';
 import { useRouter, type Href } from 'expo-router';
 import { useSessions } from '@/lib/hooks/useSessions';
 import { SessionCard } from '@/components/sessions/SessionCard';
+import {
+  SessionFiltersComponent,
+  filterSessions,
+  createEmptyFilters,
+  getUniqueSurahs,
+  type SessionFilters,
+} from '@/components/sessions/SessionFilters';
 import type { SessionWithRelations } from '@/lib/api/sessions';
 
 function LoadingSkeleton() {
@@ -37,15 +43,17 @@ function LoadingSkeleton() {
   );
 }
 
-function EmptyState() {
+function EmptyState({ hasFilters }: { hasFilters: boolean }) {
   return (
-    <View className="flex-1 items-center justify-center p-8">
-      <Text className="text-6xl mb-4">📖</Text>
+    <View className="items-center justify-center p-8 pt-16">
+      <Text className="text-6xl mb-4">{hasFilters ? '🔍' : '📖'}</Text>
       <Text className="text-xl font-semibold text-gray-800 mb-2">
-        No Sessions Yet
+        {hasFilters ? 'No Matching Sessions' : 'No Sessions Yet'}
       </Text>
       <Text className="text-gray-500 text-center">
-        Start tracking your Quran practice by creating your first session.
+        {hasFilters
+          ? 'Try adjusting your filters or search query.'
+          : 'Start tracking your Quran practice by creating your first session.'}
       </Text>
     </View>
   );
@@ -72,6 +80,31 @@ function ErrorState({ message, onRetry }: { message: string; onRetry: () => void
 export default function SessionsScreen() {
   const router = useRouter();
   const { data: sessions, isLoading, isError, error, refetch, isRefetching } = useSessions();
+  const [filters, setFilters] = useState<SessionFilters>(createEmptyFilters);
+
+  // Get unique surahs from all sessions for the filter dropdown
+  const availableSurahs = useMemo(() => {
+    if (!sessions) return [];
+    return getUniqueSurahs(sessions);
+  }, [sessions]);
+
+  // Filter sessions client-side
+  const filteredSessions = useMemo(() => {
+    if (!sessions) return [];
+    return filterSessions(sessions, filters);
+  }, [sessions, filters]);
+
+  const hasActiveFilters = Boolean(
+    filters.searchQuery ||
+    filters.sessionType ||
+    filters.surahName ||
+    filters.dateFrom ||
+    filters.dateTo ||
+    filters.performanceMin !== null ||
+    filters.performanceMax !== null ||
+    filters.mistakeFilter !== 'all' ||
+    filters.recencyCategory
+  );
 
   const handleEdit = useCallback((sessionId: string) => {
     router.push(`/session/edit/${sessionId}` as Href);
@@ -118,10 +151,11 @@ export default function SessionsScreen() {
     );
   }
 
+  // Show empty state if no sessions at all
   if (!sessions || sessions.length === 0) {
     return (
       <View testID="sessions-empty" className="flex-1 bg-gray-50">
-        <EmptyState />
+        <EmptyState hasFilters={false} />
       </View>
     );
   }
@@ -129,7 +163,7 @@ export default function SessionsScreen() {
   return (
     <View testID="session-list" className="flex-1 bg-gray-50">
       <FlatList
-        data={sessions}
+        data={filteredSessions}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         contentContainerClassName="p-4"
@@ -142,10 +176,22 @@ export default function SessionsScreen() {
           />
         }
         ListHeaderComponent={
-          <Text className="text-sm text-gray-500 mb-3">
-            {sessions.length} session{sessions.length !== 1 ? 's' : ''}
-          </Text>
+          <View>
+            <SessionFiltersComponent
+              testID="session-filters"
+              filters={filters}
+              onFiltersChange={setFilters}
+              availableSurahs={availableSurahs}
+            />
+            <Text className="text-sm text-gray-500 mb-3">
+              {filteredSessions.length} session{filteredSessions.length !== 1 ? 's' : ''}
+              {hasActiveFilters && sessions.length !== filteredSessions.length
+                ? ` (filtered from ${sessions.length})`
+                : ''}
+            </Text>
+          </View>
         }
+        ListEmptyComponent={<EmptyState hasFilters={hasActiveFilters} />}
       />
     </View>
   );
