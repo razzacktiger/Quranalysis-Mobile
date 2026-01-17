@@ -112,7 +112,17 @@ _No entries yet_
 
 ## Test Issues
 
-_No entries yet_
+### E2E tests require matching UI components
+**Symptom:** Maestro tests fail because expected elements don't exist
+**Cause:** E2E tests were written for UI that wasn't implemented yet (e.g., logout test expects Profile tab)
+**Fix:** Either implement the UI first, or create minimal placeholder UI with correct testIDs:
+```typescript
+// Minimal component with testID for E2E testing
+<Pressable testID="sign-out-button" onPress={signOut}>
+  <Text>Sign Out</Text>
+</Pressable>
+```
+**Prevention:** Write E2E tests alongside UI implementation, not before
 
 ---
 

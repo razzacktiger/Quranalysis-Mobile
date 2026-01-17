@@ -11,7 +11,7 @@
 | Epic | Status | Progress |
 |------|--------|----------|
 | EPIC-0: Setup | ✅ Complete | 9/9 |
-| EPIC-1: Auth | 🟡 In Progress | 7/8 |
+| EPIC-1: Auth | ✅ Complete | 8/8 |
 | EPIC-2: Sessions | ⬜ Not Started | 0/19 |
 | EPIC-3: Dashboard | ⬜ Not Started | 0/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
@@ -30,7 +30,7 @@
 | 1.3.1 | Create Login Screen | M | ✅ | typecheck | NativeWind + testIDs |
 | 1.3.2 | Auth Navigation Guard | M | ✅ | manual | router.replace approach |
 | 1.4.1 | Implement Sign Out | S | ✅ | - | In AuthContext |
-| 1.3.3 | E2E Tests - Auth Flow | M | ⬜ | - | Maestro tests pending |
+| 1.3.3 | E2E Tests - Auth Flow | M | ✅ | maestro | login.yaml, logout.yaml |
 
 ---
 
@@ -74,20 +74,21 @@
 | Feature | Status | Notes |
 |---------|--------|-------|
 | EPIC-0 Complete | ⬜ Pending | Run `npx expo start --ios` to verify |
+| EPIC-1 Complete | ⬜ Pending | Test full auth flow: login, persist, logout |
 
 ---
 
 ## Metrics
 
 ### Completed This Session (EPIC-1)
-- Tasks: 7
-- Files Created: 5 (auth types, context, googleAuth, login screen, auth layout)
-- Files Modified: 4 (_layout, supabase, index exports)
+- Tasks: 8
+- Files Created: 7 (auth types, context, googleAuth, login screen, auth layout, login.yaml, logout.yaml)
+- Files Modified: 5 (_layout, supabase, index exports, two.tsx → Profile)
 
 ### Cumulative
-- Tasks Completed: 16
+- Tasks Completed: 17
 - EPIC-0: 9 tasks
-- EPIC-1: 7 tasks (1 pending)
+- EPIC-1: 8 tasks ✅
 
 ---
 
