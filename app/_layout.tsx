@@ -101,6 +101,7 @@ function RootLayoutNav() {
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="session/[id]" options={{ title: 'Session Details' }} />
+        <Stack.Screen name="session/edit/[id]" options={{ title: 'Edit Session' }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
     </ThemeProvider>

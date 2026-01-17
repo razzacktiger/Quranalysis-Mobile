@@ -320,6 +320,18 @@ const queryClient = new QueryClient();
 ```
 **Prevention:** Add QueryClientProvider when installing @tanstack/react-query
 
+### Zod optional fields require undefined, not null
+**Symptom:** Form validation fails on optional fields that should be empty
+**Cause:** Database returns `null` for empty fields, but Zod's `.optional()` expects `undefined`
+**Fix:** Convert null to undefined when loading data into forms:
+```typescript
+session_goal: session.session_goal ?? undefined,
+additional_notes: session.additional_notes ?? undefined,
+```
+**Prevention:** When loading database data into Zod-validated forms, always use `?? undefined` for optional fields
+```
+**Prevention:** Add QueryClientProvider when installing @tanstack/react-query
+
 <!-- Example:
 ### Forgetting to handle loading state
 **Symptom:** UI flashes or shows undefined
