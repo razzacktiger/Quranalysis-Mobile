@@ -1,31 +1,91 @@
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, ScrollView, RefreshControl } from 'react-native';
+import { useAuth } from '@/lib/auth';
+import { StatsGrid } from '@/components/analytics';
+import { useSessions } from '@/lib/hooks';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+export default function DashboardScreen() {
+  const { user } = useAuth();
+  const { refetch, isRefetching } = useSessions();
 
-export default function TabOneScreen() {
+  // Get first name for greeting
+  const firstName = user?.name?.split(' ')[0] ?? 'there';
+
+  const handleRefresh = () => {
+    refetch();
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <ScrollView
+      testID="dashboard-screen"
+      className="flex-1 bg-gray-50"
+      contentContainerClassName="p-4"
+      refreshControl={
+        <RefreshControl refreshing={isRefetching} onRefresh={handleRefresh} />
+      }
+    >
+      {/* Welcome Header */}
+      <View className="mb-6">
+        <Text testID="dashboard-welcome" className="text-2xl font-bold text-gray-900">
+          Welcome, {firstName}!
+        </Text>
+        <Text className="text-gray-500 mt-1">
+          Here's your practice overview
+        </Text>
+      </View>
+
+      {/* Stats Grid */}
+      <View className="mb-6">
+        <Text className="text-lg font-semibold text-gray-800 mb-3">
+          Your Stats
+        </Text>
+        <StatsGrid testID="stats-grid" />
+      </View>
+
+      {/* Activity Heatmap Placeholder */}
+      <View className="mb-6">
+        <Text className="text-lg font-semibold text-gray-800 mb-3">
+          Activity
+        </Text>
+        <View
+          testID="activity-heatmap-placeholder"
+          className="bg-white rounded-xl p-6 border border-gray-100 items-center justify-center"
+        >
+          <Text className="text-gray-400 text-sm">
+            📅 Activity Heatmap coming soon...
+          </Text>
+        </View>
+      </View>
+
+      {/* Performance Chart Placeholder */}
+      <View className="mb-6">
+        <Text className="text-lg font-semibold text-gray-800 mb-3">
+          Performance Trend
+        </Text>
+        <View
+          testID="performance-chart-placeholder"
+          className="bg-white rounded-xl p-6 border border-gray-100 items-center justify-center"
+        >
+          <Text className="text-gray-400 text-sm">
+            📈 Performance Chart coming soon...
+          </Text>
+        </View>
+      </View>
+
+      {/* Mistake Chart Placeholder */}
+      <View className="mb-6">
+        <Text className="text-lg font-semibold text-gray-800 mb-3">
+          Mistake Analysis
+        </Text>
+        <View
+          testID="mistake-chart-placeholder"
+          className="bg-white rounded-xl p-6 border border-gray-100 items-center justify-center"
+        >
+          <Text className="text-gray-400 text-sm">
+            📊 Mistake Analysis coming soon...
+          </Text>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});

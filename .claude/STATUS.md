@@ -31,7 +31,7 @@
 | 3.3.2 | Create Performance Chart | M | ⬜ | - | Line chart |
 | 3.3.3 | Create Mistake Analysis Chart | M | ⬜ | - | Bar/pie chart |
 | 3.3.4 | E2E Test - Charts | S | ⬜ | - | Maestro |
-| 3.4.1 | Create Dashboard Screen | L | ⬜ | - | Main screen |
+| 3.4.1 | Create Dashboard Screen | L | 🟡 | typecheck | StatsGrid + placeholders |
 | 3.4.2 | E2E Test - Dashboard | M | ⬜ | - | Maestro |
 
 ---
