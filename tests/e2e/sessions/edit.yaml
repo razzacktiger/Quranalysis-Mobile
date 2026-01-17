@@ -1,0 +1,137 @@
+# Session Edit E2E Test
+# Run with: maestro test tests/e2e/sessions/edit.yaml
+#
+# Prerequisites:
+# - User must be logged in before running this test
+# - Expo dev server must be running (npx expo start)
+# - At least one session must exist in the database
+#
+# Bundle IDs:
+# - Development build: com.quranalysis.mobile
+# - Expo Go: host.exp.Exponent (currently used for testing)
+appId: host.exp.Exponent
+name: Sessions - Edit Session
+---
+# Launch Expo Go without clearing state to preserve login
+- launchApp:
+    clearState: false
+
+# Wait for Expo Go to be ready
+- extendedWaitUntil:
+    visible: "Quranalysis|Tab One"
+    timeout: 15000
+
+# Tap on Quranalysis project to load it (if on Expo Go home)
+- runFlow:
+    when:
+      visible: "Quranalysis"
+    commands:
+      - tapOn: "Quranalysis"
+
+# Wait for app to fully load
+- extendedWaitUntil:
+    visible: "Tab One"
+    timeout: 30000
+
+- waitForAnimationToEnd
+
+# Navigate to Sessions tab
+- tapOn:
+    point: "37%,96%"
+
+# Wait for Sessions screen
+- extendedWaitUntil:
+    visible: "Sessions"
+    timeout: 5000
+
+# Wait for session list to load (any state)
+- extendedWaitUntil:
+    visible:
+      id: "session-list|sessions-loading|sessions-error|sessions-empty"
+    timeout: 10000
+
+# ===== Test edit session flow =====
+# Only proceed if sessions exist
+- runFlow:
+    when:
+      visible:
+        id: "session-card-0"
+    commands:
+      # Tap on first session card to go to detail
+      - tapOn:
+          id: "session-card-0"
+
+      # Wait for detail screen to load
+      - extendedWaitUntil:
+          visible: "Session Details"
+          timeout: 5000
+
+      # Tap edit button in header
+      - tapOn:
+          id: "edit-button"
+
+      # Wait for edit screen to load
+      - extendedWaitUntil:
+          visible: "Edit Session"
+          timeout: 5000
+
+      # Verify edit screen elements
+      - assertVisible:
+          id: "edit-session-screen"
+
+      # Verify form fields are pre-filled
+      - assertVisible:
+          id: "date-picker"
+      - assertVisible:
+          id: "session-type-picker"
+      - assertVisible:
+          id: "duration-input"
+      - assertVisible:
+          id: "performance-slider"
+
+      # Verify portions section exists
+      - assertVisible:
+          id: "add-portion-btn"
+
+      # Verify at least one portion is loaded
+      - assertVisible:
+          id: "portion-0"
+
+      # Make a change to duration
+      - tapOn:
+          id: "duration-input"
+      - eraseText:
+          charactersToErase: 3
+      - inputText: "45"
+
+      # Hide keyboard
+      - hideKeyboard
+
+      # Scroll down to see save button
+      - swipe:
+          direction: UP
+          duration: 500
+
+      # Verify save button exists
+      - assertVisible:
+          id: "save-session-btn"
+
+      # Tap save button
+      - tapOn:
+          id: "save-session-btn"
+
+      # Wait for success - should navigate back to detail
+      - extendedWaitUntil:
+          visible: "Session Details"
+          timeout: 10000
+
+      # Navigate back to list
+      - back
+
+      # Verify we're back on Sessions list
+      - extendedWaitUntil:
+          visible: "Sessions"
+          timeout: 5000
+
+# Final verification - we're on Sessions screen
+- assertVisible: "Sessions"

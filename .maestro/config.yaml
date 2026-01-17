@@ -1,3 +1,4 @@
 # Maestro configuration
 flows:
   - tests/e2e/**/*.yaml
+  

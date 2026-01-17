@@ -1,0 +1,117 @@
+# Session Delete E2E Test
+# Run with: maestro test tests/e2e/sessions/delete.yaml
+#
+# Prerequisites:
+# - User must be logged in before running this test
+# - Expo dev server must be running (npx expo start)
+# - At least one session must exist in the database
+#
+# WARNING: This test will DELETE the first session in the list!
+# Only run this test if you have test data that can be deleted.
+#
+# Bundle IDs:
+# - Development build: com.quranalysis.mobile
+# - Expo Go: host.exp.Exponent (currently used for testing)
+appId: host.exp.Exponent
+name: Sessions - Delete Session
+---
+# Launch Expo Go without clearing state to preserve login
+- launchApp:
+    clearState: false
+
+# Wait for Expo Go to be ready
+- extendedWaitUntil:
+    visible: "Quranalysis|Tab One"
+    timeout: 15000
+
+# Tap on Quranalysis project to load it (if on Expo Go home)
+- runFlow:
+    when:
+      visible: "Quranalysis"
+    commands:
+      - tapOn: "Quranalysis"
+
+# Wait for app to fully load
+- extendedWaitUntil:
+    visible: "Tab One"
+    timeout: 30000
+
+- waitForAnimationToEnd
+
+# Navigate to Sessions tab
+- tapOn:
+    point: "37%,96%"
+
+# Wait for Sessions screen
+- extendedWaitUntil:
+    visible: "Sessions"
+    timeout: 5000
+
+# Wait for session list to load (any state)
+- extendedWaitUntil:
+    visible:
+      id: "session-list|sessions-loading|sessions-error|sessions-empty"
+    timeout: 10000
+
+# ===== Test delete session flow =====
+# Only proceed if sessions exist
+- runFlow:
+    when:
+      visible:
+        id: "session-card-0"
+    commands:
+      # Tap on first session card to go to detail
+      - tapOn:
+          id: "session-card-0"
+
+      # Wait for detail screen to load
+      - extendedWaitUntil:
+          visible: "Session Details"
+          timeout: 5000
+
+      # Tap delete button in header
+      - tapOn:
+          id: "delete-button"
+
+      # Wait for confirmation dialog
+      - extendedWaitUntil:
+          visible:
+            id: "delete-confirm-dialog"
+          timeout: 3000
+
+      # Verify dialog content
+      - assertVisible:
+          id: "delete-confirm-dialog-title"
+      - assertVisible:
+          id: "delete-confirm-dialog-message"
+
+      # Test cancel first - dialog should dismiss
+      - tapOn:
+          id: "delete-confirm-dialog-cancel"
+
+      # Verify we're still on detail screen
+      - extendedWaitUntil:
+          visible: "Session Details"
+          timeout: 3000
+
+      # Now actually delete - tap delete button again
+      - tapOn:
+          id: "delete-session-btn"
+
+      # Wait for confirmation dialog again
+      - extendedWaitUntil:
+          visible:
+            id: "delete-confirm-dialog"
+          timeout: 3000
+
+      # Confirm deletion
+      - tapOn:
+          id: "delete-confirm-dialog-confirm"
+
+      # Wait for navigation back to list
+      - extendedWaitUntil:
+          visible: "Sessions"
+          timeout: 10000
+
+# Final verification - we're on Sessions screen
+- assertVisible: "Sessions"

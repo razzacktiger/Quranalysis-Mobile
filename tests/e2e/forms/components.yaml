@@ -1,0 +1,81 @@
+# Form Components E2E Test
+# Requires: Task 2.4.1 (Session Form Screen) to be complete
+# Run with: maestro test tests/e2e/forms/components.yaml
+appId: com.quranalysis.mobile
+name: Forms - Component Interactions
+---
+- launchApp
+
+# Navigate to Add Session screen (assumes tab navigation)
+- tapOn: "Add Session"
+
+# Test Surah Picker - search and select
+- tapOn:
+    id: "surah-picker-0"
+- inputText:
+    id: "surah-picker-0-search"
+    text: "Fatiha"
+- assertVisible: "Al-Fatihah"
+- tapOn: "Al-Fatihah"
+
+# Verify surah was selected
+- assertVisible:
+    id: "surah-picker-0"
+    text: "1. Al-Fatihah"
+
+# Test Ayah inputs
+- tapOn:
+    id: "portion-0-ayah-start"
+- inputText: "1"
+- tapOn:
+    id: "portion-0-ayah-end"
+- inputText: "7"
+
+# Verify calculated values appear
+- assertVisible:
+    id: "portion-0-juz"
+- assertVisible:
+    id: "portion-0-pages"
+
+# Test Performance Slider
+- assertVisible:
+    id: "performance-slider"
+
+# Test Date Picker
+- tapOn:
+    id: "date-picker"
+- assertVisible: "Done"
+- tapOn: "Done"
+
+# Test Recency Select
+- tapOn:
+    id: "portion-0-recency"
+- assertVisible: "New"
+- assertVisible: "Recent"
+- assertVisible: "Reviewing"
+- assertVisible: "Maintenance"
+- tapOn: "New"
+
+# Test adding a mistake
+- tapOn: "Add Mistake"
+- assertVisible:
+    id: "mistake-0"
+
+# Test Mistake Category picker
+- tapOn:
+    id: "mistake-0-category"
+- assertVisible: "Pronunciation"
+- assertVisible: "Tajweed"
+- assertVisible: "Memorization"
+- tapOn: "Tajweed"
+
+# Verify subcategories are filtered
+- tapOn:
+    id: "mistake-0-subcategory"
+- assertVisible: "Ghunna"
+- assertVisible: "Qalqalah"
+- tapOn: "Ghunna"
+
+# Test Severity slider
+- assertVisible:
+    id: "mistake-0-severity"

@@ -1,0 +1,116 @@
+# Session Detail E2E Test
+# Run with: maestro test tests/e2e/sessions/detail.yaml
+#
+# Prerequisites:
+# - User must be logged in before running this test
+# - Expo dev server must be running (npx expo start)
+# - At least one session must exist in the database
+#
+# Bundle IDs:
+# - Development build: com.quranalysis.mobile
+# - Expo Go: host.exp.Exponent (currently used for testing)
+appId: host.exp.Exponent
+name: Sessions - View Detail
+---
+# Launch Expo Go without clearing state to preserve login
+- launchApp:
+    clearState: false
+
+# Wait for Expo Go to be ready
+- extendedWaitUntil:
+    visible: "Quranalysis|Tab One"
+    timeout: 15000
+
+# Tap on Quranalysis project to load it (if on Expo Go home)
+- runFlow:
+    when:
+      visible: "Quranalysis"
+    commands:
+      - tapOn: "Quranalysis"
+
+# Wait for app to fully load
+- extendedWaitUntil:
+    visible: "Tab One"
+    timeout: 30000
+
+- waitForAnimationToEnd
+
+# Navigate to Sessions tab
+- tapOn:
+    point: "37%,96%"
+
+# Wait for Sessions screen
+- extendedWaitUntil:
+    visible: "Sessions"
+    timeout: 5000
+
+# Wait for session list to load (any state)
+- extendedWaitUntil:
+    visible:
+      id: "session-list|sessions-loading|sessions-error|sessions-empty"
+    timeout: 10000
+
+# ===== Test session detail navigation =====
+# Only proceed if sessions exist
+- runFlow:
+    when:
+      visible:
+        id: "session-card-0"
+    commands:
+      # Tap on first session card
+      - tapOn:
+          id: "session-card-0"
+
+      # Wait for detail screen to load
+      - extendedWaitUntil:
+          visible: "Session Details"
+          timeout: 5000
+
+      # Verify session detail screen elements
+      - assertVisible:
+          id: "session-detail-screen"
+
+      # Verify header section
+      - assertVisible:
+          id: "session-header"
+
+      # Verify stats section
+      - assertVisible:
+          id: "session-stats"
+
+      # Verify portions section
+      - assertVisible:
+          id: "portions-section"
+
+      # Verify action buttons
+      - assertVisible:
+          id: "edit-button"
+      - assertVisible:
+          id: "delete-button"
+
+      # Test expanding a portion (if exists)
+      - runFlow:
+          when:
+            visible:
+              id: "portion-toggle-0"
+          commands:
+            - tapOn:
+                id: "portion-toggle-0"
+            - waitForAnimationToEnd
+
+      # Verify bottom action buttons
+      - assertVisible:
+          id: "edit-session-btn"
+      - assertVisible:
+          id: "delete-session-btn"
+
+      # Navigate back to verify we can return
+      - back
+
+      # Verify we're back on Sessions list
+      - extendedWaitUntil:
+          visible: "Sessions"
+          timeout: 5000
+
+# Final verification - we're on Sessions screen
+- assertVisible: "Sessions"

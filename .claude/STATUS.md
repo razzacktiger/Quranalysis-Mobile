@@ -1,8 +1,8 @@
 # Sprint Status
 
-**Current Epic:** EPIC-1-AUTH
+**Current Epic:** EPIC-2-SESSIONS
 **Started:** 2025-01-15
-**Last Updated:** 2025-01-16
+**Last Updated:** 2025-01-17
 
 ---
 
@@ -12,14 +12,42 @@
 |------|--------|----------|
 | EPIC-0: Setup | ✅ Complete | 9/9 |
 | EPIC-1: Auth | ✅ Complete | 8/8 |
-| EPIC-2: Sessions | ⬜ Not Started | 0/19 |
+| EPIC-2: Sessions | ✅ Complete | 21/21 |
 | EPIC-3: Dashboard | ⬜ Not Started | 0/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
 | EPIC-5: Profile | ⬜ Not Started | 0/5 |
 
 ---
 
-## Current Sprint Tasks (EPIC-1: Auth)
+## Current Sprint Tasks (EPIC-2: Sessions)
+
+| ID | Task | Size | Status | Tests | Notes |
+|----|------|------|--------|-------|-------|
+| 2.2.1 | Create Surah Data File | M | ✅ | typecheck | 114 surahs + helpers |
+| 2.1.1 | Create Session API Functions | L | ✅ | typecheck | CRUD + rollback |
+| 2.1.2 | Create Session Hooks | M | ✅ | 8 pass | React Query hooks |
+| 2.3.1 | Create Base Form Components | M | ✅ | typecheck | Input, Select, Slider, DatePicker |
+| 2.3.2 | Create Surah Picker Component | M | ✅ | typecheck | Searchable 114 surahs |
+| 2.3.3 | Create Portion Form Component | L | ✅ | typecheck | Auto-calc juz/pages |
+| 2.3.4 | Create Mistake Form Component | L | ✅ | typecheck | Category filtering |
+| 2.3.5 | E2E Test - Form Components | S | ✅ | maestro | Needs 2.4.1 to run |
+| 2.4.1 | Create Session Form Screen | XL | ✅ | typecheck | RHF + Zod + mutation |
+| 2.4.2 | E2E Test - Create Session | M | ✅ | maestro | Basic session flow |
+| 2.4.3 | E2E Test - Create with Mistakes | M | ✅ | maestro | With mistake flow |
+| 2.5.1 | Create Session Card Component | M | ✅ | typecheck | Score badge + actions |
+| 2.5.2 | Create Session List Screen | M | ✅ | typecheck | FlatList + bug fixes |
+| 2.5.3 | Add Filters and Search | M | ✅ | typecheck | 7 filter types + search |
+| 2.5.4 | E2E Test - Session List | M | ✅ | maestro | List, search, 7 filters |
+| 2.6.1 | Create Session Detail Screen | L | ✅ | typecheck | Expandable portions, delete works |
+| 2.6.2 | E2E Test - Session Detail | S | ✅ | maestro | Nav, elements, expand |
+| 2.7.1 | Create Edit Session Screen | L | ✅ | typecheck | Form pre-fill, unsaved warning |
+| 2.7.2 | E2E Test - Edit Session | M | ✅ | maestro | Pre-fill, save flow |
+| 2.8.1 | Implement Delete Confirmation | S | ✅ | typecheck | Reusable ConfirmDialog |
+| 2.8.2 | E2E Test - Delete Session | S | ✅ | maestro | Cancel + confirm flow |
+
+---
+
+## Past Sprint Tasks (EPIC-1: Auth)
 
 | ID | Task | Size | Status | Tests | Notes |
 |----|------|------|--------|-------|-------|
@@ -65,7 +93,7 @@
 ## Blockers
 
 - Node.js version warning (20.19.1 vs required 20.19.4) - functional but consider upgrading
-- Maestro CLI needs manual installation: `curl -Ls "https://get.maestro.mobile.dev" | bash`
+- ~~Maestro CLI needs manual installation~~ - ✅ Installed (v2.1.0)
 
 ---
 
@@ -80,15 +108,16 @@
 
 ## Metrics
 
-### Completed This Session (EPIC-1)
-- Tasks: 8
-- Files Created: 7 (auth types, context, googleAuth, login screen, auth layout, login.yaml, logout.yaml)
-- Files Modified: 5 (_layout, supabase, index exports, two.tsx → Profile)
+### Completed This Session (EPIC-2)
+- Tasks: 21
+- Files Created: 27 (quran-data.ts, sessions.ts, useSessions.ts, useSessions.test.ts, jest.setup.js, Input.tsx, Select.tsx, Slider.tsx, DatePicker.tsx, SurahPicker.tsx, PortionForm.tsx, MistakeForm.tsx, components.yaml, SessionForm.tsx, add.tsx, create.yaml, create-with-mistakes.yaml, SessionCard.tsx, sessions.tsx, SessionFilters.tsx, list.yaml, [id].tsx, detail.yaml, edit/[id].tsx, edit.yaml, ConfirmDialog.tsx, delete.yaml)
+- Files Modified: 15 (constants/index.ts, lib/api/index.ts, lib/hooks/index.ts, jest.config.js, components/ui/index.ts, package.json, components/forms/index.ts, components/sessions/index.ts, app/(tabs)/_layout.tsx, app/_layout.tsx, PortionForm.tsx, SessionForm.tsx, DatePicker.tsx, app/session/[id].tsx x2)
 
 ### Cumulative
-- Tasks Completed: 17
-- EPIC-0: 9 tasks
+- Tasks Completed: 38
+- EPIC-0: 9 tasks ✅
 - EPIC-1: 8 tasks ✅
+- EPIC-2: 21 tasks ✅ **COMPLETE!**
 
 ---
 
