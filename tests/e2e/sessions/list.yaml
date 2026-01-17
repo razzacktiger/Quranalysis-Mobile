@@ -1,0 +1,117 @@
+# Session List and Filter E2E Test
+# Run with: maestro test tests/e2e/sessions/list.yaml
+#
+# Prerequisites:
+# - User must be logged in before running this test
+# - Expo dev server must be running (npx expo start)
+# - For full filter tests, Supabase backend must be accessible
+#
+# Bundle IDs:
+# - Development build: com.quranalysis.mobile
+# - Expo Go: host.exp.Exponent (currently used for testing)
+appId: host.exp.Exponent
+name: Sessions - List and Filter
+---
+# Launch Expo Go without clearing state to preserve login
+- launchApp:
+    clearState: false
+
+# Wait for Expo Go to be ready
+- extendedWaitUntil:
+    visible: "Quranalysis|Tab One"
+    timeout: 15000
+
+# Tap on Quranalysis project to load it (if on Expo Go home)
+- runFlow:
+    when:
+      visible: "Quranalysis"
+    commands:
+      - tapOn: "Quranalysis"
+
+# Wait for app to fully load - look for Tab One text on Home screen
+- extendedWaitUntil:
+    visible: "Tab One"
+    timeout: 30000
+
+# Small delay to let UI stabilize
+- waitForAnimationToEnd
+
+# Navigate to Sessions tab by tapping on second tab position
+# Tab bar has 4 tabs evenly spaced: Home(12.5%), Sessions(37.5%), Add Session(62.5%), Profile(87.5%)
+- tapOn:
+    point: "37%,96%"
+
+# Wait for Sessions screen header to appear
+- extendedWaitUntil:
+    visible: "Sessions"
+    timeout: 5000
+
+# Wait for any state to load - list, loading, error, or empty
+- extendedWaitUntil:
+    visible:
+      id: "session-list|sessions-loading|sessions-error|sessions-empty"
+    timeout: 10000
+
+# ===== Test filters only if data loaded successfully =====
+- runFlow:
+    when:
+      visible:
+        id: "session-filters"
+    commands:
+      # Test Search Functionality
+      - tapOn:
+          id: "session-filters-search"
+      - inputText: "Fatiha"
+      - extendedWaitUntil:
+          visible: "Al-Fatihah|0 session"
+          timeout: 3000
+      - tapOn:
+          id: "session-filters-clear-search"
+
+      # Test Session Type Filter
+      - tapOn:
+          id: "session-filters-type-filter"
+      - tapOn: "Memorization"
+
+      # Test Surah Filter
+      - tapOn:
+          id: "session-filters-surah-filter"
+      - assertVisible: "All Surahs"
+      - tapOn: "All Surahs"
+
+      # Test Clear All Filters
+      - tapOn:
+          id: "session-filters-clear-all"
+
+      # Test Date Range Filter
+      - tapOn:
+          id: "session-filters-date-filter"
+      - assertVisible: "Date Range"
+      - tapOn: "Done"
+
+      # Test Performance Filter
+      - tapOn:
+          id: "session-filters-performance-filter"
+      - assertVisible: "Performance Score"
+      - tapOn: "Excellent (9-10)"
+      - tapOn:
+          id: "session-filters-clear-all"
+
+      # Test Mistakes Filter
+      - tapOn:
+          id: "session-filters-mistakes-filter"
+      - assertVisible: "Filter by Mistakes"
+      - tapOn: "With Mistakes"
+      - tapOn:
+          id: "session-filters-clear-all"
+
+      # Test Recency Filter
+      - tapOn:
+          id: "session-filters-recency-filter"
+      - assertVisible: "Recency Category"
+      - tapOn: "New"
+      - tapOn:
+          id: "session-filters-clear-all"
+
+# Final verification - we're still on Sessions screen
+- assertVisible: "Sessions"
