@@ -1,8 +1,8 @@
 # Sprint Status
 
-**Current Epic:** EPIC-1-AUTH
+**Current Epic:** EPIC-2-SESSIONS
 **Started:** 2025-01-15
-**Last Updated:** 2025-01-16
+**Last Updated:** 2025-01-17
 
 ---
 
@@ -12,14 +12,42 @@
 |------|--------|----------|
 | EPIC-0: Setup | ✅ Complete | 9/9 |
 | EPIC-1: Auth | ✅ Complete | 8/8 |
-| EPIC-2: Sessions | ⬜ Not Started | 0/19 |
+| EPIC-2: Sessions | 🟡 In Progress | 1/19 |
 | EPIC-3: Dashboard | ⬜ Not Started | 0/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
 | EPIC-5: Profile | ⬜ Not Started | 0/5 |
 
 ---
 
-## Current Sprint Tasks (EPIC-1: Auth)
+## Current Sprint Tasks (EPIC-2: Sessions)
+
+| ID | Task | Size | Status | Tests | Notes |
+|----|------|------|--------|-------|-------|
+| 2.2.1 | Create Surah Data File | M | ✅ | typecheck | 114 surahs + helpers |
+| 2.1.1 | Create Session API Functions | L | ⬜ | - | - |
+| 2.1.2 | Create Session Hooks | M | ⬜ | - | - |
+| 2.3.1 | Create Base Form Components | M | ⬜ | - | - |
+| 2.3.2 | Create Surah Picker Component | M | ⬜ | - | - |
+| 2.3.3 | Create Portion Form Component | L | ⬜ | - | - |
+| 2.3.4 | Create Mistake Form Component | L | ⬜ | - | - |
+| 2.3.5 | E2E Test - Form Components | S | ⬜ | - | - |
+| 2.4.1 | Create Session Form Screen | XL | ⬜ | - | - |
+| 2.4.2 | E2E Test - Create Session | M | ⬜ | - | - |
+| 2.4.3 | E2E Test - Create with Mistakes | M | ⬜ | - | - |
+| 2.5.1 | Create Session Card Component | M | ⬜ | - | - |
+| 2.5.2 | Create Session List Screen | M | ⬜ | - | - |
+| 2.5.3 | Add Filters and Search | M | ⬜ | - | - |
+| 2.5.4 | E2E Test - Session List | M | ⬜ | - | - |
+| 2.6.1 | Create Session Detail Screen | L | ⬜ | - | - |
+| 2.6.2 | E2E Test - Session Detail | S | ⬜ | - | - |
+| 2.7.1 | Create Edit Session Screen | L | ⬜ | - | - |
+| 2.7.2 | E2E Test - Edit Session | M | ⬜ | - | - |
+| 2.8.1 | Implement Delete Confirmation | S | ⬜ | - | - |
+| 2.8.2 | E2E Test - Delete Session | S | ⬜ | - | - |
+
+---
+
+## Past Sprint Tasks (EPIC-1: Auth)
 
 | ID | Task | Size | Status | Tests | Notes |
 |----|------|------|--------|-------|-------|
@@ -80,15 +108,16 @@
 
 ## Metrics
 
-### Completed This Session (EPIC-1)
-- Tasks: 8
-- Files Created: 7 (auth types, context, googleAuth, login screen, auth layout, login.yaml, logout.yaml)
-- Files Modified: 5 (_layout, supabase, index exports, two.tsx → Profile)
+### Completed This Session (EPIC-2)
+- Tasks: 1
+- Files Created: 1 (quran-data.ts)
+- Files Modified: 1 (constants/index.ts)
 
 ### Cumulative
-- Tasks Completed: 17
-- EPIC-0: 9 tasks
+- Tasks Completed: 18
+- EPIC-0: 9 tasks ✅
 - EPIC-1: 8 tasks ✅
+- EPIC-2: 1 task (18 remaining)
 
 ---
 
