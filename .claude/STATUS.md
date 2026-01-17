@@ -13,7 +13,7 @@
 | EPIC-0: Setup | ✅ Complete | 9/9 |
 | EPIC-1: Auth | ✅ Complete | 8/8 |
 | EPIC-2: Sessions | ✅ Complete | 21/21 |
-| EPIC-3: Dashboard | 🟡 In Progress | 1/10 |
+| EPIC-3: Dashboard | 🟡 In Progress | 2/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
 | EPIC-5: Profile | ⬜ Not Started | 0/5 |
 
@@ -24,7 +24,7 @@
 | ID | Task | Size | Status | Tests | Notes |
 |----|------|------|--------|-------|-------|
 | 3.1.1 | Create Stats Calculation Utils | M | ✅ | 24 pass | TDD - 7 functions |
-| 3.1.2 | Create useStats Hook | S | ⬜ | - | Derives from useSessions |
+| 3.1.2 | Create useStats Hook | S | ✅ | typecheck | Memoized stats from useSessions |
 | 3.2.1 | Create Stat Card Component | S | ⬜ | - | Icon, label, value |
 | 3.2.2 | Create Stats Grid | M | ⬜ | - | 2x2 layout |
 | 3.3.1 | Create Activity Heatmap | L | ⬜ | - | 7x12 grid |
@@ -127,16 +127,16 @@
 ## Metrics
 
 ### Completed This Session (EPIC-3)
-- Tasks: 1
-- Files Created: 2 (stats.ts, stats.test.ts)
-- Files Modified: 1 (lib/utils/index.ts)
+- Tasks: 2
+- Files Created: 3 (stats.ts, stats.test.ts, useStats.ts)
+- Files Modified: 2 (lib/utils/index.ts, lib/hooks/index.ts)
 
 ### Cumulative
-- Tasks Completed: 39
+- Tasks Completed: 40
 - EPIC-0: 9 tasks ✅
 - EPIC-1: 8 tasks ✅
 - EPIC-2: 21 tasks ✅
-- EPIC-3: 1 task
+- EPIC-3: 2 tasks
 
 ---
 

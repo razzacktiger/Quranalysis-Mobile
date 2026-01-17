@@ -1,9 +1,10 @@
-import type { FullSessionData, ErrorCategory, SessionType } from '@/types/session';
+import type { SessionWithRelations } from '@/lib/api/sessions';
+import type { ErrorCategory, SessionType } from '@/types/session';
 
 /**
  * Calculate total number of sessions
  */
-export function calculateTotalSessions(sessions: FullSessionData[]): number {
+export function calculateTotalSessions(sessions: SessionWithRelations[]): number {
   return sessions.length;
 }
 
@@ -11,10 +12,10 @@ export function calculateTotalSessions(sessions: FullSessionData[]): number {
  * Calculate average performance score across all sessions
  * Returns 0 for empty array, rounds to 1 decimal place
  */
-export function calculateAveragePerformance(sessions: FullSessionData[]): number {
+export function calculateAveragePerformance(sessions: SessionWithRelations[]): number {
   if (sessions.length === 0) return 0;
 
-  const total = sessions.reduce((sum, s) => sum + s.session.performance_score, 0);
+  const total = sessions.reduce((sum, s) => sum + s.performance_score, 0);
   const avg = total / sessions.length;
 
   // Round to 1 decimal place
@@ -24,7 +25,7 @@ export function calculateAveragePerformance(sessions: FullSessionData[]): number
 /**
  * Calculate total mistakes across all sessions
  */
-export function calculateTotalMistakes(sessions: FullSessionData[]): number {
+export function calculateTotalMistakes(sessions: SessionWithRelations[]): number {
   return sessions.reduce((sum, s) => sum + s.mistakes.length, 0);
 }
 
@@ -34,13 +35,13 @@ export function calculateTotalMistakes(sessions: FullSessionData[]): number {
  * - Best streak: longest consecutive streak ever
  */
 export function calculateCurrentStreak(
-  sessions: FullSessionData[]
+  sessions: SessionWithRelations[]
 ): { current: number; best: number } {
   if (sessions.length === 0) return { current: 0, best: 0 };
 
   // Get unique dates (sorted descending - most recent first)
   const uniqueDates = [
-    ...new Set(sessions.map((s) => s.session.session_date)),
+    ...new Set(sessions.map((s) => s.session_date)),
   ].sort((a, b) => b.localeCompare(a));
 
   if (uniqueDates.length === 0) return { current: 0, best: 0 };
@@ -59,13 +60,7 @@ export function calculateCurrentStreak(
   const dateSet = new Set(uniqueDates);
 
   // Calculate all streaks
-  const streaks: number[] = [];
   let currentStreak = 0;
-  let isCurrentStreak = true; // Track if we're building the current active streak
-
-  // Start from today and work backwards
-  let daysChecked = 0;
-  let consecutiveDays = 0;
 
   // First, find the current streak (starting from today or yesterday)
   const mostRecentDate = uniqueDates[0];
@@ -131,8 +126,8 @@ export function calculateCurrentStreak(
  * Group mistakes by error category and count
  */
 export function calculateMistakesByCategory(
-  sessions: FullSessionData[]
-): Record<ErrorCategory, number> {
+  sessions: SessionWithRelations[]
+): Partial<Record<ErrorCategory, number>> {
   const result: Partial<Record<ErrorCategory, number>> = {};
 
   for (const session of sessions) {
@@ -142,30 +137,30 @@ export function calculateMistakesByCategory(
     }
   }
 
-  return result as Record<ErrorCategory, number>;
+  return result;
 }
 
 /**
  * Group sessions by type and count
  */
 export function calculateSessionsByType(
-  sessions: FullSessionData[]
-): Record<SessionType, number> {
+  sessions: SessionWithRelations[]
+): Partial<Record<SessionType, number>> {
   const result: Partial<Record<SessionType, number>> = {};
 
   for (const session of sessions) {
-    const type = session.session.session_type;
+    const type = session.session_type;
     result[type] = (result[type] || 0) + 1;
   }
 
-  return result as Record<SessionType, number>;
+  return result;
 }
 
 /**
  * Calculate total ayahs and pages across all sessions
  */
 export function calculateAyahsAndPages(
-  sessions: FullSessionData[]
+  sessions: SessionWithRelations[]
 ): { totalAyahs: number; totalPages: number } {
   let totalAyahs = 0;
   let totalPages = 0;

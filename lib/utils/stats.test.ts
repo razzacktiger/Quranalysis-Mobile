@@ -7,10 +7,11 @@ import {
   calculateSessionsByType,
   calculateAyahsAndPages,
 } from './stats';
-import type { FullSessionData, SessionData, SessionPortion, MistakeData } from '@/types/session';
+import type { SessionWithRelations } from '@/lib/api/sessions';
+import type { SessionPortion, MistakeData } from '@/types/session';
 
-// Helper to create mock session data
-const createSession = (overrides: Partial<SessionData> = {}): SessionData => ({
+// Helper to create mock session data (SessionWithRelations = flattened structure)
+const createSession = (overrides: Partial<SessionWithRelations> = {}): SessionWithRelations => ({
   id: 'session-1',
   user_id: 'user-1',
   session_date: '2025-01-15',
@@ -19,6 +20,8 @@ const createSession = (overrides: Partial<SessionData> = {}): SessionData => ({
   performance_score: 7,
   created_at: '2025-01-15T10:00:00Z',
   updated_at: '2025-01-15T10:00:00Z',
+  session_portions: [],
+  mistakes: [],
   ...overrides,
 });
 
@@ -47,16 +50,6 @@ const createMistake = (overrides: Partial<MistakeData> = {}): MistakeData => ({
   ...overrides,
 });
 
-const createFullSession = (
-  sessionOverrides: Partial<SessionData> = {},
-  portions: SessionPortion[] = [],
-  mistakes: MistakeData[] = []
-): FullSessionData => ({
-  session: createSession(sessionOverrides),
-  session_portions: portions,
-  mistakes,
-});
-
 describe('calculateTotalSessions', () => {
   it('returns 0 for empty array', () => {
     expect(calculateTotalSessions([])).toBe(0);
@@ -64,9 +57,9 @@ describe('calculateTotalSessions', () => {
 
   it('counts all sessions', () => {
     const sessions = [
-      createFullSession({ id: 'session-1' }),
-      createFullSession({ id: 'session-2' }),
-      createFullSession({ id: 'session-3' }),
+      createSession({ id: 'session-1' }),
+      createSession({ id: 'session-2' }),
+      createSession({ id: 'session-3' }),
     ];
     expect(calculateTotalSessions(sessions)).toBe(3);
   });
@@ -79,9 +72,9 @@ describe('calculateAveragePerformance', () => {
 
   it('calculates mean correctly', () => {
     const sessions = [
-      createFullSession({ performance_score: 8 }),
-      createFullSession({ performance_score: 6 }),
-      createFullSession({ performance_score: 10 }),
+      createSession({ performance_score: 8 }),
+      createSession({ performance_score: 6 }),
+      createSession({ performance_score: 10 }),
     ];
     // (8 + 6 + 10) / 3 = 8
     expect(calculateAveragePerformance(sessions)).toBe(8);
@@ -89,16 +82,16 @@ describe('calculateAveragePerformance', () => {
 
   it('rounds to 1 decimal place', () => {
     const sessions = [
-      createFullSession({ performance_score: 7 }),
-      createFullSession({ performance_score: 8 }),
-      createFullSession({ performance_score: 9 }),
+      createSession({ performance_score: 7 }),
+      createSession({ performance_score: 8 }),
+      createSession({ performance_score: 9 }),
     ];
     // (7 + 8 + 9) / 3 = 8
     expect(calculateAveragePerformance(sessions)).toBe(8);
   });
 
   it('handles single session', () => {
-    const sessions = [createFullSession({ performance_score: 5 })];
+    const sessions = [createSession({ performance_score: 5 })];
     expect(calculateAveragePerformance(sessions)).toBe(5);
   });
 });
@@ -110,17 +103,17 @@ describe('calculateTotalMistakes', () => {
 
   it('returns 0 for sessions with no mistakes', () => {
     const sessions = [
-      createFullSession({}, [createPortion()], []),
-      createFullSession({}, [createPortion()], []),
+      createSession({ session_portions: [createPortion()], mistakes: [] }),
+      createSession({ session_portions: [createPortion()], mistakes: [] }),
     ];
     expect(calculateTotalMistakes(sessions)).toBe(0);
   });
 
   it('sums mistakes across all sessions', () => {
     const sessions = [
-      createFullSession({}, [], [createMistake(), createMistake()]),
-      createFullSession({}, [], [createMistake()]),
-      createFullSession({}, [], [createMistake(), createMistake(), createMistake()]),
+      createSession({ mistakes: [createMistake(), createMistake()] }),
+      createSession({ mistakes: [createMistake()] }),
+      createSession({ mistakes: [createMistake(), createMistake(), createMistake()] }),
     ];
     expect(calculateTotalMistakes(sessions)).toBe(6);
   });
@@ -140,19 +133,19 @@ describe('calculateCurrentStreak', () => {
 
   it('counts consecutive days including today', () => {
     const sessions = [
-      createFullSession({ session_date: daysAgo(0) }), // today
-      createFullSession({ session_date: daysAgo(1) }), // yesterday
-      createFullSession({ session_date: daysAgo(2) }), // 2 days ago
+      createSession({ session_date: daysAgo(0) }), // today
+      createSession({ session_date: daysAgo(1) }), // yesterday
+      createSession({ session_date: daysAgo(2) }), // 2 days ago
     ];
     expect(calculateCurrentStreak(sessions)).toEqual({ current: 3, best: 3 });
   });
 
   it('breaks streak on gap day', () => {
     const sessions = [
-      createFullSession({ session_date: daysAgo(0) }), // today
-      createFullSession({ session_date: daysAgo(1) }), // yesterday
+      createSession({ session_date: daysAgo(0) }), // today
+      createSession({ session_date: daysAgo(1) }), // yesterday
       // gap on day 2
-      createFullSession({ session_date: daysAgo(3) }), // 3 days ago
+      createSession({ session_date: daysAgo(3) }), // 3 days ago
     ];
     expect(calculateCurrentStreak(sessions)).toEqual({ current: 2, best: 2 });
   });
@@ -160,8 +153,8 @@ describe('calculateCurrentStreak', () => {
   it('today counts only if session exists', () => {
     const sessions = [
       // no session today
-      createFullSession({ session_date: daysAgo(1) }), // yesterday
-      createFullSession({ session_date: daysAgo(2) }), // 2 days ago
+      createSession({ session_date: daysAgo(1) }), // yesterday
+      createSession({ session_date: daysAgo(2) }), // 2 days ago
     ];
     // Streak from yesterday is still current (within 1 day)
     expect(calculateCurrentStreak(sessions).current).toBe(2);
@@ -169,29 +162,29 @@ describe('calculateCurrentStreak', () => {
 
   it('tracks best streak separately from current', () => {
     const sessions = [
-      createFullSession({ session_date: daysAgo(0) }), // today (current streak: 1)
+      createSession({ session_date: daysAgo(0) }), // today (current streak: 1)
       // gap
-      createFullSession({ session_date: daysAgo(5) }), // 5 days ago
-      createFullSession({ session_date: daysAgo(6) }), // 6 days ago
-      createFullSession({ session_date: daysAgo(7) }), // 7 days ago
-      createFullSession({ session_date: daysAgo(8) }), // 8 days ago (best streak: 4)
+      createSession({ session_date: daysAgo(5) }), // 5 days ago
+      createSession({ session_date: daysAgo(6) }), // 6 days ago
+      createSession({ session_date: daysAgo(7) }), // 7 days ago
+      createSession({ session_date: daysAgo(8) }), // 8 days ago (best streak: 4)
     ];
     expect(calculateCurrentStreak(sessions)).toEqual({ current: 1, best: 4 });
   });
 
   it('handles multiple sessions on same day', () => {
     const sessions = [
-      createFullSession({ session_date: daysAgo(0) }),
-      createFullSession({ session_date: daysAgo(0) }), // same day
-      createFullSession({ session_date: daysAgo(1) }),
+      createSession({ session_date: daysAgo(0) }),
+      createSession({ session_date: daysAgo(0) }), // same day
+      createSession({ session_date: daysAgo(1) }),
     ];
     expect(calculateCurrentStreak(sessions)).toEqual({ current: 2, best: 2 });
   });
 
   it('returns 0 current streak if gap of 2+ days from today', () => {
     const sessions = [
-      createFullSession({ session_date: daysAgo(3) }),
-      createFullSession({ session_date: daysAgo(4) }),
+      createSession({ session_date: daysAgo(3) }),
+      createSession({ session_date: daysAgo(4) }),
     ];
     expect(calculateCurrentStreak(sessions).current).toBe(0);
   });
@@ -199,24 +192,22 @@ describe('calculateCurrentStreak', () => {
 
 describe('calculateMistakesByCategory', () => {
   it('returns empty object for no mistakes', () => {
-    const sessions = [createFullSession({}, [createPortion()], [])];
+    const sessions = [createSession({ session_portions: [createPortion()], mistakes: [] })];
     expect(calculateMistakesByCategory(sessions)).toEqual({});
   });
 
   it('groups by category correctly', () => {
     const sessions = [
-      createFullSession(
-        {},
-        [],
-        [
+      createSession({
+        mistakes: [
           createMistake({ error_category: 'pronunciation' }),
           createMistake({ error_category: 'pronunciation' }),
           createMistake({ error_category: 'tajweed' }),
           createMistake({ error_category: 'memorization' }),
           createMistake({ error_category: 'memorization' }),
           createMistake({ error_category: 'memorization' }),
-        ]
-      ),
+        ],
+      }),
     ];
     expect(calculateMistakesByCategory(sessions)).toEqual({
       pronunciation: 2,
@@ -227,8 +218,8 @@ describe('calculateMistakesByCategory', () => {
 
   it('aggregates across multiple sessions', () => {
     const sessions = [
-      createFullSession({}, [], [createMistake({ error_category: 'pronunciation' })]),
-      createFullSession({}, [], [createMistake({ error_category: 'pronunciation' })]),
+      createSession({ mistakes: [createMistake({ error_category: 'pronunciation' })] }),
+      createSession({ mistakes: [createMistake({ error_category: 'pronunciation' })] }),
     ];
     expect(calculateMistakesByCategory(sessions)).toEqual({
       pronunciation: 2,
@@ -243,10 +234,10 @@ describe('calculateSessionsByType', () => {
 
   it('groups by session type correctly', () => {
     const sessions = [
-      createFullSession({ session_type: 'reading_practice' }),
-      createFullSession({ session_type: 'reading_practice' }),
-      createFullSession({ session_type: 'memorization' }),
-      createFullSession({ session_type: 'audit' }),
+      createSession({ session_type: 'reading_practice' }),
+      createSession({ session_type: 'reading_practice' }),
+      createSession({ session_type: 'memorization' }),
+      createSession({ session_type: 'audit' }),
     ];
     expect(calculateSessionsByType(sessions)).toEqual({
       reading_practice: 2,
@@ -263,21 +254,17 @@ describe('calculateAyahsAndPages', () => {
 
   it('sums ayahs and pages across portions', () => {
     const sessions = [
-      createFullSession(
-        {},
-        [
+      createSession({
+        session_portions: [
           createPortion({ ayah_start: 1, ayah_end: 7, pages_read: 1 }), // 7 ayahs
           createPortion({ ayah_start: 1, ayah_end: 5, pages_read: 2 }), // 5 ayahs
         ],
-        []
-      ),
-      createFullSession(
-        {},
-        [
+      }),
+      createSession({
+        session_portions: [
           createPortion({ ayah_start: 10, ayah_end: 20, pages_read: 3 }), // 11 ayahs
         ],
-        []
-      ),
+      }),
     ];
     expect(calculateAyahsAndPages(sessions)).toEqual({
       totalAyahs: 23, // 7 + 5 + 11
@@ -287,7 +274,9 @@ describe('calculateAyahsAndPages', () => {
 
   it('handles portions with same start and end ayah', () => {
     const sessions = [
-      createFullSession({}, [createPortion({ ayah_start: 5, ayah_end: 5, pages_read: 1 })], []),
+      createSession({
+        session_portions: [createPortion({ ayah_start: 5, ayah_end: 5, pages_read: 1 })],
+      }),
     ];
     expect(calculateAyahsAndPages(sessions)).toEqual({
       totalAyahs: 1,
