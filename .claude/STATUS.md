@@ -1,7 +1,7 @@
 # Sprint Status
 
-**Current Epic:** EPIC-2-SESSIONS
-**Started:** 2025-01-15
+**Current Epic:** EPIC-3-DASHBOARD
+**Started:** 2025-01-17
 **Last Updated:** 2025-01-17
 
 ---
@@ -13,13 +13,30 @@
 | EPIC-0: Setup | ✅ Complete | 9/9 |
 | EPIC-1: Auth | ✅ Complete | 8/8 |
 | EPIC-2: Sessions | ✅ Complete | 21/21 |
-| EPIC-3: Dashboard | ⬜ Not Started | 0/10 |
+| EPIC-3: Dashboard | 🟡 In Progress | 1/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
 | EPIC-5: Profile | ⬜ Not Started | 0/5 |
 
 ---
 
-## Current Sprint Tasks (EPIC-2: Sessions)
+## Current Sprint Tasks (EPIC-3: Dashboard)
+
+| ID | Task | Size | Status | Tests | Notes |
+|----|------|------|--------|-------|-------|
+| 3.1.1 | Create Stats Calculation Utils | M | ✅ | 24 pass | TDD - 7 functions |
+| 3.1.2 | Create useStats Hook | S | ⬜ | - | Derives from useSessions |
+| 3.2.1 | Create Stat Card Component | S | ⬜ | - | Icon, label, value |
+| 3.2.2 | Create Stats Grid | M | ⬜ | - | 2x2 layout |
+| 3.3.1 | Create Activity Heatmap | L | ⬜ | - | 7x12 grid |
+| 3.3.2 | Create Performance Chart | M | ⬜ | - | Line chart |
+| 3.3.3 | Create Mistake Analysis Chart | M | ⬜ | - | Bar/pie chart |
+| 3.3.4 | E2E Test - Charts | S | ⬜ | - | Maestro |
+| 3.4.1 | Create Dashboard Screen | L | ⬜ | - | Main screen |
+| 3.4.2 | E2E Test - Dashboard | M | ⬜ | - | Maestro |
+
+---
+
+## Past Sprint Tasks (EPIC-2: Sessions)
 
 | ID | Task | Size | Status | Tests | Notes |
 |----|------|------|--------|-------|-------|
@@ -38,9 +55,9 @@
 | 2.5.2 | Create Session List Screen | M | ✅ | typecheck | FlatList + bug fixes |
 | 2.5.3 | Add Filters and Search | M | ✅ | typecheck | 7 filter types + search |
 | 2.5.4 | E2E Test - Session List | M | ✅ | maestro | List, search, 7 filters |
-| 2.6.1 | Create Session Detail Screen | L | ✅ | typecheck | Expandable portions, delete works |
+| 2.6.1 | Create Session Detail Screen | L | ✅ | typecheck | Expandable portions |
 | 2.6.2 | E2E Test - Session Detail | S | ✅ | maestro | Nav, elements, expand |
-| 2.7.1 | Create Edit Session Screen | L | ✅ | typecheck | Form pre-fill, unsaved warning |
+| 2.7.1 | Create Edit Session Screen | L | ✅ | typecheck | Form pre-fill |
 | 2.7.2 | E2E Test - Edit Session | M | ✅ | maestro | Pre-fill, save flow |
 | 2.8.1 | Implement Delete Confirmation | S | ✅ | typecheck | Reusable ConfirmDialog |
 | 2.8.2 | E2E Test - Delete Session | S | ✅ | maestro | Cancel + confirm flow |
@@ -103,21 +120,23 @@
 |---------|--------|-------|
 | EPIC-0 Complete | ⬜ Pending | Run `npx expo start --ios` to verify |
 | EPIC-1 Complete | ⬜ Pending | Test full auth flow: login, persist, logout |
+| EPIC-2 Complete | ⬜ Pending | Test sessions CRUD flow |
 
 ---
 
 ## Metrics
 
-### Completed This Session (EPIC-2)
-- Tasks: 21
-- Files Created: 27 (quran-data.ts, sessions.ts, useSessions.ts, useSessions.test.ts, jest.setup.js, Input.tsx, Select.tsx, Slider.tsx, DatePicker.tsx, SurahPicker.tsx, PortionForm.tsx, MistakeForm.tsx, components.yaml, SessionForm.tsx, add.tsx, create.yaml, create-with-mistakes.yaml, SessionCard.tsx, sessions.tsx, SessionFilters.tsx, list.yaml, [id].tsx, detail.yaml, edit/[id].tsx, edit.yaml, ConfirmDialog.tsx, delete.yaml)
-- Files Modified: 15 (constants/index.ts, lib/api/index.ts, lib/hooks/index.ts, jest.config.js, components/ui/index.ts, package.json, components/forms/index.ts, components/sessions/index.ts, app/(tabs)/_layout.tsx, app/_layout.tsx, PortionForm.tsx, SessionForm.tsx, DatePicker.tsx, app/session/[id].tsx x2)
+### Completed This Session (EPIC-3)
+- Tasks: 1
+- Files Created: 2 (stats.ts, stats.test.ts)
+- Files Modified: 1 (lib/utils/index.ts)
 
 ### Cumulative
-- Tasks Completed: 38
+- Tasks Completed: 39
 - EPIC-0: 9 tasks ✅
 - EPIC-1: 8 tasks ✅
-- EPIC-2: 21 tasks ✅ **COMPLETE!**
+- EPIC-2: 21 tasks ✅
+- EPIC-3: 1 task
 
 ---
 
