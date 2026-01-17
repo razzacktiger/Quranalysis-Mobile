@@ -4,12 +4,12 @@ import {
   Text,
   ScrollView,
   Pressable,
-  ActivityIndicator,
   Alert,
 } from 'react-native';
 import { useLocalSearchParams, useRouter, Stack } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { useSession, useDeleteSession } from '@/lib/hooks/useSessions';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import type { SessionPortion, MistakeData } from '@/types/session';
 
 // Helper to format session type for display
@@ -219,31 +219,29 @@ export default function SessionDetailScreen() {
   const router = useRouter();
   const { data: session, isLoading, isError, error, refetch } = useSession(id);
   const deleteSessionMutation = useDeleteSession();
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleEdit = () => {
     router.push(`/session/edit/${id}` as any);
   };
 
   const handleDelete = () => {
-    Alert.alert(
-      'Delete Session',
-      'Are you sure you want to delete this session? This action cannot be undone.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await deleteSessionMutation.mutateAsync(id!);
-              router.back();
-            } catch (err) {
-              Alert.alert('Error', 'Failed to delete session. Please try again.');
-            }
-          },
-        },
-      ]
-    );
+    setShowDeleteDialog(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      await deleteSessionMutation.mutateAsync(id!);
+      setShowDeleteDialog(false);
+      router.back();
+    } catch (err) {
+      setShowDeleteDialog(false);
+      Alert.alert('Error', 'Failed to delete session. Please try again.');
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteDialog(false);
   };
 
   if (isLoading) {
@@ -393,6 +391,20 @@ export default function SessionDetailScreen() {
           </Pressable>
         </View>
       </ScrollView>
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        testID="delete-confirm-dialog"
+        visible={showDeleteDialog}
+        title="Delete Session"
+        message="Are you sure you want to delete this session? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        confirmStyle="destructive"
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+        isLoading={deleteSessionMutation.isPending}
+      />
     </>
   );
 }
