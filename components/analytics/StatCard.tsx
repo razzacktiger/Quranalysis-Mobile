@@ -55,7 +55,8 @@ export function StatCard({
   return (
     <View
       testID={testID}
-      className={`${bgColor} rounded-xl p-4 shadow-sm border border-gray-100 flex-1`}
+      className={`${bgColor} rounded-xl p-4 shadow-sm border border-gray-100`}
+      style={{ minHeight: 110 }}
     >
       {/* Header: Icon and Trend */}
       <View className="flex-row justify-between items-start mb-2">
