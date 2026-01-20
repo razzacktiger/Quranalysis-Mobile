@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, RefreshControl } from 'react-native';
 import { useAuth } from '@/lib/auth';
-import { StatsGrid, ActivityHeatmap, PerformanceChart } from '@/components/analytics';
+import { StatsGrid, ActivityHeatmap, PerformanceChart, MistakeChart } from '@/components/analytics';
 import { useSessions } from '@/lib/hooks';
 
 export default function DashboardScreen() {
@@ -58,19 +58,12 @@ export default function DashboardScreen() {
         <PerformanceChart testID="performance-chart" />
       </View>
 
-      {/* Mistake Chart Placeholder */}
+      {/* Mistake Chart */}
       <View className="mb-6">
         <Text className="text-lg font-semibold text-gray-800 mb-3">
           Mistake Analysis
         </Text>
-        <View
-          testID="mistake-chart-placeholder"
-          className="bg-white rounded-xl p-6 border border-gray-100 items-center justify-center"
-        >
-          <Text className="text-gray-400 text-sm">
-            📊 Mistake Analysis coming soon...
-          </Text>
-        </View>
+        <MistakeChart testID="mistake-chart" />
       </View>
     </ScrollView>
   );
