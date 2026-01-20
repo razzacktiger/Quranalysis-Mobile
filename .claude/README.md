@@ -48,6 +48,7 @@
 | /create-epic | Convert spec to epic |
 | /improve-workflow | Analyze and improve workflow |
 | /refactor-check | Scan for code quality issues |
+| /run-workflow | Execute a saved workflow |
 
 ## Common Workflows
 
