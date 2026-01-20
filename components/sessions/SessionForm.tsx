@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useFocusEffect } from '@react-navigation/native';
 import { v4 as uuidv4 } from 'uuid';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -85,7 +86,7 @@ export function SessionForm({ testID }: SessionFormProps) {
   } = useForm<SessionFormSchemaType>({
     resolver: zodResolver(sessionFormSchema),
     defaultValues: {
-      session_date: new Date().toISOString().split('T')[0],
+      session_date: new Date().toISOString(),
       session_type: 'memorization',
       duration_minutes: 30,
       performance_score: 7,
@@ -96,6 +97,13 @@ export function SessionForm({ testID }: SessionFormProps) {
 
   const portions = watch('portions');
   const mistakes = watch('mistakes');
+
+  // Update session_date to current time when screen gains focus
+  useFocusEffect(
+    useCallback(() => {
+      setValue('session_date', new Date().toISOString());
+    }, [setValue])
+  );
 
   const handleAddPortion = () => {
     setValue('portions', [...portions, createEmptyPortion()]);
