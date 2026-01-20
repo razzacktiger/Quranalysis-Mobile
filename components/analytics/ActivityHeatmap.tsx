@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react';
-import { View, Text, Pressable, ScrollView, Dimensions } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { View, Text, Pressable, LayoutChangeEvent } from 'react-native';
 import { useSessions } from '@/lib/hooks';
 
 const WEEKS_TO_SHOW = 13;
 const DAYS_IN_WEEK = 7;
-const CELL_SIZE = 14; // Size of each cell in pixels
-const CELL_GAP = 2; // Gap between cells
-const DAY_LABEL_WIDTH = 28; // Width for day labels column
+const CELL_GAP = 3; // Gap between cells
+const DAY_LABEL_WIDTH = 32; // Width for day labels column
+const CONTAINER_PADDING = 16; // Padding inside the container (p-4 = 16px)
 
 export interface ActivityHeatmapProps {
   testID?: string;
@@ -58,9 +58,11 @@ function generateDateGrid(weeks: number): { date: string; month: string; day: nu
 
 /**
  * ActivityHeatmap - GitHub-style contribution graph
+ * Dynamically sizes cells to fill available container width
  */
 export function ActivityHeatmap({ testID, onDayPress }: ActivityHeatmapProps) {
   const { data: sessions, isLoading } = useSessions();
+  const [containerWidth, setContainerWidth] = useState(0);
 
   const sessionCountByDate = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -75,7 +77,21 @@ export function ActivityHeatmap({ testID, onDayPress }: ActivityHeatmapProps) {
 
   const dateGrid = useMemo(() => generateDateGrid(WEEKS_TO_SHOW), []);
 
-  // Get month labels - only show when month changes and there's room
+  // Calculate cell size based on available width
+  // Available width = container width - padding - day label width
+  // Cell size = (available width - gaps) / number of weeks
+  const cellSize = useMemo(() => {
+    if (containerWidth === 0) return 14; // Default fallback
+    const availableWidth = containerWidth - (CONTAINER_PADDING * 2) - DAY_LABEL_WIDTH;
+    const totalGaps = (WEEKS_TO_SHOW - 1) * CELL_GAP;
+    const calculatedSize = Math.floor((availableWidth - totalGaps) / WEEKS_TO_SHOW);
+    // Clamp between 12 and 28 pixels for reasonable sizing
+    return Math.max(12, Math.min(28, calculatedSize));
+  }, [containerWidth]);
+
+  const columnWidth = cellSize + CELL_GAP;
+
+  // Get month labels - show all month changes
   const monthLabels = useMemo(() => {
     const labels: { month: string; weekIndex: number }[] = [];
     let lastMonth = '';
@@ -83,8 +99,6 @@ export function ActivityHeatmap({ testID, onDayPress }: ActivityHeatmapProps) {
     dateGrid.forEach((week, weekIndex) => {
       const month = week[0].month;
       if (month !== lastMonth) {
-        // Only add if there's at least 2 weeks before next month change
-        // to prevent crowding
         labels.push({ month, weekIndex });
         lastMonth = month;
       }
@@ -92,6 +106,10 @@ export function ActivityHeatmap({ testID, onDayPress }: ActivityHeatmapProps) {
 
     return labels;
   }, [dateGrid]);
+
+  const handleLayout = (event: LayoutChangeEvent) => {
+    setContainerWidth(event.nativeEvent.layout.width);
+  };
 
   if (isLoading) {
     return (
@@ -104,80 +122,74 @@ export function ActivityHeatmap({ testID, onDayPress }: ActivityHeatmapProps) {
   }
 
   const today = new Date().toISOString().split('T')[0];
-  const columnWidth = CELL_SIZE + CELL_GAP;
 
   return (
-    <View testID={testID} className="bg-white rounded-xl p-4 border border-gray-100">
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingRight: 8 }}
-      >
-        <View>
-          {/* Month labels row */}
-          <View
-            className="flex-row mb-2"
-            style={{ marginLeft: DAY_LABEL_WIDTH, height: 16 }}
-          >
-            {monthLabels.map(({ month, weekIndex }, idx) => (
-              <Text
-                key={`${month}-${idx}`}
-                className="text-xs text-gray-500 absolute"
-                style={{
-                  left: weekIndex * columnWidth,
-                }}
+    <View testID={testID} className="bg-white rounded-xl p-4 border border-gray-100" onLayout={handleLayout}>
+      <View>
+        {/* Month labels row */}
+        <View
+          className="flex-row mb-2"
+          style={{ marginLeft: DAY_LABEL_WIDTH, height: 16, position: 'relative' }}
+        >
+          {monthLabels.map(({ month, weekIndex }, idx) => (
+            <Text
+              key={`${month}-${idx}`}
+              className="text-xs text-gray-500"
+              style={{
+                position: 'absolute',
+                left: weekIndex * columnWidth,
+              }}
+            >
+              {month}
+            </Text>
+          ))}
+        </View>
+
+        {/* Grid with day labels */}
+        <View className="flex-row">
+          {/* Day labels column */}
+          <View style={{ width: DAY_LABEL_WIDTH }}>
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((label, index) => (
+              <View
+                key={label}
+                style={{ height: cellSize + CELL_GAP }}
+                className="justify-center"
               >
-                {month}
-              </Text>
+                {index % 2 === 1 && (
+                  <Text className="text-xs text-gray-400">{label}</Text>
+                )}
+              </View>
             ))}
           </View>
 
-          {/* Grid with day labels */}
+          {/* Weeks grid */}
           <View className="flex-row">
-            {/* Day labels column */}
-            <View style={{ width: DAY_LABEL_WIDTH }}>
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((label, index) => (
-                <View
-                  key={label}
-                  style={{ height: CELL_SIZE + CELL_GAP }}
-                  className="justify-center"
-                >
-                  {index % 2 === 1 && (
-                    <Text className="text-xs text-gray-400">{label}</Text>
-                  )}
-                </View>
-              ))}
-            </View>
+            {dateGrid.map((week, weekIndex) => (
+              <View key={weekIndex} style={{ marginRight: CELL_GAP }}>
+                {week.map(({ date }) => {
+                  const count = sessionCountByDate[date] || 0;
+                  const isFuture = date > today;
 
-            {/* Weeks grid */}
-            <View className="flex-row">
-              {dateGrid.map((week, weekIndex) => (
-                <View key={weekIndex} style={{ marginRight: CELL_GAP }}>
-                  {week.map(({ date }) => {
-                    const count = sessionCountByDate[date] || 0;
-                    const isFuture = date > today;
-
-                    return (
-                      <Pressable
-                        key={date}
-                        testID={date === today ? 'heatmap-cell-today' : undefined}
-                        onPress={() => !isFuture && onDayPress?.(date, count)}
-                        style={{
-                          width: CELL_SIZE,
-                          height: CELL_SIZE,
-                          marginBottom: CELL_GAP,
-                          borderRadius: 3,
-                        }}
-                        className={isFuture ? 'bg-gray-100' : getIntensityColor(count)}
-                      />
-                    );
-                  })}
-                </View>
-              ))}
-            </View>
+                  return (
+                    <Pressable
+                      key={date}
+                      testID={date === today ? 'heatmap-cell-today' : undefined}
+                      onPress={() => !isFuture && onDayPress?.(date, count)}
+                      style={{
+                        width: cellSize,
+                        height: cellSize,
+                        marginBottom: CELL_GAP,
+                        borderRadius: 3,
+                      }}
+                      className={isFuture ? 'bg-gray-100' : getIntensityColor(count)}
+                    />
+                  );
+                })}
+              </View>
+            ))}
           </View>
         </View>
-      </ScrollView>
+      </View>
 
       {/* Legend */}
       <View className="flex-row items-center justify-end mt-3 gap-1">
