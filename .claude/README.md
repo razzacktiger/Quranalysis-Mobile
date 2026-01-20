@@ -48,3 +48,18 @@
 | /create-epic | Convert spec to epic |
 | /improve-workflow | Analyze and improve workflow |
 | /refactor-check | Scan for code quality issues |
+
+## Common Workflows
+
+| Workflow | Guide | When to Use |
+|----------|-------|-------------|
+| **Revise Epic** | [guides/epic-revision-workflow.md](guides/epic-revision-workflow.md) | Reconsider technologies, restructure epic |
+| **New Feature** | /research-tech → /spec-feature → /create-epic | Planning from scratch |
+| **Continue Work** | /start-epic → /next-task (repeat) → /end-session | Daily development |
+
+### Loading a Workflow
+
+In a new session after `/clear`:
+```
+Read guides/epic-revision-workflow.md and help me revise EPIC-4
+```
