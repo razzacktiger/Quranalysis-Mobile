@@ -1,0 +1,127 @@
+# Dashboard Main Screen E2E Test
+# Run with: maestro test tests/e2e/dashboard/main.yaml
+#
+# Prerequisites:
+# - User must be logged in before running this test
+# - Expo dev server must be running (npx expo start)
+# - Supabase backend must be accessible for data
+#
+# Bundle IDs:
+# - Development build: com.quranalysis.mobile
+# - Expo Go: host.exp.Exponent (currently used for testing)
+appId: host.exp.Exponent
+name: Dashboard - Main Screen
+---
+# Launch Expo Go without clearing state to preserve login
+- launchApp:
+    clearState: false
+
+# Wait for Expo Go to be ready
+- extendedWaitUntil:
+    visible: "Quranalysis|Welcome"
+    timeout: 15000
+
+# Tap on Quranalysis project to load it (if on Expo Go home)
+- runFlow:
+    when:
+      visible: "Quranalysis"
+    commands:
+      - tapOn: "Quranalysis"
+
+# Wait for Dashboard to load - look for Welcome text
+- extendedWaitUntil:
+    visible: "Welcome"
+    timeout: 30000
+
+# Small delay to let UI stabilize
+- waitForAnimationToEnd
+
+# ===== Verify Dashboard Screen =====
+- assertVisible:
+    id: "dashboard-screen"
+
+# Verify welcome header is visible
+- assertVisible:
+    id: "dashboard-welcome"
+
+# ===== Verify Stats Grid =====
+- assertVisible:
+    id: "stats-grid"
+
+# Check individual stat cards
+- assertVisible:
+    id: "stat-total-sessions"
+- assertVisible:
+    id: "stat-avg-performance"
+
+# Scroll to see more stats
+- scroll
+
+- assertVisible:
+    id: "stat-total-mistakes"
+- assertVisible:
+    id: "stat-streak"
+
+# ===== Verify Recent Sessions Section =====
+- assertVisible: "Recent Sessions"
+
+# Check for recent sessions list OR empty state
+- extendedWaitUntil:
+    visible:
+      id: "recent-sessions-list|recent-sessions-empty|recent-sessions-loading"
+    timeout: 5000
+
+# ===== Test View All Navigation (if sessions exist) =====
+- runFlow:
+    when:
+      visible:
+        id: "view-all-sessions"
+    commands:
+      - tapOn:
+          id: "view-all-sessions"
+      # Verify we navigated to Sessions screen
+      - extendedWaitUntil:
+          visible: "Sessions"
+          timeout: 5000
+      # Navigate back to Dashboard tab
+      - tapOn:
+          point: "12%,96%"
+      # Verify we're back on Dashboard
+      - extendedWaitUntil:
+          visible: "Welcome"
+          timeout: 5000
+
+# ===== Test Add First Session (if empty state) =====
+- runFlow:
+    when:
+      visible:
+        id: "add-first-session"
+    commands:
+      - tapOn:
+          id: "add-first-session"
+      # Verify we navigated to Add Session screen
+      - extendedWaitUntil:
+          visible: "New Session|Add Session"
+          timeout: 5000
+      # Navigate back to Dashboard tab
+      - tapOn:
+          point: "12%,96%"
+      - extendedWaitUntil:
+          visible: "Welcome"
+          timeout: 5000
+
+# ===== Test Pull to Refresh =====
+# Swipe down to trigger refresh
+- swipe:
+    direction: DOWN
+    duration: 500
+
+# Wait for refresh to complete
+- waitForAnimationToEnd
+
+# Dashboard should still be visible
+- assertVisible: "Welcome"
+
+# ===== Final Verification =====
+- assertVisible:
+    id: "dashboard-screen"
