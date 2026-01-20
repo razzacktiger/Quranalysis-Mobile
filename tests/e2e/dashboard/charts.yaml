@@ -1,0 +1,96 @@
+# Dashboard Charts E2E Test
+# Run with: maestro test tests/e2e/dashboard/charts.yaml
+#
+# Prerequisites:
+# - User must be logged in before running this test
+# - Expo dev server must be running (npx expo start)
+# - Supabase backend must be accessible for data
+#
+# Bundle IDs:
+# - Development build: com.quranalysis.mobile
+# - Expo Go: host.exp.Exponent (currently used for testing)
+appId: host.exp.Exponent
+name: Dashboard - Charts Render
+---
+# Launch Expo Go without clearing state to preserve login
+- launchApp:
+    clearState: false
+
+# Wait for Expo Go to be ready
+- extendedWaitUntil:
+    visible: "Quranalysis|Welcome"
+    timeout: 15000
+
+# Tap on Quranalysis project to load it (if on Expo Go home)
+- runFlow:
+    when:
+      visible: "Quranalysis"
+    commands:
+      - tapOn: "Quranalysis"
+
+# Wait for Dashboard to load - look for Welcome text
+- extendedWaitUntil:
+    visible: "Welcome"
+    timeout: 30000
+
+# Small delay to let UI stabilize
+- waitForAnimationToEnd
+
+# ===== Verify Dashboard Screen =====
+- assertVisible:
+    id: "dashboard-screen"
+
+# Verify welcome header is visible
+- assertVisible:
+    id: "dashboard-welcome"
+
+# ===== Verify Stats Grid =====
+- assertVisible:
+    id: "stats-grid"
+
+# ===== Verify Activity Heatmap =====
+# Scroll down to ensure heatmap is visible
+- scroll
+
+- assertVisible:
+    id: "activity-heatmap"
+
+# Test heatmap cell interaction (if today's cell is visible)
+- runFlow:
+    when:
+      visible:
+        id: "heatmap-cell-today"
+    commands:
+      - tapOn:
+          id: "heatmap-cell-today"
+      # Cell tap doesn't show modal yet, just verify tap works
+
+# ===== Verify Performance Chart =====
+- scroll
+
+- assertVisible:
+    id: "performance-chart"
+
+# Test filter chips interaction
+- runFlow:
+    when:
+      visible:
+        id: "filter-all"
+    commands:
+      - tapOn:
+          id: "filter-all"
+
+# ===== Verify Mistake Chart =====
+- scroll
+
+- assertVisible:
+    id: "mistake-chart"
+
+# ===== Final Verification =====
+# Scroll back to top
+- swipe:
+    direction: DOWN
+    duration: 500
+
+# Dashboard should still be visible
+- assertVisible: "Welcome"
