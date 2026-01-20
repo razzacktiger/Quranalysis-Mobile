@@ -2,7 +2,7 @@
 
 **Current Epic:** EPIC-3-DASHBOARD
 **Started:** 2025-01-17
-**Last Updated:** 2025-01-17
+**Last Updated:** 2025-01-19
 
 ---
 
@@ -13,7 +13,7 @@
 | EPIC-0: Setup | ✅ Complete | 9/9 |
 | EPIC-1: Auth | ✅ Complete | 8/8 |
 | EPIC-2: Sessions | ✅ Complete | 21/21 |
-| EPIC-3: Dashboard | 🟡 In Progress | 5/10 |
+| EPIC-3: Dashboard | 🟡 In Progress | 7/10 |
 | EPIC-4: AI Chat | ⬜ Not Started | 0/12 |
 | EPIC-5: Profile | ⬜ Not Started | 0/5 |
 
@@ -28,8 +28,8 @@
 | 3.2.1 | Create Stat Card Component | S | ✅ | typecheck | Icon, label, value, trend |
 | 3.2.2 | Create Stats Grid | M | ✅ | typecheck | 2x2 layout + loading state |
 | 3.3.1 | Create Activity Heatmap | L | ✅ | typecheck | Custom Views, 12 weeks |
-| 3.3.2 | Create Performance Chart | M | ⬜ | - | Line chart |
-| 3.3.3 | Create Mistake Analysis Chart | M | ⬜ | - | Bar/pie chart |
+| 3.3.2 | Create Performance Chart | M | ✅ | typecheck | SVG line chart + filter chips |
+| 3.3.3 | Create Mistake Analysis Chart | M | ✅ | typecheck | Horizontal bar chart |
 | 3.3.4 | E2E Test - Charts | S | ⬜ | - | Maestro |
 | 3.4.1 | Create Dashboard Screen | L | 🟡 | typecheck | StatsGrid + placeholders |
 | 3.4.2 | E2E Test - Dashboard | M | ⬜ | - | Maestro |
@@ -127,17 +127,17 @@
 ## Metrics
 
 ### Completed This Session (EPIC-3)
-- Tasks: 5
-- Bug fixes: 2 (heatmap labels, session datetime)
-- Files Created: 6 (stats.ts, stats.test.ts, useStats.ts, StatCard.tsx, StatsGrid.tsx, ActivityHeatmap.tsx)
-- Files Modified: 6 (lib/utils/index.ts, lib/hooks/index.ts, components/analytics/index.ts, app/(tabs)/index.tsx, SessionForm.tsx, edit/[id].tsx)
+- Tasks: 7
+- Bug fixes: 4 (heatmap labels, session datetime, stats layout stability, heatmap width)
+- Files Created: 8 (stats.ts, stats.test.ts, useStats.ts, StatCard.tsx, StatsGrid.tsx, ActivityHeatmap.tsx, PerformanceChart.tsx, MistakeChart.tsx)
+- Files Modified: 8 (lib/utils/index.ts, lib/hooks/index.ts, components/analytics/index.ts, app/(tabs)/index.tsx, SessionForm.tsx, edit/[id].tsx, package.json, package-lock.json)
 
 ### Cumulative
-- Tasks Completed: 43
+- Tasks Completed: 45
 - EPIC-0: 9 tasks ✅
 - EPIC-1: 8 tasks ✅
 - EPIC-2: 21 tasks ✅
-- EPIC-3: 5 tasks
+- EPIC-3: 7 tasks
 
 ---
 
