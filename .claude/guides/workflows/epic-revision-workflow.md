@@ -24,7 +24,11 @@ How to reconsider technologies, frameworks, or implementation approach for an ex
 # OR for major restructure:
 /create-epic new N-name
 
-# 4. Begin implementation
+# ⚠️ 4. CLEAR CONTEXT (required before implementation)
+/clear
+# OR: End session and start a new one
+
+# 5. Begin implementation (in fresh context)
 /start-epic N-name
 ```
 
@@ -173,9 +177,38 @@ or for major restructure:
 
 ---
 
+## ⚠️ Context Boundary (Required)
+
+**Before starting implementation, you MUST either:**
+
+### Option A: Clear Current Context
+```
+/clear
+```
+Then continue in the same session with fresh context.
+
+### Option B: Start a New Agent Session
+End the current session and start a new Claude Code session.
+
+### Why This Matters
+- Research and planning phases consume significant context
+- Implementation benefits from fresh context focused on the task
+- Epic/feature files preserve all decisions—no information is lost
+- A clean context produces better code quality
+
+### What's Preserved (Read by `/start-epic`)
+- `epics/active/EPIC-N-*/README.md` — Epic overview and goals
+- `epics/active/EPIC-N-*/FEATURE-*.md` — Feature specifications
+- `epics/active/EPIC-N-*/TASKS.md` — Task breakdown with sizing
+- `specs/RESEARCH-*.md` — Technology decisions
+- `specs/FEATURE-*.md` — Feature specifications
+- `status/CURRENT.md` — Current status tracking
+
+---
+
 ## Phase 4: Start Implementation (`/start-epic`)
 
-**Run when ready to implement:**
+**Run after clearing context or in a new session:**
 ```
 /start-epic 4-ai-chat
 ```
@@ -241,8 +274,15 @@ This epic has:
 └──────────────────────────────────────────────────────┘
                          │
                          ▼
+╔══════════════════════════════════════════════════════╗
+║  ⚠️  CONTEXT BOUNDARY                                ║
+║  /clear OR new session                               ║
+║  All decisions preserved in epic/spec files          ║
+╚══════════════════════════════════════════════════════╝
+                         │
+                         ▼
 ┌──────────────────────────────────────────────────────┐
-│  /start-epic N-name                                  │
+│  /start-epic N-name  (fresh context)                 │
 │  Creates: Branch, session tracking                   │
 └──────────────────────────────────────────────────────┘
                          │
@@ -281,7 +321,10 @@ This epic has:
 # Update the epic
 /create-epic add-to EPIC-4
 
-# Start fresh implementation
+# ⚠️ CLEAR CONTEXT before implementation
+/clear
+
+# Start implementation (now in fresh context)
 /start-epic 4-ai-chat
 ```
 
