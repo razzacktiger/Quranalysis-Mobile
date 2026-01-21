@@ -1,3 +1,7 @@
+// CRITICAL: Must import polyfills before any other imports
+// - polyfills.ts adds AbortSignal.any for Firebase AI SDK (not available in React Native)
+// - react-native-get-random-values needed for uuid/crypto
+import '@/lib/polyfills';
 import 'react-native-get-random-values';
 import '../global.css';
 

@@ -2,10 +2,10 @@
 
 ## Active
 - **Epic:** EPIC-4-AI-CHAT
-- **Feature:** -
-- **Task:** -
+- **Feature:** 4.1 - AI Integration
+- **Task:** 4.1.2 - Session Extraction Prompt
 - **Branch:** epic-4-ai-chat
-- **Session Started:** -
+- **Session Started:** 2026-01-21
 
 ## Blockers
 - None
@@ -21,7 +21,7 @@
 | EPIC-1: Auth | Archived | 8/8 |
 | EPIC-2: Sessions | Archived | 21/21 |
 | EPIC-3: Dashboard | Archived | 10/10 |
-| EPIC-4: AI Chat | Not Started | 0/12 |
+| EPIC-4: AI Chat | In Progress | 1/12 |
 | EPIC-5: Profile | Not Started | 0/5 |
 
 ## Notes

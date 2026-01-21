@@ -63,3 +63,29 @@ function getIntensityColor(count: number): string {
 // Then use: <View className={`w-2.5 h-2.5 rounded-sm ${getIntensityColor(count)}`} />
 ```
 **Prevention:** Before adding a chart library, consider if the visualization can be built with styled Views
+
+## Firebase AI SDK fails with AbortSignal.any error
+
+**Symptom:** `AbortSignal.any is not a function (it is undefined)` error when calling Firebase AI/Gemini
+**Cause:** React Native doesn't include the AbortSignal.any Web API (added in newer browsers)
+**Fix:** Create a polyfill and import it at app entry point:
+```typescript
+// lib/polyfills.ts
+if (typeof AbortSignal !== 'undefined' && !AbortSignal.any) {
+  AbortSignal.any = function (signals: AbortSignal[]): AbortSignal {
+    const controller = new AbortController();
+    for (const signal of signals) {
+      if (signal.aborted) {
+        controller.abort(signal.reason);
+        return controller.signal;
+      }
+      signal.addEventListener('abort', () => controller.abort(signal.reason), { once: true });
+    }
+    return controller.signal;
+  };
+}
+
+// At very top of app/_layout.tsx (before any Firebase imports)
+import '@/lib/polyfills';
+```
+**Prevention:** When using Firebase AI SDK in React Native, always add the AbortSignal.any polyfill
