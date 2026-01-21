@@ -4,12 +4,12 @@
 
 | Stage | Bugs Found | Avg Fix Cost | % of Total |
 |-------|------------|--------------|------------|
-| Self-caught (impl) | - | ~1.2k | - |
-| TypeScript | - | ~0.5k | - |
-| code-reviewer | - | ~1.8k | - |
-| Jest tests | - | ~1.5k | - |
-| E2E tests | - | ~2.8k | - |
-| Human QA | - | ~8k | - |
+| Self-caught (impl) | 0 | ~1.2k | 0% |
+| TypeScript | 0 | ~0.5k | 0% |
+| code-reviewer | 4 | ~1.8k | 100% |
+| Jest tests | 0 | ~1.5k | 0% |
+| E2E tests | 0 | ~2.8k | 0% |
+| Human QA | 0 | ~8k | 0% |
 
 ## Cost Analysis
 

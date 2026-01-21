@@ -4,7 +4,7 @@ Last 20 tasks with full breakdown.
 
 | Date | Task | Epic | Size | Type | Input | Output | Total | Turns | Tools | Agent | Notes |
 |------|------|------|------|------|-------|--------|-------|-------|-------|-------|-------|
-| - | - | - | - | - | - | - | - | - | - | - | Tracking starts with v2.0 |
+| 01-21 | 4.1.1 | 4 | M | API | 12k | 3k | 15k | 12 | 35 | code-reviewer | Firebase AI setup, polyfill needed |
 
 ## Summary Stats
 - Average: -

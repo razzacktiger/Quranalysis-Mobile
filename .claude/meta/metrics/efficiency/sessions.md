@@ -4,7 +4,7 @@
 
 | Date | Epic | Tasks | Tokens | Context% | Turns | Duration | Notes |
 |------|------|-------|--------|----------|-------|----------|-------|
-| - | - | - | - | - | - | - | Tracking starts with v2.0 |
+| 01-21 | 4 | 1 | 15k | ~25% | 12 | ~45m | Setup session, Firebase config + user account setup time |
 
 ## Session Averages
 
