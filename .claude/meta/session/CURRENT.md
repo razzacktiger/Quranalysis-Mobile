@@ -22,4 +22,4 @@ _None_
 ## Files Read This Session
 
 ## Notes
-
+- Bug logged: BUG-2.1 - Invalid ayah range accepted when adding session portions (Severity: 2)
