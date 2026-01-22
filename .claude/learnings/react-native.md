@@ -65,3 +65,18 @@ const cellSize = useMemo(() => {
 <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}>
 ```
 **Prevention:** For grids/heatmaps that should fill available space, use dynamic sizing based on container width rather than fixed cell sizes
+
+## ES2023 Array methods not available in Hermes
+
+**Symptom:** Runtime crash `TypeError: array.findLastIndex is not a function`
+**Cause:** `Array.prototype.findLastIndex()` is ES2023 and may not be available in all React Native JavaScript engines (Hermes on older devices)
+**Fix:** Create a polyfill helper:
+```typescript
+function findLastIndex<T>(array: T[], predicate: (item: T) => boolean): number {
+  for (let i = array.length - 1; i >= 0; i--) {
+    if (predicate(array[i])) return i;
+  }
+  return -1;
+}
+```
+**Prevention:** Avoid ES2023+ array methods (`findLastIndex`, `toSorted`, `toReversed`) in React Native code. Use manual implementations or lodash equivalents

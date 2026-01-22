@@ -35,11 +35,13 @@
 Use `date-fns` `formatDistanceToNow` for relative time ("2 min ago")
 
 ### Acceptance
-- [ ] User bubbles right-aligned, blue
-- [ ] AI bubbles left-aligned, gray
-- [ ] ExtractionPreview shows data summary
-- [ ] LoadingMessage with spinner
-- [ ] Timestamps in relative format
+- [x] User bubbles right-aligned, blue
+- [x] AI bubbles left-aligned, gray
+- [x] ExtractionPreview shows data summary
+- [x] LoadingMessage with spinner
+- [x] Timestamps in relative format
+
+**Status:** ✅ Complete
 
 ---
 
@@ -101,12 +103,14 @@ What would you like to log?
 6. Update ExtractionSummary
 
 ### Acceptance
-- [ ] Modal opens with slide animation
-- [ ] Initial greeting displayed
-- [ ] Messages auto-scroll to bottom
-- [ ] Quick action chips work
-- [ ] Keyboard stays above input
-- [ ] ExtractionSummary updates on new extractions
+- [x] Modal opens with slide animation
+- [x] Initial greeting displayed
+- [x] Messages auto-scroll to bottom
+- [x] Quick action chips work
+- [x] Keyboard stays above input
+- [x] ExtractionSummary updates on new extractions
+
+**Status:** ✅ Complete
 
 ---
 
@@ -186,12 +190,14 @@ What would you like to log?
 6. On error: show error message
 
 ### Acceptance
-- [ ] All extracted data displayed
-- [ ] Fields editable with appropriate input type
-- [ ] Portions and mistakes can be removed
-- [ ] "Add More" returns to chat
-- [ ] Save creates session with all data
-- [ ] Loading/error states handled
+- [x] All extracted data displayed
+- [x] Fields editable with appropriate input type
+- [x] Portions and mistakes can be removed
+- [x] "Add More" returns to chat
+- [x] Save creates session with all data
+- [x] Loading/error states handled
+
+**Status:** ✅ Complete
 
 ---
 
@@ -231,10 +237,12 @@ elevation: 8 (Android)
 - Handle flow: Chat → Confirmation → Success
 
 ### Acceptance
-- [ ] Button visible on all tab screens
-- [ ] Positioned above tab bar
-- [ ] Opens ChatModal on tap
-- [ ] Shadow and bounce animation work
+- [x] Button visible on all tab screens
+- [x] Positioned above tab bar
+- [x] Opens ChatModal on tap
+- [x] Shadow and bounce animation work
+
+**Status:** ✅ Complete
 
 ---
 

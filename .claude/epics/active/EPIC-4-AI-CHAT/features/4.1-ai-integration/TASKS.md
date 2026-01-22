@@ -307,8 +307,10 @@ error: string | null
 - Allow retry on failure
 
 ### Acceptance
-- [ ] Messages track full conversation
-- [ ] Extractions validated with Zod
-- [ ] Data accumulates across turns
-- [ ] `isReadyToSave` correctly computed
-- [ ] Error states handled gracefully
+- [x] Messages track full conversation
+- [x] Extractions validated with Zod
+- [x] Data accumulates across turns
+- [x] `isReadyToSave` correctly computed
+- [x] Error states handled gracefully
+
+**Status:** ✅ Complete
