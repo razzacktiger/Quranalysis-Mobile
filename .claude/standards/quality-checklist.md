@@ -106,6 +106,35 @@ npx expo start --ios  # Visual verification
 maestro test tests/e2e/relevant-test.yaml  # E2E verification
 ```
 
+## Feature Completion - Bug Gate
+
+**A feature CANNOT be marked complete if it has open blocking bugs.**
+
+### Blocking Bug Severities
+| Severity | Blocks Completion | Example |
+|----------|-------------------|---------|
+| 1 - Critical | YES | Crash, data loss, security |
+| 2 - High | YES | Feature broken, can't complete flow |
+| 3 - Medium | NO | Degraded but usable |
+| 4 - Low | NO | Cosmetic, minor issues |
+
+### Before Marking Feature Complete
+```bash
+# Check for blocking bugs
+cat .claude/epics/active/EPIC-X-NAME/features/X.X-name/BUGS.md | grep -E "Severity: (1|2).*Open"
+```
+
+If blocking bugs exist:
+1. Fix them using `/fix-bug X.X`
+2. Or demote severity if the bug is actually less severe
+3. Cannot proceed until blocking bugs are resolved
+
+### Non-Blocking Bugs
+Bugs with severity 3-4 can be fixed after feature completion:
+- Log them with `/add-bug` for tracking
+- Fix them during dedicated bug-fixing sessions (`/start-epic X --bugs`)
+- Or fix opportunistically when working in related code
+
 ## Pre-Epic-Completion Bug Sweep
 
 Before marking an epic complete:
@@ -115,5 +144,6 @@ Before marking an epic complete:
 3. Verify all form inputs have proper validation
 4. Check error states and edge cases
 5. Review any "TODO" comments added during development
-6. Fix all High/Medium bugs discovered
-7. Document Low bugs in Bugs Epic if deferring
+6. **Check all features for blocking bugs** - use `/start-epic X --bugs` to see summary
+7. Fix all Critical/High bugs
+8. Document Medium/Low bugs in BUGS.md if deferring

@@ -33,7 +33,15 @@
     },
     "plugins": [
       "expo-router",
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      "@react-native-firebase/app",
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Allow Quranalysis to use the microphone for voice input.",
+          "speechRecognitionPermission": "Allow Quranalysis to use speech recognition for session logging."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

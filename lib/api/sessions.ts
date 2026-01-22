@@ -91,7 +91,7 @@ export async function createSession(formData: SessionFormData): Promise<SessionW
     ayah_start: p.ayah_start ?? 1,
     ayah_end: p.ayah_end ?? 1,
     juz_number: p.juz_number ?? 1,
-    pages_read: p.pages_read ?? 0,
+    pages_read: p.pages_read ?? 1, // DB constraint requires >= 1
     repetition_count: p.repetition_count,
     recency_category: p.recency_category,
   }));
@@ -208,7 +208,7 @@ export async function updateSession(
       ayah_start: portion.ayah_start ?? 1,
       ayah_end: portion.ayah_end ?? 1,
       juz_number: portion.juz_number ?? 1,
-      pages_read: portion.pages_read ?? 0,
+      pages_read: portion.pages_read ?? 1, // DB constraint requires >= 1
       repetition_count: portion.repetition_count,
       recency_category: portion.recency_category,
     };

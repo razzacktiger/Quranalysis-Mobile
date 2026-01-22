@@ -9,6 +9,10 @@ Begin work on an epic with proper setup and context loading.
 ## Input
 $ARGUMENTS = epic identifier (e.g., "4-ai-chat")
 
+**Optional flags:**
+- `--bugs` or `bugs` - Start bug-fixing mode instead of tasks
+- `--severity N` - Filter bugs by severity (1-4) in bug mode
+
 ## Step 1: Read Current State
 Read `status/CURRENT.md` to understand current progress.
 
@@ -30,9 +34,35 @@ git pull origin main
 git checkout -b epic-$ARGUMENTS
 ```
 
-## Step 5: Identify First Task
+## Step 5: Identify First Task (or Bug)
+
+### Normal Mode (Tasks):
 Find the first incomplete task in the epic's feature files.
-Read the relevant FEATURE-*.md file.
+Read the relevant TASKS.md file.
+
+### Bug Mode (`--bugs` flag):
+Instead of tasks, scan all feature folders for BUGS.md files:
+
+1. For each feature in the epic, check for `features/X.X-name/BUGS.md`
+2. Collect all open bugs across features
+3. Sort by severity (1 first) then by feature ID
+
+Display bug summary:
+```
+## EPIC-X Bug Summary
+
+| Feature | Open Bugs | Blocking | Non-blocking |
+|---------|-----------|----------|--------------|
+| 4.1 | 2 | 1 | 1 |
+| 4.2 | 3 | 2 | 1 |
+| 4.3 | 0 | 0 | 0 |
+
+Total: 5 open bugs (3 blocking)
+
+Highest priority: BUG-4.2.1 (Critical) - Modal crash
+```
+
+Then use `/fix-bug` workflow for the highest priority bug.
 
 ## Step 6: Plan Agent Usage
 Review all tasks in epic and note:
@@ -86,20 +116,35 @@ Update `status/CURRENT.md`:
 - Set branch name
 
 ## Step 9: Report
+
+### Normal Mode:
 Tell the user:
 - Epic name and goal
 - Branch created
 - First task ID and brief description
 - Agent usage plan
 - Any relevant learnings found
+- **Bug summary:** "X open bugs across features (Y blocking)" if any bugs exist
 
 Then ask: "Ready to begin Task X.X.X?"
+
+### Bug Mode:
+Tell the user:
+- Epic name
+- Branch status
+- Bug summary table (by feature)
+- Highest priority bug details
+- Files involved
+
+Then ask: "Ready to fix BUG-X.X.X?"
 
 ## Standards
 Follow `.claude/standards/` for all implementation.
 Load only relevant standard files based on task type.
 
 ## Example Usage
+
+### Normal Mode
 ```
 User: /start-epic 4-ai-chat
 Agent: *Creates branch, reads epic, initializes session*
@@ -112,5 +157,27 @@ Agent: "Starting EPIC-4: AI Chatbot
        - 0 TDD tasks
        - 2 research tasks (4.1.1, 4.3.1)
 
+       Bug summary: 3 open bugs (2 blocking)
+
        Ready to begin Task 4.1.1?"
+```
+
+### Bug Mode
+```
+User: /start-epic 4-ai-chat --bugs
+Agent: *Reads epic, scans for BUGS.md files*
+Agent: "EPIC-4: AI Chatbot - Bug Fixing Mode
+
+       | Feature | Open | Blocking |
+       |---------|------|----------|
+       | 4.1 | 1 | 0 |
+       | 4.2 | 2 | 2 |
+
+       Total: 3 open bugs (2 blocking)
+
+       Highest priority:
+       BUG-4.2.1 (Critical): Modal crash on rapid close
+       Files: components/ai/ChatModal.tsx
+
+       Ready to fix BUG-4.2.1?"
 ```

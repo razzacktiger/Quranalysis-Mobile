@@ -4,19 +4,19 @@
 
 | Agent | Invocations | Avg Tokens | Total Cost | Value Score |
 |-------|-------------|------------|------------|-------------|
-| code-reviewer | - | ~2.1k | - | - |
-| code-explorer | - | ~3.8k | - | - |
-| code-architect | - | ~2.9k | - | - |
-| frontend-design | - | ~4.2k | - | - |
+| code-reviewer | 1 | ~2.1k | 2.1k | High (4 bugs) |
+| code-explorer | 0 | ~3.8k | 0 | - |
+| code-architect | 0 | ~2.9k | 0 | - |
+| frontend-design | 0 | ~4.2k | 0 | - |
 
 ## ROI Analysis
 
 ### code-reviewer
-- **Investment:** - tokens
-- **Bugs caught:** -
-- **Cost if found at QA:** - (8k per bug)
-- **Net savings:** -
-- **Quality benefit:** -
+- **Investment:** 2.1k tokens
+- **Bugs caught:** 4
+- **Cost if found at QA:** 32k (8k per bug)
+- **Net savings:** ~29.9k tokens
+- **Quality benefit:** Caught missing error handling, config validation, code duplication, missing docs
 - **Verdict:** Essential for M/L/XL tasks
 
 ### code-explorer
