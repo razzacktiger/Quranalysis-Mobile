@@ -89,3 +89,15 @@ if (typeof AbortSignal !== 'undefined' && !AbortSignal.any) {
 import '@/lib/polyfills';
 ```
 **Prevention:** When using Firebase AI SDK in React Native, always add the AbortSignal.any polyfill
+
+## Workflow: Skipping /complete-task after implementation
+
+**Symptom:** Metrics not tracked, code review skipped, commits inconsistent
+**Cause:** After implementing a task and getting user approval, jumping directly to `/next-task` instead of running `/complete-task`
+**Fix:** Follow the proper workflow sequence:
+1. Implement task
+2. Present results for user approval
+3. **Prompt user:** "Shall I commit this? Run `/complete-task` when ready."
+4. User runs `/complete-task` (code review, commit, metrics, status updates)
+5. Then user runs `/next-task`
+**Prevention:** After presenting implementation results, ALWAYS end with prompting the user to run `/complete-task`. Never suggest `/next-task` until `/complete-task` has been executed
