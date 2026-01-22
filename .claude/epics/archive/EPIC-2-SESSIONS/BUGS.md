@@ -28,7 +28,7 @@ _No open bugs._
 
 **Severity:** 2 (High) | **Status:** Fixed
 **Found In:** Manual testing | **Found Date:** 2026-01-22
-**Fixed Date:** 2026-01-22 | **Fixed In:** bugfixes branch
+**Fixed Date:** 2026-01-22 | **Fixed In:** aac44e3
 **Files:** `lib/validation/session.ts`, `lib/api/sessions.ts`, `components/forms/PortionForm.tsx`, `components/ai/PortionCard.tsx`
 
 ### Description
