@@ -250,12 +250,14 @@ confidence: "high" | "medium" | "low"
 Create `combinedExtractionSchema` that includes both session and mistakes for conversational chat flow.
 
 ### Acceptance
-- [ ] Mistake schema created and exported
-- [ ] Terminology mapping accurate
-- [ ] Severity inferred from language
-- [ ] Multiple mistakes extracted from single message
-- [ ] Mistakes linked to surah from conversation context
-- [ ] Combined schema for chat responses
+- [x] Mistake schema created and exported
+- [x] Terminology mapping accurate
+- [x] Severity inferred from language
+- [x] Multiple mistakes extracted from single message
+- [x] Mistakes linked to surah from conversation context
+- [x] Combined schema for chat responses
+
+**Status:** ✅ Complete
 
 ---
 

@@ -23,12 +23,13 @@
 | meta: agent-system | ~25k | 8 | 45 | - | 1 (missing workflow integration) |
 | 4.1.2 | ~18k | 15 | 25 | prompt-agent | 1 (perf_score schema mismatch) |
 | 4.3.1 | ~3k | 5 | 12 | setup-agent | 0 |
+| 4.1.3 | ~8k | 6 | 10 | direct | 0 |
 
 ## Running Totals
-- Tasks: 3 epic tasks complete, 1 meta task complete
-- Tokens: ~61k (input: ~50k, output: ~11k)
-- Context: ~65%
-- Tool calls: 117
+- Tasks: 4 epic tasks complete, 1 meta task complete
+- Tokens: ~69k (input: ~56k, output: ~13k)
+- Context: ~70%
+- Tool calls: 127
 
 ## Files Read This Session
 - .claude/status/CURRENT.md
