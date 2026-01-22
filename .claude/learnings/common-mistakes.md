@@ -102,6 +102,17 @@ import '@/lib/polyfills';
 5. Then user runs `/next-task`
 **Prevention:** After presenting implementation results, ALWAYS end with prompting the user to run `/complete-task`. Never suggest `/next-task` until `/complete-task` has been executed
 
+## Workflow: Skipping post-completion updates (learnings, session meta)
+
+**Symptom:** Status files stale, learnings not captured, session metrics incomplete
+**Cause:** Focused on code fix and commit, forgot the documentation steps in /complete-task or /fix-bug
+**Example:** BUG-3.1 fix committed but `meta/session/CURRENT.md` not updated, no learning added for date format mismatch
+**Fix:** Both /complete-task and /fix-bug now have MANDATORY Completion Checklist at the end
+**Prevention:**
+- Never report completion to user until checklist is verified
+- The checklist includes: commit, session metrics, status update, learnings capture, bug tracking updates
+- Ask yourself: "Is this root cause reusable knowledge?" - if yes, add to learnings
+
 ## Task ordering: Triggers before content
 
 **Symptom:** User can't verify UI components because there's no way to see them in the app

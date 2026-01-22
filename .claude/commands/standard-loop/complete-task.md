@@ -70,9 +70,19 @@ Add row to "This Session" table:
 | {task_id} | {est_tokens}k | {turns} | {tool_calls} | {agent_used} | {bugs_caught} |
 ```
 
+### Overhead Tracking
+Note: The completion process itself (this checklist) costs ~1-3k tokens.
+Track this in `meta/metrics/tokens/recent-tasks.md` in the "Overhead" column.
+
+**Overhead includes:**
+- Status file updates
+- Session metrics updates
+- Learnings capture
+- Bug tracking updates (if bug)
+
 ### Running Totals
 - Increment tasks completed
-- Update token estimate
+- Update token estimate (include overhead)
 - Note any bugs caught and by whom
 
 ### Files Read
@@ -117,8 +127,8 @@ If you encountered and solved any issues:
 Tell the user:
 - Commit hash
 - Code review results (if ran)
-- Updated metrics
-- Any learnings added
+- Files updated: `meta/session/CURRENT.md`, `status/CURRENT.md`
+- Learnings added (if any, with filename)
 - Any bugs caught (and by whom)
 
 Then suggest: "Ready for the next task? Use `/next-task`"
@@ -127,7 +137,12 @@ Then suggest: "Ready for the next task? Use `/next-task`"
 Tell the user:
 - Bug ID and title
 - Commit hash
-- Root cause summary
+- Root cause summary (1 line)
+- Files updated:
+  - `BUGS.md` - moved to Fixed section
+  - `meta/session/CURRENT.md` - added row
+  - `learnings/*.md` - if pattern added (specify file)
+  - Epic README - if removed from blockers
 - Remaining open bugs for this feature (if any)
 - If feature is now unblocked (no more critical/high bugs)
 
@@ -159,3 +174,33 @@ When running code-reviewer, check for:
 - [ ] No console.log statements
 - [ ] Follows existing patterns
 - [ ] No security issues
+
+---
+
+## MANDATORY Completion Checklist
+
+**STOP. Before reporting to user, verify ALL items are done:**
+
+### 1. Commit Created
+- [ ] `git add -A && git commit` executed
+- [ ] Commit message follows convention
+
+### 2. Session Metrics Updated (`meta/session/CURRENT.md`)
+- [ ] Added row to "This Session" table with: task_id, tokens, turns, tools, agent, bugs_caught
+- [ ] Updated "Running Totals" section
+- [ ] Added to "Notes" if significant learnings discovered
+
+### 3. Status Updated (`status/CURRENT.md`)
+- [ ] Task marked complete OR bug section cleared
+- [ ] Next task identified (if applicable)
+
+### 4. Learnings Captured (if root cause found)
+- [ ] **ASK:** "Did I discover a reusable pattern or fix a non-obvious issue?"
+- [ ] If YES: Add to appropriate `learnings/*.md` file with: Symptom, Cause, Fix, Prevention
+- [ ] Common categories: `common-mistakes.md`, `react-native.md`, `typescript.md`
+
+### 5. Bug Tracking (for bugs only)
+- [ ] BUGS.md updated: moved to Fixed section with commit hash
+- [ ] Epic README blockers section updated (if was listed)
+
+**Only report to user after ALL applicable items are checked.**

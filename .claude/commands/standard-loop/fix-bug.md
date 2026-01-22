@@ -164,11 +164,24 @@ When using `/start-epic X-name --bugs` or `/start-epic X-name bugs`:
 - Start with highest severity bug
 - Follow this workflow
 
-## Bug Fix Checklist
+## Bug Fix Checklist (Before Reporting to User)
 
-Before marking fixed:
-- [ ] Root cause identified and addressed
-- [ ] Fix doesn't introduce new issues
-- [ ] Tested reproduction steps no longer reproduce bug
+Verify these before presenting fix to user for approval:
+- [ ] Root cause identified and documented
+- [ ] Fix implemented
+- [ ] `npm run typecheck` passes
+- [ ] Reproduction steps no longer reproduce bug
 - [ ] No console errors
-- [ ] Types still pass
+- [ ] Regression test added (if applicable)
+
+**Then report to user:**
+- What the root cause was
+- What was changed to fix it
+- Files modified
+
+**After user approval:** Prompt them to run `/complete-task` which will:
+- Create the commit
+- Update BUGS.md (move to Fixed, add commit hash)
+- Update epic README (remove from blockers)
+- Update session metrics
+- Capture learnings

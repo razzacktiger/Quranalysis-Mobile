@@ -29,9 +29,21 @@
 
 (Add notable sessions with lessons learned)
 
+## Duration Tracking
+
+**Session-level:** User provides at /end-session (actual wall-clock time)
+
+**Per-task estimate:** Use turns as proxy
+- ~2-3 min per turn for focused work
+- 10 turns ≈ 20-30 min
+- Add 5 min for /complete-task overhead
+
+**Formula:** `duration_minutes ≈ turns * 2.5 + 5`
+
 ## How to Update
 
 At /end-session:
-1. Add row to Recent Sessions
-2. Recalculate averages
-3. Note any lessons learned
+1. Ask user for session duration (or estimate from turns)
+2. Add row to Recent Sessions
+3. Recalculate averages
+4. Note any lessons learned

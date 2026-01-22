@@ -1,13 +1,13 @@
 # Claude Code Workflow - Quranalysis Mobile
 
-**Version:** 2.0.0 | [Changelog](meta/CHANGELOG.md)
+**Version:** 2.1.0 | [Changelog](meta/CHANGELOG.md)
 
 ## Quick Start
 1. `/clear` - Fresh session
-2. `/start-epic N-name` - Begin epic
+2. `/start-epic N-name` - Begin epic (initializes session tracking)
 3. `/next-task` - Continue work
-4. `/complete-task` - Commit with review
-5. `/end-session` - Save state
+4. `/complete-task` - Commit with review + **mandatory checklist** (status, metrics, learnings)
+5. `/end-session` - Archive session + aggregate metrics
 
 ## Directory Index
 
@@ -69,3 +69,40 @@ In a new session after `/clear`:
 ```
 Read guides/epic-revision-workflow.md and help me revise EPIC-4
 ```
+
+## Session Management
+
+**Session = one Claude conversation (until `/clear`)**
+
+| File | Purpose | Lifecycle |
+|------|---------|-----------|
+| `status/CURRENT.md` | Project state (epic, task, progress) | Persists across sessions |
+| `meta/session/CURRENT.md` | Current conversation metrics | Resets on `/end-session` |
+| `meta/session/archive/` | Archived sessions | One file per session |
+
+**Flow:**
+```
+/start-epic → Init CURRENT.md
+    ↓
+Work → Rows added to session table
+    ↓
+/complete-task → Commit + update metrics + capture learnings
+    ↓
+/end-session → Archive to YYYY-MM-DD-N.md → Reset CURRENT.md
+    ↓
+/clear → Ready for next session
+```
+
+## Metrics Tracking
+
+| Metric | Tracked In | Per-Task | Per-Session |
+|--------|------------|----------|-------------|
+| Tokens | recent-tasks.md | ✅ | ✅ |
+| Turns | recent-tasks.md | ✅ | ✅ |
+| Overhead | recent-tasks.md | ✅ | - |
+| Duration | sessions.md | estimate | ✅ (user provides) |
+| Bugs caught | session/CURRENT.md | ✅ | ✅ |
+
+**Overhead:** The "completion tax" - tokens spent on /complete-task checklist (~1-3k)
+
+**Duration estimate:** `turns * 2.5 + 5 min`

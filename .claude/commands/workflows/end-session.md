@@ -25,8 +25,34 @@ If yes:
 
 If no: Continue
 
-## Step 3: Finalize Metrics
-From `meta/session/CURRENT.md`, aggregate to metrics files:
+## Step 3: Archive Session
+Archive the current session before aggregating:
+
+```bash
+# Create archive directory if needed
+mkdir -p .claude/meta/session/archive
+
+# Generate filename: YYYY-MM-DD-N.md (N = session number that day)
+DATE=$(date +%Y-%m-%d)
+N=1
+while [ -f ".claude/meta/session/archive/${DATE}-${N}.md" ]; do
+  N=$((N+1))
+done
+ARCHIVE_FILE=".claude/meta/session/archive/${DATE}-${N}.md"
+
+# Copy current to archive
+cp .claude/meta/session/CURRENT.md "$ARCHIVE_FILE"
+```
+
+Add archive header to the file:
+```markdown
+# Archived Session: {DATE}-{N}
+**Archived:** {timestamp}
+**Original Epic:** {epic from CURRENT.md}
+```
+
+## Step 4: Aggregate Metrics
+From the archived session, aggregate to metrics files:
 
 ### Token Metrics
 Add all session tasks to `meta/metrics/tokens/recent-tasks.md`.
@@ -98,7 +124,9 @@ Provide summary:
 
 **Epic:** EPIC-X-NAME
 **Branch:** epic-x-name
+**Archived To:** meta/session/archive/YYYY-MM-DD-N.md
 **Tasks Completed:** X (task IDs)
+**Bugs Fixed:** X (bug IDs, if any)
 **Progress:** X/Y tasks (Z%)
 
 **Metrics:**
@@ -109,14 +137,50 @@ Provide summary:
 **Signals:**
 - (any flags detected)
 
+**Files Updated:**
+- meta/session/archive/YYYY-MM-DD-N.md (archived)
+- meta/metrics/efficiency/sessions.md (aggregated)
+- status/CURRENT.md (progress)
+
 **Next Task:** X.X.X - Description
 **Blockers:** None / Description
 
 Run `/clear` then `/next-task` or `/start-epic` to continue.
 ```
 
-## Step 9: Remind About Context
+## Step 9: Reset Session File
+Reset `meta/session/CURRENT.md` for next session:
+
+```markdown
+# Current Session
+
+**Started:** (will be set by /start-epic or /next-task)
+**Epic:** -
+**Branch:** -
+
+## Active Task
+(none)
+
+## This Session (Running)
+
+| Task | Tokens | Turns | Tools | Agent | Bugs Caught |
+|------|--------|-------|-------|-------|-------------|
+
+## Running Totals
+- Tasks: 0 complete
+- Tokens: 0
+- Tool calls: 0
+
+## Files Read This Session
+(none yet)
+
+## Notes
+(fresh session)
+```
+
+## Step 10: Remind About Context
 Tell the user:
+- "Session archived to `meta/session/archive/{filename}`"
 - "Run `/clear` before starting next session"
 - "Next session: `/start-epic X` or `/next-task`"
 
