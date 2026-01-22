@@ -18,6 +18,7 @@
 | I-003 | Session | Firebase setup wizard shows native iOS steps (Swift/Xcode) that don't apply to Expo - add note in task docs to skip native setup steps | Med | S | Open |
 | I-004 | Session | AbortSignal.any polyfill needed for Firebase AI in React Native - already added to learnings | Med | S | Done |
 | I-005 | Session | Initial agent system design missed workflow integration (git, status, metrics). Cause: Focused on MIT research pattern without mapping to existing workflow first. Fix: Always audit existing workflow before designing new systems. Added orchestrator.md, report-format.md, /agent-complete, /agent-dispatch to fix. | Med | M | Done |
+| I-006 | Session | Jest can't parse Firebase ESM modules (@firebase/ai, @firebase/util). Need to configure transformIgnorePatterns and possibly mock Firebase for unit tests. Current workaround: use `npx tsx scripts/test-ai-extraction.ts` for manual testing. | Med | M | Open |
 
 ## Completed
 

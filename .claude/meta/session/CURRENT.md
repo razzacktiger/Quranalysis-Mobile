@@ -4,12 +4,16 @@
 **Epic:** EPIC-4-AI-CHAT
 **Branch:** epic-4-ai-chat
 
-## Active Task
-- **ID:** 4.1.2
-- **Name:** Session Extraction Prompt
-- **Type:** API/Prompt
-- **Size:** L
-- **Started:** 2026-01-21
+## Active Agents
+
+| Agent ID | Task | Type | Started | Status |
+|----------|------|------|---------|--------|
+| aaaa893 | 4.1.2 - Session Extraction Prompt | prompt-agent | 2026-01-21 | ✅ Complete |
+| ac2a39a | 4.3.1 - Setup expo-speech-recognition | setup-agent | 2026-01-21 | ✅ Complete |
+
+**Output Files:**
+- 4.1.2: `/private/tmp/claude/-Users-haroon-Vast-Projects--Agentic-Systems-cluade-code-Quranalysis-Mobile-Quranalysis-Mobile/tasks/aaaa893.output`
+- 4.3.1: `/private/tmp/claude/-Users-haroon-Vast-Projects--Agentic-Systems-cluade-code-Quranalysis-Mobile-Quranalysis-Mobile/tasks/ac2a39a.output`
 
 ## This Session (Running)
 
