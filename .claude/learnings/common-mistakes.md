@@ -101,3 +101,13 @@ import '@/lib/polyfills';
 4. User runs `/complete-task` (code review, commit, metrics, status updates)
 5. Then user runs `/next-task`
 **Prevention:** After presenting implementation results, ALWAYS end with prompting the user to run `/complete-task`. Never suggest `/next-task` until `/complete-task` has been executed
+
+## Task ordering: Triggers before content
+
+**Symptom:** User can't verify UI components because there's no way to see them in the app
+**Cause:** Task order has the trigger (button, navigation link) coming AFTER the content it triggers (modal, screen)
+**Fix:** When planning features, order tasks so entry points come first:
+1. Create trigger/shell first (button, nav link, route)
+2. Then fill in the triggered content (modal body, screen content)
+3. This allows visual verification at every step
+**Prevention:** When creating TASKS.md, ask "Can the user see this component after implementation?" If not, reorder so the trigger comes first or together with the component

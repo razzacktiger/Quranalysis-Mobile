@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs, type Href } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { FloatingChatButton, ChatModal } from '@/components/ai';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -17,9 +18,18 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const [chatVisible, setChatVisible] = useState(false);
+
+  const handleOpenChat = () => setChatVisible(true);
+  const handleCloseChat = () => setChatVisible(false);
+  const handleConfirmChat = () => {
+    // TODO: Navigate to confirmation screen (Task 4.2.3)
+    setChatVisible(false);
+  };
 
   return (
-    <Tabs
+    <View style={{ flex: 1 }}>
+      <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         // Disable the static render of the header on web
@@ -69,5 +79,20 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+
+      {/* Floating AI Chat Button */}
+      <FloatingChatButton
+        onPress={handleOpenChat}
+        testID="floating-chat-button"
+      />
+
+      {/* AI Chat Modal */}
+      <ChatModal
+        visible={chatVisible}
+        onClose={handleCloseChat}
+        onConfirm={handleConfirmChat}
+        testID="chat-modal"
+      />
+    </View>
   );
 }
