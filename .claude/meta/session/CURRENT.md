@@ -30,10 +30,12 @@
 | 4.2.1 | ~6k | 5 | 12 | direct + reviewer | 3 (non-null assertion, date validation, a11y) |
 | 4.2.2+4.2.4 | ~15k | 12 | 28 | frontend-design + reviewer | 3 (setTimeout leak, null check, RN types) |
 | 4.2.3 | ~20k | 18 | 45 | frontend-design + reviewer | 6 (isReadyToSave logic, subcategory filtering, portion linking, pages_read constraint, timestamp capture, console.log cleanup) |
+| BUG-3.1 | ~8k | 6 | 15 | direct | 0 |
+| meta: bug-workflow | ~12k | 8 | 20 | direct | 0 |
 
 ## Running Totals
-- Tasks: 9 epic tasks complete, 1 meta task complete
-- Tokens: ~122k (input: ~100k, output: ~22k)
+- Tasks: 9 epic tasks complete, 2 meta tasks complete, 1 bug fixed
+- Tokens: ~142k (input: ~116k, output: ~26k)
 - Context: ~85%
 - Tool calls: 227
 
@@ -68,6 +70,8 @@
 - components/ai/SessionConfirmation.tsx
 
 ## Notes
+- BUG-3.1 fixed: Dashboard heatmap/streak not showing data (ISO date format mismatch)
+- Added bug tracking workflow: /add-bug, /fix-bug skills
 - Research completed: LLM → Firebase AI + Gemini 2.5 Flash, Voice → expo-speech-recognition
 - Added AbortSignal.any polyfill for React Native compatibility
 - Firebase AI connection tested and working

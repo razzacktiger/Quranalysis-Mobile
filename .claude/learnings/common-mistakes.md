@@ -112,6 +112,20 @@ import '@/lib/polyfills';
 3. This allows visual verification at every step
 **Prevention:** When creating TASKS.md, ask "Can the user see this component after implementation?" If not, reorder so the trigger comes first or together with the component
 
+## ISO timestamp vs date-only string mismatch
+
+**Symptom:** Date-based features (heatmaps, streaks, calendars) show empty/zero despite data existing
+**Cause:** Data stored as full ISO timestamps (`2025-01-21T00:00:00Z`) but compared against date-only strings (`2025-01-21`). String comparison fails because formats don't match.
+**Fix:** Normalize dates before comparison:
+```typescript
+// When building date lookup maps or comparing dates
+const dateOnly = session.session_date.split('T')[0]; // "2025-01-21"
+```
+**Prevention:**
+- When working with dates, always check the actual format stored in the database
+- Use `.split('T')[0]` to normalize ISO timestamps to date-only format
+- Add regression tests with full ISO timestamps, not just date-only strings
+
 ## Context exhaustion from accumulated bug fixes
 
 **Symptom:** Context runs out mid-task while fixing multiple bugs discovered during user testing
