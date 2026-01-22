@@ -10,6 +10,10 @@ Last 20 tasks with full breakdown.
 | 01-21 | 4.1.3 | 4 | L | API | 8k | 6 | 10 | direct | ~1k | Mistake extraction, combined schema, 7 tests pass |
 | 01-22 | BUG-3.1 | 3 | M | Bug | 8k | 6 | 15 | direct | ~3k | Dashboard heatmap date format mismatch |
 | 01-22 | meta:workflow | - | M | Meta | 12k | 8 | 20 | direct | - | Bug tracking system, workflow checklists |
+| 01-22 | 4.1.4 | 4 | M | API | 12k | 8 | 15 | prompt-agent | ~1k | useAIChat hook |
+| 01-22 | 4.2.1 | 4 | S | UI | 6k | 5 | 12 | direct | ~1k | ExtractionSummary component |
+| 01-22 | 4.2.2+4.2.4 | 4 | L | UI | 15k | 12 | 28 | frontend-design | ~2k | ChatModal + FloatingButton |
+| 01-22 | 4.2.3 | 4 | XL | UI | 20k | 18 | 45 | frontend-design | ~3k | Confirmation screen, 6 bugs caught |
 
 ## Task Types
 
