@@ -111,3 +111,22 @@ import '@/lib/polyfills';
 2. Then fill in the triggered content (modal body, screen content)
 3. This allows visual verification at every step
 **Prevention:** When creating TASKS.md, ask "Can the user see this component after implementation?" If not, reorder so the trigger comes first or together with the component
+
+## Context exhaustion from accumulated bug fixes
+
+**Symptom:** Context runs out mid-task while fixing multiple bugs discovered during user testing
+**Cause:** All testing happens after full implementation; no incremental review; L-size tasks have many edge cases
+**Example (Task 4.2.3):** 6 bugs found post-implementation:
+- Business logic: isReadyToSave missing mistake check, subcategory filtering wrong
+- UX: Couldn't edit "Unknown" portion, no editable fields for notes
+- Integration: DB constraint (pages_read >= 1), timestamp format wrong
+- Code quality: console.log left in production
+**Fix:**
+1. Run code-reviewer agent after each component (not just at task end)
+2. Test business logic incrementally during implementation
+3. For L-size UI tasks with 3+ components, test each before moving to next
+4. Check DB constraints match default values before testing
+**Prevention:**
+- For L-size tasks: implement → test → review per component
+- Always verify DB constraints against code defaults
+- Run code-reviewer proactively on multi-file changes
