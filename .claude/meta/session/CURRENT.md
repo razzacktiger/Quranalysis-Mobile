@@ -23,3 +23,4 @@ _None_
 
 ## Notes
 - Bug logged: BUG-2.1 - Invalid ayah range accepted when adding session portions (Severity: 2)
+- Bug fixed: BUG-2.1 - Added multi-layer validation (Zod schema, API layer, UI components)
