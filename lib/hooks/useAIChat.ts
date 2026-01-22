@@ -152,11 +152,17 @@ export function useAIChat() {
 
   /**
    * Check if there's enough data to save
-   * Requires at least one portion with a surah_name
+   * Requires at least one portion with a surah_name OR mistakes with valid surah
    */
   const isReadyToSave = useMemo(() => {
-    return accumulatedPortions.some((portion) => portion.surah_name !== null);
-  }, [accumulatedPortions]);
+    const hasValidPortion = accumulatedPortions.some(
+      (portion) => portion.surah_name !== null
+    );
+    const hasValidMistake = accumulatedMistakes.some(
+      (mistake) => mistake.portion_surah && mistake.portion_surah !== 'Unknown'
+    );
+    return hasValidPortion || hasValidMistake;
+  }, [accumulatedPortions, accumulatedMistakes]);
 
   /**
    * Send a message to the AI and process the response
@@ -216,23 +222,27 @@ export function useAIChat() {
       } catch (err) {
         // Handle different error types
         let errorMessage: string;
+        let userFacingMessage: string;
 
         if (err instanceof ZodError) {
           // Zod validation error - malformed AI response
-          errorMessage = `Invalid AI response format: ${err.issues.map((issue) => issue.message).join(', ')}`;
+          errorMessage = `Invalid AI response format: ${err.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`).join(', ')}`;
+          userFacingMessage = `I received an unexpected response format. This is a technical issue - please try again.`;
         } else if (err instanceof Error) {
           errorMessage = err.message;
+          userFacingMessage = `Error: ${err.message}`;
         } else {
           errorMessage = 'An unexpected error occurred';
+          userFacingMessage = errorMessage;
         }
 
         setError(errorMessage);
 
-        // Add error message from assistant
+        // Add error message from assistant - show actual error for debugging
         const errorAssistantMessage: Message = {
           id: generateId(),
           role: 'assistant',
-          content: `I'm sorry, I encountered an error processing your message. Please try again.`,
+          content: userFacingMessage,
           timestamp: new Date(),
         };
 

@@ -8,7 +8,7 @@ import {
   type ListRenderItem,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useAIChat, type Message } from '@/lib/hooks/useAIChat';
+import { useAIChat, type Message, type UseAIChatReturn } from '@/lib/hooks/useAIChat';
 import { ChatHeader } from './ChatHeader';
 import { ChatMessage } from './ChatMessage';
 import { LoadingMessage } from './LoadingMessage';
@@ -24,6 +24,8 @@ export interface ChatModalProps {
   testID?: string;
   /** Optional voice input button component */
   voiceButton?: React.ReactNode;
+  /** Optional external chat state - if not provided, uses internal state */
+  chatState?: UseAIChatReturn;
 }
 
 /**
@@ -43,11 +45,15 @@ export function ChatModal({
   onConfirm,
   testID,
   voiceButton,
+  chatState: externalChatState,
 }: ChatModalProps) {
   const insets = useSafeAreaInsets();
   const flatListRef = useRef<FlatList<Message>>(null);
 
-  // Use the AI chat hook for state management
+  // Use external state if provided, otherwise use internal state
+  const internalChatState = useAIChat();
+  const chatState = externalChatState ?? internalChatState;
+
   const {
     messages,
     isLoading,
@@ -56,8 +62,7 @@ export function ChatModal({
     extractedPortions,
     extractedMistakes,
     sendMessage,
-    clearChat,
-  } = useAIChat();
+  } = chatState;
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {

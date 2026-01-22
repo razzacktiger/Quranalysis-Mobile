@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs, type Href } from 'expo-router';
-import { Pressable, View } from 'react-native';
+import { Pressable, View, Modal } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import { FloatingChatButton, ChatModal } from '@/components/ai';
+import { FloatingChatButton, ChatModal, SessionConfirmation } from '@/components/ai';
+import { useAIChat } from '@/lib/hooks/useAIChat';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -18,14 +20,46 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const [chatVisible, setChatVisible] = useState(false);
+  const insets = useSafeAreaInsets();
 
-  const handleOpenChat = () => setChatVisible(true);
-  const handleCloseChat = () => setChatVisible(false);
-  const handleConfirmChat = () => {
-    // TODO: Navigate to confirmation screen (Task 4.2.3)
+  // Chat and confirmation state
+  const [chatVisible, setChatVisible] = useState(false);
+  const [confirmationVisible, setConfirmationVisible] = useState(false);
+
+  // Lift AI chat state to layout level for sharing between modals
+  const chatState = useAIChat();
+
+  const handleOpenChat = useCallback(() => {
+    setChatVisible(true);
+  }, []);
+
+  const handleCloseChat = useCallback(() => {
     setChatVisible(false);
-  };
+  }, []);
+
+  const handleConfirmChat = useCallback(() => {
+    // Switch from chat to confirmation screen
+    setChatVisible(false);
+    setConfirmationVisible(true);
+  }, []);
+
+  const handleAddMoreFromConfirmation = useCallback(() => {
+    // Go back to chat to add more data
+    setConfirmationVisible(false);
+    setChatVisible(true);
+  }, []);
+
+  const handleCancelConfirmation = useCallback(() => {
+    // Cancel confirmation - go back to chat
+    setConfirmationVisible(false);
+    setChatVisible(true);
+  }, []);
+
+  const handleSuccessConfirmation = useCallback(() => {
+    // Session saved successfully - close everything and clear chat
+    setConfirmationVisible(false);
+    chatState.clearChat();
+  }, [chatState]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -91,8 +125,28 @@ export default function TabLayout() {
         visible={chatVisible}
         onClose={handleCloseChat}
         onConfirm={handleConfirmChat}
+        chatState={chatState}
         testID="chat-modal"
       />
+
+      {/* Session Confirmation Modal */}
+      <Modal
+        visible={confirmationVisible}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={handleCancelConfirmation}
+        testID="confirmation-modal"
+      >
+        <View style={{ flex: 1, paddingTop: insets.top }}>
+          <SessionConfirmation
+            extraction={chatState.getCurrentExtraction()}
+            onAddMore={handleAddMoreFromConfirmation}
+            onCancel={handleCancelConfirmation}
+            onSuccess={handleSuccessConfirmation}
+            testID="session-confirmation"
+          />
+        </View>
+      </Modal>
     </View>
   );
 }

@@ -9,3 +9,7 @@ export * from './ExtractionSummary';
 export * from './GreetingMessage';
 export * from './QuickActionChips';
 export * from './FloatingChatButton';
+export * from './SessionConfirmation';
+export * from './EditableField';
+export * from './PortionCard';
+export * from './MistakeCard';
