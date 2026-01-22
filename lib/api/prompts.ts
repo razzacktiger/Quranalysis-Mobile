@@ -1,9 +1,18 @@
 import { Schema, sendMessageWithSchema } from './ai';
 import {
   sessionExtractionSchema,
+  mistakeExtractionSchema,
+  combinedExtractionSchema,
   type SessionExtractionResult,
+  type MistakeExtractionResult,
+  type CombinedExtractionResult,
 } from '@/lib/validation/ai';
-import { SESSION_TYPES, RECENCY_CATEGORIES } from '@/types/session';
+import {
+  SESSION_TYPES,
+  RECENCY_CATEGORIES,
+  ERROR_CATEGORIES,
+  ERROR_SUBCATEGORIES,
+} from '@/types/session';
 
 /**
  * Firebase AI Schema for extracted session fields
@@ -192,5 +201,323 @@ export async function extractSessionFromMessage(
       throw new Error(`Session extraction failed: ${error.message}`);
     }
     throw new Error('Session extraction failed: Unknown error');
+  }
+}
+
+// ============================================================================
+// MISTAKE EXTRACTION
+// ============================================================================
+
+/**
+ * Firebase AI Schema for extracted mistake fields
+ */
+const extractedMistakeFirebaseSchema = Schema.object({
+  properties: {
+    portion_surah: Schema.string(),
+    error_category: Schema.enumString({ enum: [...ERROR_CATEGORIES] }),
+    error_subcategory: Schema.enumString({
+      enum: [...ERROR_SUBCATEGORIES],
+      nullable: true,
+    }),
+    severity_level: Schema.integer({ minimum: 1, maximum: 5 }),
+    ayah_number: Schema.integer({ nullable: true }),
+    additional_notes: Schema.string({ nullable: true }),
+  },
+});
+
+/**
+ * Firebase AI Schema for mistake extraction
+ */
+export const mistakeExtractionFirebaseSchema = Schema.object({
+  properties: {
+    mistakes: Schema.array({ items: extractedMistakeFirebaseSchema }),
+    follow_up_question: Schema.string({ nullable: true }),
+    confidence: Schema.enumString({ enum: ['high', 'medium', 'low'] }),
+  },
+});
+
+/**
+ * System prompt for mistake extraction
+ * Instructs the AI on how to parse error/mistake descriptions
+ */
+export const MISTAKE_EXTRACTION_SYSTEM_PROMPT = `You are a Quran recitation mistake analyzer. Extract structured mistake information from natural language descriptions.
+
+## Your Task
+Parse the user's message to extract:
+1. Mistakes made during recitation (category, subcategory, severity)
+2. Link mistakes to the surah being discussed
+3. Identify specific ayah numbers when mentioned
+
+## Error Categories
+Available categories: ${ERROR_CATEGORIES.join(', ')}
+
+## Terminology Mapping
+Map user language to our categories:
+
+### Tajweed Errors
+| User Says | Category | Subcategory |
+|-----------|----------|-------------|
+| tajweed, tajwid | tajweed | (general) |
+| ghunna, gunna, nasal sound | tajweed | ghunna |
+| madd, mad, elongation, stretch | tajweed | madd |
+| idgham, idghaam, merging | tajweed | idgham |
+| ikhfa, ikhfaa, hiding | tajweed | ikhfa |
+| qalqala, qalqalah, echo | tajweed | qalqalah |
+| iqlab | tajweed | iqlab |
+
+### Pronunciation Errors
+| User Says | Category | Subcategory |
+|-----------|----------|-------------|
+| pronunciation, articulation | pronunciation | (general) |
+| makhraj, makharij, point of articulation | pronunciation | makhraj |
+| letter sound, wrong letter | pronunciation | sifat |
+
+### Memorization Errors
+| User Says | Category | Subcategory |
+|-----------|----------|-------------|
+| forgot, blanked, couldn't remember | memorization | forgotten_word |
+| skipped, missed verse | memorization | verse_skip |
+| mixed up, confused verses, similar verse | memorization | mutashabih |
+| wrong word order | memorization | word_order |
+| said wrong word | memorization | word_substitution |
+
+### Fluency Errors
+| User Says | Category | Subcategory |
+|-----------|----------|-------------|
+| hesitated, paused, slow | fluency | hesitation |
+| stumbled, not smooth | fluency | hesitation |
+| repeated myself, said twice | fluency | repetition |
+| rhythm off, timing wrong | fluency | rhythm |
+
+### Waqf (Stopping) Errors
+| User Says | Category | Subcategory |
+|-----------|----------|-------------|
+| wrong stop, bad pause, stopped wrong | waqf | wrong_stop |
+| didn't stop, missed stop, should have stopped | waqf | missed_stop |
+| shouldn't have stopped | waqf | disencouraged_stop |
+
+## Severity Guidelines (1-5 scale)
+Infer severity from user language:
+
+| Level | Description | User Indicators |
+|-------|-------------|-----------------|
+| 1 | Minor | "small slip", "barely noticeable", "self-corrected quickly", "tiny" |
+| 2 | Light | "slight error", "minor issue", "small mistake" |
+| 3 | Moderate | "mistake", "error", "needed to fix", "messed up" |
+| 4 | Significant | "major mistake", "big error", "serious", "bad" |
+| 5 | Critical | "completely wrong", "fundamental error", "really bad", "terrible" |
+
+Default to severity 3 if no indicators present.
+
+## Surah Context
+The user may have mentioned a surah in the conversation context. Use that surah name for portion_surah.
+If no surah is mentioned, use "Unknown" and ask in follow_up_question.
+
+## Multiple Mistakes
+Users may describe multiple mistakes. Create separate entries for each:
+"I hesitated on verse 5 and forgot the ghunna on verse 7" → 2 mistakes
+
+## Ayah Numbers
+- If user says "verse X" or "ayah X", extract that number
+- If user says "verses 10-12", use null for ayah_number but note in additional_notes
+- If no specific verse mentioned, leave ayah_number as null
+
+## Confidence Levels
+- high: Clear error description with category easily identified
+- medium: Some ambiguity in error type or severity
+- low: Vague description, unclear what went wrong
+
+## Examples
+
+Input: "I made a tajweed mistake on ayah 5, forgot the ghunna"
+Context surah: Al-Fatiha
+Output:
+{
+  "mistakes": [{
+    "portion_surah": "Al-Fatiha",
+    "error_category": "tajweed",
+    "error_subcategory": "ghunna",
+    "severity_level": 3,
+    "ayah_number": 5,
+    "additional_notes": "Forgot to apply ghunna rule"
+  }],
+  "follow_up_question": null,
+  "confidence": "high"
+}
+
+Input: "Kept hesitating on verse 10-12, and mixed up verse 15 with something similar"
+Context surah: Al-Baqarah
+Output:
+{
+  "mistakes": [
+    {
+      "portion_surah": "Al-Baqarah",
+      "error_category": "fluency",
+      "error_subcategory": "hesitation",
+      "severity_level": 2,
+      "ayah_number": null,
+      "additional_notes": "Hesitation on verses 10-12"
+    },
+    {
+      "portion_surah": "Al-Baqarah",
+      "error_category": "memorization",
+      "error_subcategory": "mutashabih",
+      "severity_level": 3,
+      "ayah_number": 15,
+      "additional_notes": "Confused with similar verse"
+    }
+  ],
+  "follow_up_question": null,
+  "confidence": "high"
+}
+
+Input: "Made a small slip with the madd"
+Context surah: Unknown
+Output:
+{
+  "mistakes": [{
+    "portion_surah": "Unknown",
+    "error_category": "tajweed",
+    "error_subcategory": "madd",
+    "severity_level": 1,
+    "ayah_number": null,
+    "additional_notes": "Small madd error"
+  }],
+  "follow_up_question": "Which surah were you reciting?",
+  "confidence": "medium"
+}
+
+Now parse the following mistake description:`;
+
+/**
+ * Extracts mistake data from a natural language message
+ *
+ * @param userMessage - The user's description of mistakes made
+ * @param contextSurah - Optional surah name from conversation context
+ * @returns Structured mistake extraction result
+ */
+export async function extractMistakesFromMessage(
+  userMessage: string,
+  contextSurah?: string
+): Promise<MistakeExtractionResult> {
+  const contextLine = contextSurah
+    ? `\nContext surah: ${contextSurah}`
+    : '\nContext surah: Unknown';
+
+  const fullPrompt = `${MISTAKE_EXTRACTION_SYSTEM_PROMPT}${contextLine}
+
+"${userMessage}"`;
+
+  try {
+    const rawResult = await sendMessageWithSchema<MistakeExtractionResult>(
+      fullPrompt,
+      mistakeExtractionFirebaseSchema
+    );
+
+    const validatedResult = mistakeExtractionSchema.parse(rawResult);
+    return validatedResult;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Mistake extraction failed: ${error.message}`);
+    }
+    throw new Error('Mistake extraction failed: Unknown error');
+  }
+}
+
+// ============================================================================
+// COMBINED EXTRACTION (for conversational chat)
+// ============================================================================
+
+/**
+ * Firebase AI Schema for combined session + mistake extraction
+ */
+export const combinedExtractionFirebaseSchema = Schema.object({
+  properties: {
+    session: Schema.object({
+      properties: {
+        duration_minutes: Schema.integer({ nullable: true }),
+        session_type: Schema.enumString({
+          enum: [...SESSION_TYPES],
+          nullable: true,
+        }),
+        performance_score: Schema.number({ nullable: true, minimum: 0, maximum: 10 }),
+        session_goal: Schema.string({ nullable: true }),
+      },
+      nullable: true,
+    }),
+    portions: Schema.array({ items: extractedPortionFirebaseSchema }),
+    mistakes: Schema.array({ items: extractedMistakeFirebaseSchema }),
+    missing_fields: Schema.array({ items: Schema.string() }),
+    follow_up_question: Schema.string({ nullable: true }),
+    confidence: Schema.enumString({ enum: ['high', 'medium', 'low'] }),
+  },
+});
+
+/**
+ * Combined system prompt for conversational extraction
+ * Handles both session details and mistakes in one pass
+ */
+export const COMBINED_EXTRACTION_SYSTEM_PROMPT = `You are a Quran study assistant. Extract structured information from conversational messages about Quran practice sessions.
+
+## Your Task
+Parse the user's message to extract ANY of these that are mentioned:
+1. Session details (duration, type, performance, goal)
+2. Quran portions practiced (surah, ayah range)
+3. Mistakes made during recitation
+
+Not all fields will be present in every message - only extract what's mentioned.
+
+## Session Information
+${SESSION_EXTRACTION_SYSTEM_PROMPT.split('## Your Task')[1].split('Now parse')[0]}
+
+## Mistake Information
+${MISTAKE_EXTRACTION_SYSTEM_PROMPT.split('## Your Task')[1].split('Now parse')[0]}
+
+## Combined Response Rules
+- session: Include if user mentions duration, session type, or how it went. Set to null if no session info.
+- portions: Include if user mentions specific surahs or ayahs practiced
+- mistakes: Include if user describes any errors or problems
+- missing_fields: List critical missing info (surah_name is critical)
+- follow_up_question: Ask only for critical missing info
+- confidence: Overall confidence in the extraction
+
+Now parse the following message:`;
+
+/**
+ * Extracts combined session and mistake data from a conversational message
+ *
+ * @param userMessage - The user's message
+ * @param conversationContext - Optional context from previous messages
+ * @returns Combined extraction result
+ */
+export async function extractFromMessage(
+  userMessage: string,
+  conversationContext?: { surah?: string; sessionType?: string }
+): Promise<CombinedExtractionResult> {
+  let contextInfo = '';
+  if (conversationContext?.surah) {
+    contextInfo += `\nContext surah: ${conversationContext.surah}`;
+  }
+  if (conversationContext?.sessionType) {
+    contextInfo += `\nContext session type: ${conversationContext.sessionType}`;
+  }
+
+  const fullPrompt = `${COMBINED_EXTRACTION_SYSTEM_PROMPT}${contextInfo}
+
+"${userMessage}"`;
+
+  try {
+    const rawResult = await sendMessageWithSchema<CombinedExtractionResult>(
+      fullPrompt,
+      combinedExtractionFirebaseSchema
+    );
+
+    const validatedResult = combinedExtractionSchema.parse(rawResult);
+    return validatedResult;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Extraction failed: ${error.message}`);
+    }
+    throw new Error('Extraction failed: Unknown error');
   }
 }
