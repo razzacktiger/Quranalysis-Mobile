@@ -139,11 +139,13 @@ confidence: "high" | "medium" | "low"
 - Support multiple portions in single message
 
 ### Acceptance
-- [ ] Zod schema created and exported
-- [ ] System prompt handles surah variations
-- [ ] Juz references resolved correctly
-- [ ] Performance inferred from context
-- [ ] Multiple portions extracted from one message
+- [x] Zod schema created and exported
+- [x] System prompt handles surah variations
+- [x] Juz references resolved correctly
+- [x] Performance inferred from context
+- [x] Multiple portions extracted from one message
+
+**Status:** ✅ Complete
 
 ---
 

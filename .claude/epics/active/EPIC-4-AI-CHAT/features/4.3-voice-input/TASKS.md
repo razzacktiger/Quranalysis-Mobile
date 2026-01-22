@@ -56,11 +56,13 @@ The plugin automatically adds to Info.plist:
 4. Test with basic speech input
 
 ### Acceptance
-- [ ] Package installed
-- [ ] Plugin configured in app.json
-- [ ] Dev build created successfully
-- [ ] Permissions appear on first use
-- [ ] Basic recognition works on physical device
+- [x] Package installed
+- [x] Plugin configured in app.json
+- [ ] Dev build created successfully (user must run manually)
+- [ ] Permissions appear on first use (verify after dev build)
+- [ ] Basic recognition works on physical device (verify after dev build)
+
+**Status:** ✅ Complete (config done, dev build pending user action)
 
 ---
 
