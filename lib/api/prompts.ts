@@ -220,7 +220,7 @@ const extractedMistakeFirebaseSchema = Schema.object({
       nullable: true,
     }),
     severity_level: Schema.integer({ minimum: 1, maximum: 5 }),
-    ayah_number: Schema.integer({ nullable: true }),
+    ayah_number: Schema.integer({ nullable: true, minimum: 1 }),
     additional_notes: Schema.string({ nullable: true }),
   },
 });
@@ -295,6 +295,18 @@ Map user language to our categories:
 | wrong stop, bad pause, stopped wrong | waqf | wrong_stop |
 | didn't stop, missed stop, should have stopped | waqf | missed_stop |
 | shouldn't have stopped | waqf | disencouraged_stop |
+
+### Translation Errors
+| User Says | Category | Subcategory |
+|-----------|----------|-------------|
+| wrong meaning, translation error | translation | (none - use additional_notes) |
+| didn't understand, meaning unclear | translation | (none - use additional_notes) |
+
+### Other Errors
+| User Says | Category | Subcategory |
+|-----------|----------|-------------|
+| other error, general mistake | other | (none - use additional_notes) |
+| can't categorize, not sure what type | other | (none - use additional_notes) |
 
 ## Severity Guidelines (1-5 scale)
 Infer severity from user language:
