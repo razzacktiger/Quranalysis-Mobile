@@ -68,7 +68,8 @@ export function ActivityHeatmap({ testID, onDayPress }: ActivityHeatmapProps) {
     const counts: Record<string, number> = {};
     if (sessions) {
       for (const session of sessions) {
-        const date = session.session_date;
+        // Normalize to YYYY-MM-DD format (handles both ISO timestamps and date-only strings)
+        const date = session.session_date.split('T')[0];
         counts[date] = (counts[date] || 0) + 1;
       }
     }

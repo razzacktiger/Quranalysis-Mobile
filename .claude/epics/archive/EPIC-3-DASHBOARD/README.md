@@ -1,8 +1,11 @@
 # EPIC-3: Dashboard (Archived)
 
-**Status:** Complete
+**Status:** Complete (with bugs)
 **Completed:** 2025-01-19
 **Summary:** See [status/archive/epic-3-dashboard.md](../../../status/archive/epic-3-dashboard.md)
+
+## Blockers
+- **BUG-3.1:** Activity heatmap and streak not displaying data (Severity: 2 - High)
 
 ## Goal
 Users see meaningful statistics and progress visualizations.

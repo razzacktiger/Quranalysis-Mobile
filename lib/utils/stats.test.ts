@@ -188,6 +188,19 @@ describe('calculateCurrentStreak', () => {
     ];
     expect(calculateCurrentStreak(sessions).current).toBe(0);
   });
+
+  it('handles ISO timestamp format (with time component)', () => {
+    // Real sessions are stored with full ISO timestamps like "2025-01-21T00:00:00Z"
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const sessions = [
+      createSession({ session_date: today.toISOString() }), // Full ISO: "2025-01-22T12:30:00.000Z"
+      createSession({ session_date: yesterday.toISOString() }),
+    ];
+    expect(calculateCurrentStreak(sessions)).toEqual({ current: 2, best: 2 });
+  });
 });
 
 describe('calculateMistakesByCategory', () => {

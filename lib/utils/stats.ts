@@ -40,8 +40,9 @@ export function calculateCurrentStreak(
   if (sessions.length === 0) return { current: 0, best: 0 };
 
   // Get unique dates (sorted descending - most recent first)
+  // Normalize to YYYY-MM-DD format (handles both ISO timestamps and date-only strings)
   const uniqueDates = [
-    ...new Set(sessions.map((s) => s.session_date)),
+    ...new Set(sessions.map((s) => s.session_date.split('T')[0])),
   ].sort((a, b) => b.localeCompare(a));
 
   if (uniqueDates.length === 0) return { current: 0, best: 0 };
