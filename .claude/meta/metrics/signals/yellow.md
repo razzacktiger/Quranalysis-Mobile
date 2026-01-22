@@ -4,7 +4,7 @@
 
 | Signal | Evidence | Action |
 |--------|----------|--------|
-| - | - | - |
+| Meta work used significant context | Agent system design took ~25k tokens | Expected for infrastructure work; system should reduce future tokens |
 
 ## Metrics Approaching Limits
 

@@ -30,3 +30,4 @@
 - Zod v4 (new API - uses `message` not `errorMap`)
 - Google OAuth requires development build (not Expo Go)
 - Custom scheme: quranalysis://google-auth
+- Agent orchestration system ready: /agent-dispatch, /agent-complete
