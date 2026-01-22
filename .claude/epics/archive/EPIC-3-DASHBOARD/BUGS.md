@@ -18,44 +18,30 @@
 
 ## Open Bugs
 
-## BUG-3.1: Activity heatmap and streak stats not displaying session data
-
-**Severity:** 2 (High) | **Status:** Open
-**Found In:** Manual testing | **Found Date:** 2026-01-22
-**Files:** `components/dashboard/ActivityHeatmap.tsx`, `components/dashboard/StatCard.tsx`, `lib/hooks/useStats.ts`
-
-### Description
-The Activity heatmap on the Dashboard shows all gray/empty squares despite having 23 sessions logged. The "Current Streak" stat card shows "0 days" when sessions exist from recent dates (Jan 20-21). The data exists and is visible in the Sessions list, but the Dashboard visualizations are not reflecting it.
-
-### Reproduction Steps
-1. Open app and navigate to Dashboard
-2. Observe Activity heatmap - all squares are gray (no activity color)
-3. Observe "Current Streak" card - shows "0 days" with "Best: 2"
-4. Navigate to Sessions tab - see 23 sessions listed with dates
-
-### Expected Behavior
-- Activity heatmap should show colored squares for days with logged sessions
-- Current Streak should calculate consecutive days with sessions
-- Both should reflect the actual session data
-
-### Actual Behavior
-- Activity heatmap shows all empty/gray squares
-- Current Streak shows "0 days"
-- Total Sessions (23) and Avg Performance (7.7) appear correct
-- Total Mistakes (52) appears correct
-
-### Notes
-- Possible date/timezone mismatch between session_date storage and heatmap date calculation
-- May be querying wrong date range or using incorrect date comparison
-- The streak calculation may have similar date comparison issues
-- Some stat cards work (Total Sessions, Avg Performance, Total Mistakes) while date-dependent ones don't (Streak, Heatmap)
-
----
+_No open bugs._
 
 ---
 
 ## Fixed Bugs
 
-<!-- Bugs move here after being fixed -->
+## BUG-3.1: Activity heatmap and streak stats not displaying session data
 
-_No fixed bugs yet._
+**Severity:** 2 (High) | **Status:** Fixed
+**Found In:** Manual testing | **Found Date:** 2026-01-22
+**Fixed Date:** 2026-01-22 | **Fixed In:** c030d87
+**Files:** `components/analytics/ActivityHeatmap.tsx`, `lib/utils/stats.ts`
+
+### Description
+The Activity heatmap on the Dashboard shows all gray/empty squares despite having 23 sessions logged. The "Current Streak" stat card shows "0 days" when sessions exist from recent dates (Jan 20-21). The data exists and is visible in the Sessions list, but the Dashboard visualizations are not reflecting it.
+
+### Root Cause
+Date format mismatch - sessions were stored with full ISO timestamps (`2025-01-21T00:00:00Z`) but the heatmap and streak calculations compared against date-only strings (`2025-01-21`). String comparison failed, so all dates showed 0 activity.
+
+### Fix
+Normalized `session_date` to `YYYY-MM-DD` format using `.split('T')[0]` in:
+- `ActivityHeatmap.tsx` - sessionCountByDate calculation
+- `stats.ts` - calculateCurrentStreak unique dates extraction
+
+Added regression test for ISO timestamp format handling.
+
+---
