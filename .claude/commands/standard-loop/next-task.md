@@ -16,6 +16,33 @@ Read `status/CURRENT.md` to identify:
 Read the current epic feature file to find the next task.
 Note task type and size for smart loading.
 
+## Step 2.5: Check for Blocking Bugs
+
+Before proceeding to next task, check if current feature has blocking bugs:
+
+1. Check if `BUGS.md` exists for current feature:
+   `epics/active/EPIC-X-NAME/features/X.X-name/BUGS.md`
+
+2. If exists, scan for open bugs with severity 1 (Critical) or 2 (High)
+
+3. If blocking bugs found:
+   ```
+   ⚠️ Feature X.X has blocking bugs that must be fixed first:
+
+   | ID | Title | Severity |
+   |----|-------|----------|
+   | BUG-X.X.X | {title} | {severity} |
+
+   Fix these before continuing with tasks.
+   Use `/fix-bug X.X` to start.
+   ```
+
+4. If no blocking bugs (only severity 3-4), report them as informational:
+   ```
+   Note: Feature X.X has N non-blocking bugs (can fix later)
+   ```
+   Then proceed to next task.
+
 ## Step 3: Smart Loading (Based on Task Type)
 Load only relevant standards based on task type:
 

@@ -40,8 +40,11 @@
 | Skill | Purpose |
 |-------|---------|
 | /start-epic | Begin epic with branch setup |
+| /start-epic N --bugs | Start bug-fixing mode for an epic |
 | /next-task | Continue to next task |
 | /complete-task | Commit with code review |
+| /add-bug | Log a bug for tracking |
+| /fix-bug | Start fixing bugs for a feature |
 | /end-session | Save state and metrics |
 | /research-tech | Research technology options |
 | /spec-feature | Create feature specification |
@@ -57,6 +60,8 @@
 | **Revise Epic** | [guides/epic-revision-workflow.md](guides/epic-revision-workflow.md) | Reconsider technologies, restructure epic |
 | **New Feature** | /research-tech → /spec-feature → /create-epic | Planning from scratch |
 | **Continue Work** | /start-epic → /next-task (repeat) → /end-session | Daily development |
+| **Bug Fixing** | /add-bug → /start-epic N --bugs → /fix-bug → /complete-task | Dedicated bug sessions |
+| **Ad-hoc Bug** | /add-bug → (fix immediately or defer) | Found bug during development |
 
 ### Loading a Workflow
 
