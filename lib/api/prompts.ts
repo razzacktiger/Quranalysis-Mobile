@@ -16,7 +16,7 @@ const extractedSessionFirebaseSchema = Schema.object({
       enum: [...SESSION_TYPES],
       nullable: true,
     }),
-    performance_score: Schema.number({ nullable: true }),
+    performance_score: Schema.number({ nullable: true, minimum: 0, maximum: 10 }),
     session_goal: Schema.string({ nullable: true }),
   },
 });

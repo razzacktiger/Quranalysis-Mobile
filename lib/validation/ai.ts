@@ -21,6 +21,9 @@ export const extractedSessionSchema = z.object({
 /**
  * Schema for extracted portion data from AI
  * Represents a section of Quran practiced in a session
+ *
+ * Note: Uses nullable (not optional) because AI returns explicit null for missing values.
+ * When converting to PortionFormData, null values need defaults (e.g., repetition_count: 0)
  */
 export const extractedPortionSchema = z.object({
   surah_name: z.string().nullable(),
