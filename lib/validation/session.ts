@@ -5,6 +5,18 @@ import {
   ERROR_CATEGORIES,
   ERROR_SUBCATEGORIES,
 } from '@/types/session';
+import { SURAHS } from '@/constants/quran-data';
+
+// Helper to get surah by name for validation
+function getSurahByName(name: string) {
+  const searchName = name.toLowerCase().trim();
+  return SURAHS.find(
+    (s) =>
+      s.transliteration.toLowerCase() === searchName ||
+      s.transliteration.toLowerCase().includes(searchName) ||
+      s.name.includes(name)
+  );
+}
 
 // Session schema
 export const sessionSchema = z.object({
@@ -36,18 +48,57 @@ export const portionSchema = z
     juz_number: z.number().int().positive().optional(),
     pages_read: z.number().nonnegative().optional(),
   })
-  .refine(
-    (data) => {
-      if (data.ayah_start !== undefined && data.ayah_end !== undefined) {
-        return data.ayah_end >= data.ayah_start;
+  .superRefine((data, ctx) => {
+    // Get surah info for bounds validation
+    const surah = getSurahByName(data.surah_name);
+
+    // Validate ayah_start is within surah bounds
+    if (data.ayah_start !== undefined && surah) {
+      if (data.ayah_start < 1) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Ayah must be at least 1',
+          path: ['ayah_start'],
+        });
       }
-      return true;
-    },
-    {
-      message: 'End ayah must be greater than or equal to start ayah',
-      path: ['ayah_end'],
+      if (data.ayah_start > surah.ayah_count) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `${surah.transliteration} only has ${surah.ayah_count} ayahs`,
+          path: ['ayah_start'],
+        });
+      }
     }
-  );
+
+    // Validate ayah_end is within surah bounds
+    if (data.ayah_end !== undefined && surah) {
+      if (data.ayah_end < 1) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Ayah must be at least 1',
+          path: ['ayah_end'],
+        });
+      }
+      if (data.ayah_end > surah.ayah_count) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `${surah.transliteration} only has ${surah.ayah_count} ayahs`,
+          path: ['ayah_end'],
+        });
+      }
+    }
+
+    // Validate ayah_end >= ayah_start
+    if (data.ayah_start !== undefined && data.ayah_end !== undefined) {
+      if (data.ayah_end < data.ayah_start) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'End ayah must be greater than or equal to start ayah',
+          path: ['ayah_end'],
+        });
+      }
+    }
+  });
 
 // Mistake schema
 export const mistakeSchema = z.object({
