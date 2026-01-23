@@ -146,12 +146,14 @@ ExpoSpeechRecognitionModule.getSupportedLocales({})
 | `audio-capture` | "Could not access microphone." |
 
 ### Acceptance
-- [ ] Hook returns all interface properties
-- [ ] Permission requested on first `startListening`
-- [ ] Real-time transcript updates via `interimResults`
-- [ ] `isSupported` correctly detects capability
-- [ ] Errors surfaced with user-friendly messages
-- [ ] Clean stop/cancel behavior
+- [x] Hook returns all interface properties
+- [x] Permission requested on first `startListening`
+- [x] Real-time transcript updates via `interimResults`
+- [x] `isSupported` correctly detects capability
+- [x] Errors surfaced with user-friendly messages
+- [x] Clean stop/cancel behavior
+
+**Status:** ✅ Complete
 
 ---
 

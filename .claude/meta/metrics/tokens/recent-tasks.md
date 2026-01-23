@@ -10,6 +10,7 @@ Last 20 tasks with full breakdown.
 | 01-21 | 4.1.3 | 4 | L | API | 8k | 6 | 10 | direct | ~1k | Mistake extraction, combined schema, 7 tests pass |
 | 01-22 | BUG-3.1 | 3 | M | Bug | 8k | 6 | 15 | direct | ~3k | Dashboard heatmap date format mismatch |
 | 01-22 | meta:workflow | - | M | Meta | 12k | 8 | 20 | direct | - | Bug tracking system, workflow checklists |
+| 01-22 | 4.2.5 | 4 | M | Test | 8k | 8 | 22 | direct | ~2k | E2E tests for AI chat modal and extraction |
 
 ## Task Types
 

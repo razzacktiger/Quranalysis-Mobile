@@ -5,9 +5,9 @@
 **Branch:** epic-4-ai-chat
 
 ## Active Task
-- **ID:** 4.2.5
-- **Name:** E2E Tests for Chat UI
-- **Type:** Test
+- **ID:** 4.3.2
+- **Name:** Voice Input Hook (useVoiceInput)
+- **Type:** Hook
 - **Size:** M
 - **Started:** 2026-01-22
 
@@ -15,12 +15,13 @@
 
 | Task | Tokens | Turns | Tools | Agent | Bugs Caught |
 |------|--------|-------|-------|-------|-------------|
+| 4.2.5 | ~8k | 8 | 22 | direct | 0 |
 
 ## Running Totals
-- Tasks: 0 complete, 1 in progress
-- Tokens: 0 (input: 0, output: 0)
-- Context: (check with /context)
-- Tool calls: 0
+- Tasks: 1 complete, 0 in progress
+- Tokens: ~8k (input: ~6k, output: ~2k)
+- Context: ~10%
+- Tool calls: 22
 
 ## Files Read This Session
 - .claude/status/CURRENT.md
@@ -29,11 +30,20 @@
 - .claude/epics/active/EPIC-4-AI-CHAT/features/4.3-voice-input/TASKS.md
 - .claude/learnings/common-mistakes.md
 - .claude/learnings/react-native.md
-- .claude/meta/session/CURRENT.md (previous session)
+- .claude/meta/session/CURRENT.md
+- tests/e2e/sessions/create.yaml
+- tests/e2e/helpers/common.yaml
+- components/ai/FloatingChatButton.tsx
+- components/ai/ChatModal.tsx
+- app/(tabs)/_layout.tsx
+- components/ai/ChatInput.tsx
+- components/ai/QuickActionChips.tsx
+- components/ai/ChatHeader.tsx
+- components/ai/SessionConfirmation.tsx
+- components/ai/GreetingMessage.tsx
 
 ## Notes
 - New session resuming EPIC-4 with 9/12 tasks complete
-- Remaining tasks: 4.2.5 (E2E tests), 4.3.2 (voice hook), 4.3.3 (voice button), 4.3.4 (voice E2E)
-- Voice tasks (4.3.2-4.3.4) marked as optional in status
-- Task 4.3.1 complete but dev build pending user action
-- Previous session ended at ~85% context with 227 tool calls
+- Task 4.2.5 complete: Created 2 E2E test files for AI chat
+- Remaining: 4.3.2-4.3.4 (voice tasks, optional)
+- Voice tasks require dev build for proper testing
