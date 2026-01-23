@@ -14,6 +14,7 @@ Last 20 tasks with full breakdown.
 | 01-22 | 4.2.1 | 4 | S | UI | 6k | 5 | 12 | direct | ~1k | ExtractionSummary component |
 | 01-22 | 4.2.2+4.2.4 | 4 | L | UI | 15k | 12 | 28 | frontend-design | ~2k | ChatModal + FloatingButton |
 | 01-22 | 4.2.3 | 4 | XL | UI | 20k | 18 | 45 | frontend-design | ~3k | Confirmation screen, 6 bugs caught |
+| 01-22 | BUG-2.1 | 2 | M | Bug | 15k | 12 | 35 | direct | ~3k | Ayah validation, +pages_read fix, PR #6 |
 
 ## Task Types
 
