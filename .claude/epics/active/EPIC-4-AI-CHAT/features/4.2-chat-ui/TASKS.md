@@ -282,5 +282,7 @@ elevation: 8 (Android)
 - Use testIDs for reliable element selection
 
 ### Acceptance
-- [ ] chat-modal.yaml passes
-- [ ] session-extraction.yaml passes
+- [x] chat-modal.yaml passes
+- [x] session-extraction.yaml passes
+
+**Status:** ✅ Complete
