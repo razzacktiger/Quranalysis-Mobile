@@ -216,12 +216,14 @@ While listening, show real-time transcript in tooltip above button:
 - Max 2 lines, truncated
 
 ### Acceptance
-- [ ] Button hidden when not supported
-- [ ] Pulse animation when listening
-- [ ] Red background when listening
-- [ ] Tapping toggles listening state
-- [ ] Final transcript passed to `onTranscript`
-- [ ] Error state shows alert icon
+- [x] Button hidden when not supported
+- [x] Pulse animation when listening
+- [x] Red background when listening
+- [x] Tapping toggles listening state
+- [x] Final transcript passed to `onTranscript`
+- [x] Error state shows alert icon
+
+**Status:** ✅ Complete
 
 ---
 

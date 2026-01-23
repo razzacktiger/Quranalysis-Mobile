@@ -13,3 +13,4 @@ export * from './SessionConfirmation';
 export * from './EditableField';
 export * from './PortionCard';
 export * from './MistakeCard';
+export * from './VoiceInputButton';

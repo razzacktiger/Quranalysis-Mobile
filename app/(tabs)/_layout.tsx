@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import { FloatingChatButton, ChatModal, SessionConfirmation } from '@/components/ai';
+import { FloatingChatButton, ChatModal, SessionConfirmation, VoiceInputButton } from '@/components/ai';
 import { useAIChat } from '@/lib/hooks/useAIChat';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -127,6 +127,13 @@ export default function TabLayout() {
         onConfirm={handleConfirmChat}
         chatState={chatState}
         testID="chat-modal"
+        voiceButton={
+          <VoiceInputButton
+            onTranscript={chatState.sendMessage}
+            disabled={chatState.isLoading}
+            testID="voice-input-button"
+          />
+        }
       />
 
       {/* Session Confirmation Modal */}

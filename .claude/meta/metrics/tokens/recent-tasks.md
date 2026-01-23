@@ -11,6 +11,7 @@ Last 20 tasks with full breakdown.
 | 01-22 | BUG-3.1 | 3 | M | Bug | 8k | 6 | 15 | direct | ~3k | Dashboard heatmap date format mismatch |
 | 01-22 | meta:workflow | - | M | Meta | 12k | 8 | 20 | direct | - | Bug tracking system, workflow checklists |
 | 01-22 | 4.2.5 | 4 | M | Test | 8k | 8 | 22 | direct | ~2k | E2E tests for AI chat modal and extraction |
+| 01-22 | 4.3.2 | 4 | M | API | 12k | 12 | 18 | direct | ~2k | Voice hook, require() fallback for Expo Go |
 
 ## Task Types
 

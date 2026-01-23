@@ -80,3 +80,33 @@ function findLastIndex<T>(array: T[], predicate: (item: T) => boolean): number {
 }
 ```
 **Prevention:** Avoid ES2023+ array methods (`findLastIndex`, `toSorted`, `toReversed`) in React Native code. Use manual implementations or lodash equivalents
+
+## Native modules crash with static imports in Expo Go
+
+**Symptom:** App crashes at startup with import error for native module (e.g., `expo-speech-recognition`)
+**Cause:** Static `import` statements are resolved at bundle time by Metro. Native modules that only work in development builds will crash when imported in Expo Go, even if wrapped in try-catch.
+**Fix:** Use `require()` inside a try-catch block at module scope:
+```typescript
+// BAD - crashes at bundle time in Expo Go
+import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
+
+// GOOD - graceful fallback
+let ExpoSpeechRecognitionModule: any = null;
+let moduleAvailable = false;
+
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const speechRecognition = require('expo-speech-recognition');
+  ExpoSpeechRecognitionModule = speechRecognition.ExpoSpeechRecognitionModule;
+  moduleAvailable = true;
+} catch {
+  // Module not available (e.g., in Expo Go)
+  moduleAvailable = false;
+}
+
+// In hook/component:
+if (!moduleAvailable) {
+  return { isSupported: false, ... };
+}
+```
+**Prevention:** When using native modules that require development builds (speech recognition, camera, etc.), always use `require()` with try-catch to allow graceful fallback in Expo Go
