@@ -68,18 +68,19 @@ export function PortionForm({
   };
 
   const handleAyahStartChange = (text: string) => {
-    let ayah_start = text ? parseInt(text, 10) : undefined;
-
-    // Validate against surah bounds
-    if (selectedSurah && ayah_start !== undefined) {
-      if (ayah_start < 1) ayah_start = 1;
-      if (ayah_start > selectedSurah.ayah_count) ayah_start = selectedSurah.ayah_count;
-    }
-
+    const ayah_start = text ? parseInt(text, 10) : undefined;
     const newData = { ...data, ayah_start };
 
-    // Update calculated values
-    if (selectedSurah && ayah_start && data.ayah_end) {
+    // Update calculated values only if values are valid
+    if (
+      selectedSurah &&
+      ayah_start &&
+      ayah_start >= 1 &&
+      ayah_start <= selectedSurah.ayah_count &&
+      data.ayah_end &&
+      data.ayah_end >= 1 &&
+      data.ayah_end <= selectedSurah.ayah_count
+    ) {
       newData.juz_number = getJuzForAyah(selectedSurah.number, ayah_start);
       newData.pages_read = calculatePagesRead(
         selectedSurah.number,
@@ -92,18 +93,19 @@ export function PortionForm({
   };
 
   const handleAyahEndChange = (text: string) => {
-    let ayah_end = text ? parseInt(text, 10) : undefined;
-
-    // Validate against surah bounds
-    if (selectedSurah && ayah_end !== undefined) {
-      if (ayah_end < 1) ayah_end = 1;
-      if (ayah_end > selectedSurah.ayah_count) ayah_end = selectedSurah.ayah_count;
-    }
-
+    const ayah_end = text ? parseInt(text, 10) : undefined;
     const newData = { ...data, ayah_end };
 
-    // Update calculated values
-    if (selectedSurah && data.ayah_start && ayah_end) {
+    // Update calculated values only if values are valid
+    if (
+      selectedSurah &&
+      data.ayah_start &&
+      data.ayah_start >= 1 &&
+      data.ayah_start <= selectedSurah.ayah_count &&
+      ayah_end &&
+      ayah_end >= 1 &&
+      ayah_end <= selectedSurah.ayah_count
+    ) {
       newData.juz_number = getJuzForAyah(selectedSurah.number, data.ayah_start);
       newData.pages_read = calculatePagesRead(
         selectedSurah.number,

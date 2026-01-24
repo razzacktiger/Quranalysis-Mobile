@@ -1,6 +1,7 @@
 // Session API functions for Supabase CRUD operations
 
 import { supabase } from '../supabase';
+import { SURAHS } from '@/constants/quran-data';
 import type {
   SessionData,
   SessionPortion,
@@ -9,6 +10,58 @@ import type {
   PortionFormData,
   MistakeFormData,
 } from '@/types/session';
+
+/**
+ * Validates portion ayah ranges against surah boundaries
+ * Throws an error if any portion has invalid ayah values
+ */
+function validatePortionAyahs(portions: PortionFormData[]): void {
+  for (const portion of portions) {
+    const surah = SURAHS.find(
+      (s) =>
+        s.transliteration.toLowerCase() === portion.surah_name.toLowerCase() ||
+        s.transliteration.toLowerCase().includes(portion.surah_name.toLowerCase()) ||
+        s.name.includes(portion.surah_name)
+    );
+
+    if (!surah) {
+      // Unknown surah - skip validation (will be handled elsewhere)
+      continue;
+    }
+
+    if (portion.ayah_start !== undefined) {
+      if (portion.ayah_start < 1) {
+        throw new Error(`Invalid ayah start for ${surah.transliteration}: must be at least 1`);
+      }
+      if (portion.ayah_start > surah.ayah_count) {
+        throw new Error(
+          `Invalid ayah start for ${surah.transliteration}: ${portion.ayah_start} exceeds surah length of ${surah.ayah_count} ayahs`
+        );
+      }
+    }
+
+    if (portion.ayah_end !== undefined) {
+      if (portion.ayah_end < 1) {
+        throw new Error(`Invalid ayah end for ${surah.transliteration}: must be at least 1`);
+      }
+      if (portion.ayah_end > surah.ayah_count) {
+        throw new Error(
+          `Invalid ayah end for ${surah.transliteration}: ${portion.ayah_end} exceeds surah length of ${surah.ayah_count} ayahs`
+        );
+      }
+    }
+
+    if (
+      portion.ayah_start !== undefined &&
+      portion.ayah_end !== undefined &&
+      portion.ayah_end < portion.ayah_start
+    ) {
+      throw new Error(
+        `Invalid ayah range for ${surah.transliteration}: end ayah (${portion.ayah_end}) must be >= start ayah (${portion.ayah_start})`
+      );
+    }
+  }
+}
 
 // Response type for session with relations
 export interface SessionWithRelations extends SessionData {
@@ -67,6 +120,9 @@ export async function createSession(formData: SessionFormData): Promise<SessionW
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
+  // Validate ayah ranges before saving
+  validatePortionAyahs(formData.portions);
+
   // 1. Insert session
   const { data: session, error: sessionError } = await supabase
     .from('sessions')
@@ -91,7 +147,7 @@ export async function createSession(formData: SessionFormData): Promise<SessionW
     ayah_start: p.ayah_start ?? 1,
     ayah_end: p.ayah_end ?? 1,
     juz_number: p.juz_number ?? 1,
-    pages_read: p.pages_read ?? 1, // DB constraint requires >= 1
+    pages_read: Math.max(1, Math.round(p.pages_read ?? 1)), // DB requires integer >= 1
     repetition_count: p.repetition_count,
     recency_category: p.recency_category,
   }));
@@ -159,6 +215,9 @@ export async function updateSession(
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
+  // Validate ayah ranges before saving
+  validatePortionAyahs(formData.portions);
+
   // 1. Update session metadata
   const { data: session, error: sessionError } = await supabase
     .from('sessions')
@@ -208,7 +267,7 @@ export async function updateSession(
       ayah_start: portion.ayah_start ?? 1,
       ayah_end: portion.ayah_end ?? 1,
       juz_number: portion.juz_number ?? 1,
-      pages_read: portion.pages_read ?? 1, // DB constraint requires >= 1
+      pages_read: Math.max(1, Math.round(portion.pages_read ?? 1)), // DB requires integer >= 1
       repetition_count: portion.repetition_count,
       recency_category: portion.recency_category,
     };

@@ -1,15 +1,42 @@
 # Common Mistakes
 
-## Numeric inputs without bounds validation
+## Numeric inputs without bounds validation (multi-layer approach)
 
-**Symptom:** User enters value outside valid range (e.g., ayah 999 in a 7-ayah surah), database rejects
-**Cause:** Relied on database validation instead of frontend validation
-**Fix:** Add bounds checking in change handlers:
+**Symptom:** User enters value outside valid range (e.g., ayah 100 for Surah Maryam which has 98), data saved to DB
+**Cause:** Multiple entry points (form, AI extraction) - validation only in form layer gets bypassed
+**Fix:** Implement validation at multiple layers:
+1. **Zod schema** - Primary validation with helpful error messages
+2. **API layer** - Safety net before DB writes (catches bypassed form validation)
+3. **UI layer** - Immediate feedback with visual indicators
 ```typescript
-if (value > maxValue) value = maxValue;
-if (value < minValue) value = minValue;
+// Zod schema with superRefine for context-aware validation
+.superRefine((data, ctx) => {
+  const surah = getSurahByName(data.surah_name);
+  if (surah && data.ayah_end > surah.ayah_count) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: `${surah.transliteration} only has ${surah.ayah_count} ayahs`,
+      path: ['ayah_end'],
+    });
+  }
+});
 ```
-**Prevention:** Always validate numeric inputs against known bounds at input time, not just form submission
+**Prevention:** When data can enter through multiple paths (forms, APIs, AI), validate at the API layer as a safety net
+
+## Silent value clamping hides validation errors
+
+**Symptom:** Form doesn't show error but value is changed without user knowing
+**Cause:** Input handler silently clamps values (e.g., `if (value > max) value = max`) instead of showing error
+**Fix:** Let validation layer handle errors; show error messages instead of clamping:
+```typescript
+// Bad: silent clamp
+if (ayah_end > surah.ayah_count) ayah_end = surah.ayah_count;
+
+// Good: let Zod validation show error
+const ayah_end = text ? parseInt(text, 10) : undefined;
+onChange({ ...data, ayah_end }); // Zod will show error if invalid
+```
+**Prevention:** Use validation schemas (Zod) for error messaging; avoid silently "fixing" user input
 
 ## DatePicker datetime mode only captures date
 

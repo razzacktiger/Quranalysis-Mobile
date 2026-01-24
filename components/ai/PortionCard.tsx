@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, Text, Pressable, Modal, Alert, TextInput, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { RECENCY_CATEGORIES, type RecencyCategory } from '@/types/session';
+import { SURAHS } from '@/constants/quran-data';
 
 export interface PortionCardData {
   tempId: string;
@@ -40,6 +41,42 @@ export function PortionCard({
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [editedPortion, setEditedPortion] = useState(portion);
 
+  // Get surah info for validation
+  const surahInfo = useMemo(() => {
+    if (!editedPortion.surah_name) return null;
+    const searchName = editedPortion.surah_name.toLowerCase().trim();
+    return SURAHS.find(
+      (s) =>
+        s.transliteration.toLowerCase() === searchName ||
+        s.transliteration.toLowerCase().includes(searchName) ||
+        s.name.includes(editedPortion.surah_name!)
+    );
+  }, [editedPortion.surah_name]);
+
+  // Validate ayah bounds
+  const ayahStartError = useMemo(() => {
+    if (!surahInfo || editedPortion.ayah_start === null) return null;
+    if (editedPortion.ayah_start < 1) return 'Must be at least 1';
+    if (editedPortion.ayah_start > surahInfo.ayah_count) {
+      return `Max ${surahInfo.ayah_count}`;
+    }
+    return null;
+  }, [surahInfo, editedPortion.ayah_start]);
+
+  const ayahEndError = useMemo(() => {
+    if (!surahInfo || editedPortion.ayah_end === null) return null;
+    if (editedPortion.ayah_end < 1) return 'Must be at least 1';
+    if (editedPortion.ayah_end > surahInfo.ayah_count) {
+      return `Max ${surahInfo.ayah_count}`;
+    }
+    if (editedPortion.ayah_start !== null && editedPortion.ayah_end < editedPortion.ayah_start) {
+      return 'Must be >= start';
+    }
+    return null;
+  }, [surahInfo, editedPortion.ayah_start, editedPortion.ayah_end]);
+
+  const hasValidationErrors = ayahStartError !== null || ayahEndError !== null;
+
   const handleRemove = () => {
     Alert.alert(
       'Remove Portion',
@@ -56,6 +93,10 @@ export function PortionCard({
   };
 
   const handleEditSave = () => {
+    if (hasValidationErrors) {
+      Alert.alert('Invalid Input', 'Please fix the validation errors before saving.');
+      return;
+    }
     onEdit(editedPortion);
     setEditModalVisible(false);
   };
@@ -167,8 +208,18 @@ export function PortionCard({
               <Text className="text-lg font-semibold text-gray-900">
                 Edit Portion
               </Text>
-              <Pressable testID={`${testID}-modal-save`} onPress={handleEditSave}>
-                <Text className="text-base text-primary font-semibold">Save</Text>
+              <Pressable
+                testID={`${testID}-modal-save`}
+                onPress={handleEditSave}
+                disabled={hasValidationErrors}
+              >
+                <Text
+                  className={`text-base font-semibold ${
+                    hasValidationErrors ? 'text-gray-400' : 'text-primary'
+                  }`}
+                >
+                  Save
+                </Text>
               </Pressable>
             </View>
 
@@ -183,6 +234,13 @@ export function PortionCard({
                   </Text>
                 </View>
               </View>
+
+              {/* Surah ayah count hint */}
+              {surahInfo && (
+                <Text className="text-xs text-gray-500 mb-2">
+                  {surahInfo.transliteration} has {surahInfo.ayah_count} ayahs
+                </Text>
+              )}
 
               {/* Ayah Range - Editable */}
               <View className="flex-row gap-3 mb-4">
@@ -200,8 +258,13 @@ export function PortionCard({
                     }}
                     placeholder="1"
                     keyboardType="numeric"
-                    className="border border-gray-200 rounded-lg px-3 py-3 text-base text-gray-900"
+                    className={`border rounded-lg px-3 py-3 text-base text-gray-900 ${
+                      ayahStartError ? 'border-red-400 bg-red-50' : 'border-gray-200'
+                    }`}
                   />
+                  {ayahStartError && (
+                    <Text className="text-xs text-red-500 mt-1">{ayahStartError}</Text>
+                  )}
                 </View>
                 <View className="flex-1">
                   <Text className="text-sm text-gray-500 mb-1">End Ayah</Text>
@@ -215,10 +278,15 @@ export function PortionCard({
                         ayah_end: isNaN(num) ? null : num,
                       });
                     }}
-                    placeholder="7"
+                    placeholder={surahInfo?.ayah_count.toString() ?? '7'}
                     keyboardType="numeric"
-                    className="border border-gray-200 rounded-lg px-3 py-3 text-base text-gray-900"
+                    className={`border rounded-lg px-3 py-3 text-base text-gray-900 ${
+                      ayahEndError ? 'border-red-400 bg-red-50' : 'border-gray-200'
+                    }`}
                   />
+                  {ayahEndError && (
+                    <Text className="text-xs text-red-500 mt-1">{ayahEndError}</Text>
+                  )}
                 </View>
               </View>
 

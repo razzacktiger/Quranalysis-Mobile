@@ -11,6 +11,10 @@
 - **Size:** -
 - **Started:** -
 
+## Active Agents
+
+_None_
+
 ## This Session (Running)
 
 | Task | Tokens | Turns | Tools | Agent | Bugs Caught |
