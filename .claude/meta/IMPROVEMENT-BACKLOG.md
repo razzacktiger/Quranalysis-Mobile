@@ -22,6 +22,7 @@
 | I-007 | Session | Task 4.2.3 context exhaustion: 6 bugs found during testing after full implementation. Cause: No incremental testing, no code-reviewer before user testing, L-size task with 4 components. Fix: Run code-reviewer per component, test incrementally, consider splitting large UI tasks. | High | M | Open |
 | I-008 | User | Branch management friction: Need to ensure on correct branch before work, PR merge flow requires multiple steps. Consider: auto-detect branch state at session start, streamline PR merge command. | Low | S | Open |
 | I-009 | User | After /complete-task, user wants quick view of "what's next" without reading full status file. Consider: Add "Next up" line at end of completion report. Note: Keep lightweight, don't bloat workflow. | Low | S | Open |
+| I-010 | Session | Workflow improvements should be done in dedicated sessions, not mid-project-task. Exception: critical blockers like session recording that must be fixed before session end. Consider: `/improve-workflow` command that starts a meta-session specifically for workflow changes. | Med | S | Open |
 
 ## Completed
 

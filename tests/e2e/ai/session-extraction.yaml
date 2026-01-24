@@ -1,0 +1,120 @@
+# AI Session Extraction E2E Test
+# Run with: maestro test tests/e2e/ai/session-extraction.yaml
+# Note: This test requires network access for AI responses
+appId: com.quranalysis.mobile
+name: AI Chat - Session Extraction Flow
+---
+- launchApp
+- waitForAnimationToEnd
+
+# =====================
+# Step 1: Open chat modal
+# =====================
+- tapOn:
+    id: "floating-chat-button"
+- waitForAnimationToEnd
+
+- assertVisible:
+    id: "chat-modal"
+
+# =====================
+# Step 2: Type session description
+# =====================
+- tapOn:
+    id: "chat-modal-input-input"
+
+# Input a realistic session description
+- inputText: "I practiced Al-Fatiha and Al-Baqarah ayahs 1-5 for 25 minutes. Made a tajweed mistake on ghunna in ayah 3 of Al-Fatiha."
+
+# =====================
+# Step 3: Send message
+# =====================
+- tapOn:
+    id: "chat-modal-input-send"
+
+# =====================
+# Step 4: Wait for AI response (15s timeout)
+# =====================
+# First verify loading state appears
+- extendedWaitUntil:
+    visible:
+      id: "chat-modal-loading"
+    timeout: 5000
+
+# Wait for response to complete
+- extendedWaitUntil:
+    notVisible:
+      id: "chat-modal-loading"
+    timeout: 30000
+
+# =====================
+# Step 5: Verify extraction summary shows
+# =====================
+- assertVisible:
+    id: "chat-modal-summary"
+
+# =====================
+# Step 6: Tap "Review & Save" button
+# =====================
+# The review button should be visible when extraction has data
+- extendedWaitUntil:
+    visible:
+      id: "chat-modal-header-confirm"
+    timeout: 5000
+
+- tapOn:
+    id: "chat-modal-header-confirm"
+- waitForAnimationToEnd
+
+# =====================
+# Step 7: Verify confirmation screen
+# =====================
+- assertVisible:
+    id: "session-confirmation"
+
+# =====================
+# Step 8: Verify data displayed
+# =====================
+# Session details section should be visible
+- assertVisible: "Session Details"
+
+# Should show portions section
+- assertVisible: "Portions"
+
+# Should show mistakes section
+- assertVisible: "Mistakes"
+
+# Save and cancel buttons should be visible
+- assertVisible:
+    id: "session-confirmation-save"
+- assertVisible:
+    id: "session-confirmation-cancel"
+
+# =====================
+# Step 9: Tap "Save Session"
+# =====================
+- tapOn:
+    id: "session-confirmation-save"
+
+# =====================
+# Step 10: Verify modal closes on success
+# =====================
+# Wait for save operation and alert
+- extendedWaitUntil:
+    visible: "Success"
+    timeout: 10000
+
+- tapOn: "OK"
+- waitForAnimationToEnd
+
+# Confirmation modal should be closed
+- assertNotVisible:
+    id: "session-confirmation"
+
+# Chat modal should also be closed (cleared after save)
+- assertNotVisible:
+    id: "chat-modal"
+
+# App should be back to normal state with floating button
+- assertVisible:
+    id: "floating-chat-button"

@@ -1,0 +1,106 @@
+# AI Chat Modal E2E Test
+# Run with: maestro test tests/e2e/ai/chat-modal.yaml
+appId: com.quranalysis.mobile
+name: AI Chat - Modal UI States
+---
+- launchApp
+- waitForAnimationToEnd
+
+# =====================
+# Test 1: Floating button visible on launch
+# =====================
+- assertVisible:
+    id: "floating-chat-button"
+
+# =====================
+# Test 2: Tap button opens modal
+# =====================
+- tapOn:
+    id: "floating-chat-button"
+- waitForAnimationToEnd
+
+# Verify modal is visible
+- assertVisible:
+    id: "chat-modal"
+
+# =====================
+# Test 3: Initial greeting visible
+# =====================
+- assertVisible: "Assalamu Alaikum"
+- assertVisible: "Try saying or typing"
+
+# =====================
+# Test 4: Header elements visible
+# =====================
+- assertVisible:
+    id: "chat-modal-header"
+- assertVisible:
+    id: "chat-modal-header-close"
+- assertVisible: "AI Assistant"
+
+# =====================
+# Test 5: Quick action chips visible
+# =====================
+- assertVisible:
+    id: "chat-modal-chips"
+- assertVisible:
+    id: "chat-modal-chips-log-session"
+- assertVisible:
+    id: "chat-modal-chips-add-mistake"
+
+# =====================
+# Test 6: Input area visible
+# =====================
+- assertVisible:
+    id: "chat-modal-input"
+- assertVisible:
+    id: "chat-modal-input-send"
+
+# =====================
+# Test 7: Quick action chip sends message
+# =====================
+- tapOn:
+    id: "chat-modal-chips-log-session"
+
+# Should show loading indicator while AI responds
+- extendedWaitUntil:
+    visible:
+      id: "chat-modal-loading"
+    timeout: 5000
+
+# Wait for AI response (longer timeout for network)
+- extendedWaitUntil:
+    notVisible:
+      id: "chat-modal-loading"
+    timeout: 30000
+
+# =====================
+# Test 8: Close button closes modal
+# =====================
+- tapOn:
+    id: "chat-modal-header-close"
+- waitForAnimationToEnd
+
+# Modal should be closed
+- assertNotVisible:
+    id: "chat-modal"
+
+# Floating button should still be visible
+- assertVisible:
+    id: "floating-chat-button"
+
+# =====================
+# Test 9: Modal can be reopened
+# =====================
+- tapOn:
+    id: "floating-chat-button"
+- waitForAnimationToEnd
+
+# Previous conversation should still be visible (not cleared on close)
+- assertVisible:
+    id: "chat-modal"
+
+# Close again
+- tapOn:
+    id: "chat-modal-header-close"
+- waitForAnimationToEnd

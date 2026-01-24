@@ -146,12 +146,14 @@ ExpoSpeechRecognitionModule.getSupportedLocales({})
 | `audio-capture` | "Could not access microphone." |
 
 ### Acceptance
-- [ ] Hook returns all interface properties
-- [ ] Permission requested on first `startListening`
-- [ ] Real-time transcript updates via `interimResults`
-- [ ] `isSupported` correctly detects capability
-- [ ] Errors surfaced with user-friendly messages
-- [ ] Clean stop/cancel behavior
+- [x] Hook returns all interface properties
+- [x] Permission requested on first `startListening`
+- [x] Real-time transcript updates via `interimResults`
+- [x] `isSupported` correctly detects capability
+- [x] Errors surfaced with user-friendly messages
+- [x] Clean stop/cancel behavior
+
+**Status:** ✅ Complete
 
 ---
 
@@ -214,12 +216,14 @@ While listening, show real-time transcript in tooltip above button:
 - Max 2 lines, truncated
 
 ### Acceptance
-- [ ] Button hidden when not supported
-- [ ] Pulse animation when listening
-- [ ] Red background when listening
-- [ ] Tapping toggles listening state
-- [ ] Final transcript passed to `onTranscript`
-- [ ] Error state shows alert icon
+- [x] Button hidden when not supported
+- [x] Pulse animation when listening
+- [x] Red background when listening
+- [x] Tapping toggles listening state
+- [x] Final transcript passed to `onTranscript`
+- [x] Error state shows alert icon
+
+**Status:** ✅ Complete
 
 ---
 

@@ -1,0 +1,72 @@
+# Voice Input E2E Test
+# Run with: maestro test tests/e2e/ai/voice-input.yaml
+# NOTE: Requires development build - voice button hidden in Expo Go
+appId: com.quranalysis.mobile
+name: Voice Input - UI States
+---
+- launchApp
+- waitForAnimationToEnd
+
+# =====================
+# Open chat modal first
+# =====================
+- tapOn:
+    id: "floating-chat-button"
+- waitForAnimationToEnd
+
+# Verify modal is open
+- assertVisible:
+    id: "chat-modal"
+
+# =====================
+# Test 1: Voice button visibility (conditional)
+# =====================
+# Voice button may not be visible in Expo Go (isSupported = false)
+# Use conditional flow to test only when available
+- runFlow:
+    when:
+      visible:
+        id: "voice-input-button"
+    commands:
+      # =====================
+      # Test 2: Tap to start listening
+      # =====================
+      - tapOn:
+          id: "voice-input-button"
+
+      # May show permission dialog - test continues if accepted
+      # NOTE: Maestro cannot auto-accept iOS permissions on first run
+      # Run test a second time after manually accepting permissions
+
+      # =====================
+      # Test 3: Verify listening indicator appears
+      # =====================
+      - extendedWaitUntil:
+          visible:
+            id: "voice-listening-indicator"
+          timeout: 3000
+
+      # =====================
+      # Test 4: Tap to stop listening
+      # =====================
+      - tapOn:
+          id: "voice-input-button"
+
+      # =====================
+      # Test 5: Verify back to idle state
+      # =====================
+      - extendedWaitUntil:
+          notVisible:
+            id: "voice-listening-indicator"
+          timeout: 3000
+
+# =====================
+# Cleanup: Close modal
+# =====================
+- tapOn:
+    id: "chat-modal-header-close"
+- waitForAnimationToEnd
+
+# Verify modal closed
+- assertNotVisible:
+    id: "chat-modal"

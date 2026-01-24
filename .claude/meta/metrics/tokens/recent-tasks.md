@@ -15,6 +15,10 @@ Last 20 tasks with full breakdown.
 | 01-22 | 4.2.2+4.2.4 | 4 | L | UI | 15k | 12 | 28 | frontend-design | ~2k | ChatModal + FloatingButton |
 | 01-22 | 4.2.3 | 4 | XL | UI | 20k | 18 | 45 | frontend-design | ~3k | Confirmation screen, 6 bugs caught |
 | 01-22 | BUG-2.1 | 2 | M | Bug | 15k | 12 | 35 | direct | ~3k | Ayah validation, +pages_read fix, PR #6 |
+| 01-22 | 4.2.5 | 4 | M | Test | 8k | 8 | 22 | direct | ~2k | E2E tests for AI chat modal and extraction |
+| 01-22 | 4.3.2 | 4 | M | API | 12k | 12 | 18 | direct | ~2k | Voice hook, require() fallback for Expo Go |
+| 01-22 | 4.3.3 | 4 | S | UI | 6k | 6 | 12 | direct | ~1k | Voice button with pulse animation |
+| 01-24 | 4.3.4 | 4 | S | Test | 5k | 4 | 12 | direct | ~3k | Voice E2E test (written, not verified) |
 
 ## Task Types
 
