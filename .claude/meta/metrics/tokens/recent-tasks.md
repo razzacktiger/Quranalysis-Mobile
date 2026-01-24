@@ -12,6 +12,8 @@ Last 20 tasks with full breakdown.
 | 01-22 | meta:workflow | - | M | Meta | 12k | 8 | 20 | direct | - | Bug tracking system, workflow checklists |
 | 01-22 | 4.2.5 | 4 | M | Test | 8k | 8 | 22 | direct | ~2k | E2E tests for AI chat modal and extraction |
 | 01-22 | 4.3.2 | 4 | M | API | 12k | 12 | 18 | direct | ~2k | Voice hook, require() fallback for Expo Go |
+| 01-22 | 4.3.3 | 4 | S | UI | 6k | 6 | 12 | direct | ~1k | Voice button with pulse animation |
+| 01-24 | 4.3.4 | 4 | S | Test | 5k | 4 | 12 | direct | ~3k | Voice E2E test (written, not verified) |
 
 ## Task Types
 
