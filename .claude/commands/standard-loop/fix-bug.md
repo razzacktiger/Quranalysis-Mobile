@@ -88,55 +88,53 @@ Follow standard development flow:
 3. Implement fix
 4. Verify fix works
 
-## Step 8: Complete Bug Fix
+## Step 8: Verify Fix Ready
 
-After user approves fix:
+Before presenting fix to user for approval, verify:
+- [ ] Root cause identified and documented
+- [ ] Fix implemented
+- [ ] `npm run typecheck` passes
+- [ ] Reproduction steps no longer reproduce bug
+- [ ] No console errors
+- [ ] Regression test added (if applicable)
 
-1. **Update BUGS.md:**
-   - Move bug entry from "## Open Bugs" to "## Fixed Bugs"
-   - Update status: `**Status:** Fixed`
-   - Add: `**Fixed Date:** {today}` | `**Fixed In:** {commit}`
+## Step 9: Report & Hand Off to /complete-task
 
-2. **Create Commit:**
-   ```bash
-   git add -A
-   git commit -m "fix(epic-X): BUG-X.X.X - {title}
-
-   - {description of fix}
-
-   Co-Authored-By: Claude <noreply@anthropic.com>"
-   ```
-
-3. **Update Session Metrics:**
-   Add to session table with "BUG" marker:
-   ```
-   | BUG-4.2.1 | ~5k | 3 | 8 | - | - |
-   ```
-
-4. **Remove from Epic Blockers:**
-   If bug was listed in epic README blockers, remove it.
-
-## Step 9: Report
-
-Tell the user:
-- Bug fixed and committed
-- Commit hash
+Present the fix to the user:
+- What the root cause was
+- What was changed to fix it
+- Files modified
 - Remaining bugs for this feature (if any)
-- If feature is now unblocked
 
 **Example output:**
 ```
-Fixed BUG-4.2.1: Modal crash on rapid close
+## Bug Fix Ready for Review
 
-Commit: abc1234
-Fix: Added debounce to close handler
+**Bug:** BUG-4.2.1 - Modal crash on rapid close
+**Root Cause:** Close handler fired multiple times without debounce
+**Fix:** Added 300ms debounce to close handler
 
-Feature 4.2 bug status:
-- Blocking bugs remaining: 1 (BUG-4.2.2)
-- Non-blocking bugs: 1
+**Files Modified:**
+- components/ai/ChatModal.tsx
 
-Feature 4.2 is still blocked. Fix BUG-4.2.2 next?
+**Verification:**
+- ✅ Typecheck passes
+- ✅ Bug no longer reproduces
+- ✅ No console errors
+
+**Remaining bugs for Feature 4.2:**
+- Blocking: 1 (BUG-4.2.2)
+- Non-blocking: 1
+
+Ready to commit? Run `/complete-task` to finalize.
 ```
+
+**IMPORTANT:** Do NOT commit or update metrics here. The `/complete-task` command handles:
+- Creating the commit
+- Updating BUGS.md (move to Fixed, add commit hash)
+- Updating epic README (remove from blockers if listed)
+- Updating session metrics
+- Capturing learnings
 
 ## Example Usage
 
@@ -164,24 +162,18 @@ When using `/start-epic X-name --bugs` or `/start-epic X-name bugs`:
 - Start with highest severity bug
 - Follow this workflow
 
-## Bug Fix Checklist (Before Reporting to User)
+## Workflow Summary
 
-Verify these before presenting fix to user for approval:
-- [ ] Root cause identified and documented
-- [ ] Fix implemented
-- [ ] `npm run typecheck` passes
-- [ ] Reproduction steps no longer reproduce bug
-- [ ] No console errors
-- [ ] Regression test added (if applicable)
+```
+/fix-bug 4.2
+    ↓
+Select bug → Load details → Check learnings
+    ↓
+Plan fix → Execute fix → Verify ready (Step 8)
+    ↓
+Report to user (Step 9)
+    ↓
+User runs /complete-task → Commit, metrics, BUGS.md update
+```
 
-**Then report to user:**
-- What the root cause was
-- What was changed to fix it
-- Files modified
-
-**After user approval:** Prompt them to run `/complete-task` which will:
-- Create the commit
-- Update BUGS.md (move to Fixed, add commit hash)
-- Update epic README (remove from blockers)
-- Update session metrics
-- Capture learnings
+**Key:** `/fix-bug` handles discovery and implementation. `/complete-task` handles finalization.

@@ -44,9 +44,25 @@ For each task, note:
 ### If "new N-name":
 Create `epics/active/EPIC-N-NAME/`:
 - README.md (epic overview)
-- FEATURE-N.1-name.md
-- FEATURE-N.2-name.md
+- features/N.1-name/TASKS.md
+- features/N.2-name/TASKS.md
 - etc.
+
+**IMPORTANT - Canonical Structure:**
+Use the subdirectory pattern (like EPIC-4):
+```
+EPIC-N-NAME/
+├── README.md           # Epic overview, feature table
+└── features/
+    ├── N.1-name/
+    │   ├── TASKS.md    # Task list for this feature
+    │   └── BUGS.md     # (created by /add-bug if needed)
+    └── N.2-name/
+        └── TASKS.md
+```
+
+Do NOT use flat `FEATURE-N.X.md` files at root or a single root `TASKS.md`.
+This structure enables `/start-epic`, `/next-task`, and `/fix-bug` to navigate consistently.
 
 ### If "add-to EPIC-N":
 Add new FEATURE-N.X-name.md to existing epic folder.
@@ -75,15 +91,18 @@ Show summary:
 ```markdown
 # EPIC-N: {Name}
 
+**Status:** Not Started
+**Priority:** {High/Medium/Low}
+
 ## Goal
 {1-2 sentences}
 
 ## Features
 
-| ID | Feature | Status | Tasks |
-|----|---------|--------|-------|
-| N.1 | {name} | Not Started | X |
-| N.2 | {name} | Not Started | X |
+| ID | Feature | Status | Tasks | Folder |
+|----|---------|--------|-------|--------|
+| N.1 | {name} | Not Started | X | [features/N.1-name](./features/N.1-name/) |
+| N.2 | {name} | Not Started | X | [features/N.2-name](./features/N.2-name/) |
 
 ## Dependencies
 - Requires: {epics}
@@ -95,7 +114,8 @@ Show summary:
 - [ ] Human QA approved
 ```
 
-## Feature File Template
+## Feature TASKS.md Template
+File: `features/N.X-name/TASKS.md`
 ```markdown
 # Feature N.X: {Name}
 
@@ -111,6 +131,9 @@ Show summary:
 
 ## Acceptance Criteria
 - [ ] {criterion}
+
+## Human QA
+- [ ] {manual verification}
 ```
 
 ## Example Usage
