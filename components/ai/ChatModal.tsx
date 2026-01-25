@@ -123,7 +123,7 @@ export function ChatModal({
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="flex-1 bg-white"
+        className="flex-1 bg-white dark:bg-gray-900"
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
       >
         {/* Header */}

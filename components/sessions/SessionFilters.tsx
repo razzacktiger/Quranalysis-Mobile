@@ -147,11 +147,11 @@ export function SessionFiltersComponent({
   return (
     <View testID={testID} className="mb-3">
       {/* Search Input */}
-      <View className="flex-row items-center bg-white rounded-lg border border-gray-200 px-3 h-12 mb-3">
+      <View className="flex-row items-center bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 px-3 h-12 mb-3">
         <Text className="text-gray-400 mr-2">🔍</Text>
         <TextInput
           testID={`${testID}-search`}
-          className="flex-1 text-base text-gray-900 h-full py-0"
+          className="flex-1 text-base text-gray-900 dark:text-gray-100 h-full py-0"
           placeholder="Search surah, type, date..."
           placeholderTextColor="#9CA3AF"
           value={filters.searchQuery}
@@ -181,10 +181,10 @@ export function SessionFiltersComponent({
           testID={`${testID}-type-filter`}
           onPress={() => setShowTypeModal(true)}
           className={`px-3 py-1.5 rounded-full border ${
-            filters.sessionType ? 'bg-primary border-primary' : 'bg-white border-gray-200'
+            filters.sessionType ? 'bg-primary border-primary' : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
           }`}
         >
-          <Text className={`text-sm font-medium ${filters.sessionType ? 'text-white' : 'text-gray-700'}`}>
+          <Text className={`text-sm font-medium ${filters.sessionType ? 'text-white' : 'text-gray-700 dark:text-gray-300'}`}>
             {filters.sessionType ? SESSION_TYPE_LABELS[filters.sessionType] : 'Type'}
           </Text>
         </Pressable>
@@ -194,10 +194,10 @@ export function SessionFiltersComponent({
           testID={`${testID}-surah-filter`}
           onPress={() => setShowSurahModal(true)}
           className={`px-3 py-1.5 rounded-full border ${
-            filters.surahName ? 'bg-primary border-primary' : 'bg-white border-gray-200'
+            filters.surahName ? 'bg-primary border-primary' : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
           }`}
         >
-          <Text className={`text-sm font-medium ${filters.surahName ? 'text-white' : 'text-gray-700'}`}>
+          <Text className={`text-sm font-medium ${filters.surahName ? 'text-white' : 'text-gray-700 dark:text-gray-300'}`}>
             {filters.surahName || 'Surah'}
           </Text>
         </Pressable>
@@ -207,10 +207,10 @@ export function SessionFiltersComponent({
           testID={`${testID}-date-filter`}
           onPress={() => setShowDateModal(true)}
           className={`px-3 py-1.5 rounded-full border ${
-            filters.dateFrom || filters.dateTo ? 'bg-primary border-primary' : 'bg-white border-gray-200'
+            filters.dateFrom || filters.dateTo ? 'bg-primary border-primary' : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
           }`}
         >
-          <Text className={`text-sm font-medium ${filters.dateFrom || filters.dateTo ? 'text-white' : 'text-gray-700'}`}>
+          <Text className={`text-sm font-medium ${filters.dateFrom || filters.dateTo ? 'text-white' : 'text-gray-700 dark:text-gray-300'}`}>
             {getDateLabel()}
           </Text>
         </Pressable>
@@ -220,10 +220,10 @@ export function SessionFiltersComponent({
           testID={`${testID}-performance-filter`}
           onPress={() => setShowPerformanceModal(true)}
           className={`px-3 py-1.5 rounded-full border ${
-            filters.performanceMin !== null ? 'bg-primary border-primary' : 'bg-white border-gray-200'
+            filters.performanceMin !== null ? 'bg-primary border-primary' : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
           }`}
         >
-          <Text className={`text-sm font-medium ${filters.performanceMin !== null ? 'text-white' : 'text-gray-700'}`}>
+          <Text className={`text-sm font-medium ${filters.performanceMin !== null ? 'text-white' : 'text-gray-700 dark:text-gray-300'}`}>
             {getPerformanceLabel()}
           </Text>
         </Pressable>
@@ -233,10 +233,10 @@ export function SessionFiltersComponent({
           testID={`${testID}-mistakes-filter`}
           onPress={() => setShowMistakeModal(true)}
           className={`px-3 py-1.5 rounded-full border ${
-            filters.mistakeFilter !== 'all' ? 'bg-primary border-primary' : 'bg-white border-gray-200'
+            filters.mistakeFilter !== 'all' ? 'bg-primary border-primary' : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
           }`}
         >
-          <Text className={`text-sm font-medium ${filters.mistakeFilter !== 'all' ? 'text-white' : 'text-gray-700'}`}>
+          <Text className={`text-sm font-medium ${filters.mistakeFilter !== 'all' ? 'text-white' : 'text-gray-700 dark:text-gray-300'}`}>
             {filters.mistakeFilter === 'all' ? 'Mistakes' : MISTAKE_FILTER_LABELS[filters.mistakeFilter]}
           </Text>
         </Pressable>
@@ -246,10 +246,10 @@ export function SessionFiltersComponent({
           testID={`${testID}-recency-filter`}
           onPress={() => setShowRecencyModal(true)}
           className={`px-3 py-1.5 rounded-full border ${
-            filters.recencyCategory ? 'bg-primary border-primary' : 'bg-white border-gray-200'
+            filters.recencyCategory ? 'bg-primary border-primary' : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
           }`}
         >
-          <Text className={`text-sm font-medium ${filters.recencyCategory ? 'text-white' : 'text-gray-700'}`}>
+          <Text className={`text-sm font-medium ${filters.recencyCategory ? 'text-white' : 'text-gray-700 dark:text-gray-300'}`}>
             {filters.recencyCategory ? RECENCY_LABELS[filters.recencyCategory] : 'Recency'}
           </Text>
         </Pressable>
@@ -259,9 +259,9 @@ export function SessionFiltersComponent({
           <Pressable
             testID={`${testID}-clear-all`}
             onPress={clearFilters}
-            className="px-3 py-1.5 rounded-full bg-gray-100 border border-gray-200"
+            className="px-3 py-1.5 rounded-full bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-600"
           >
-            <Text className="text-sm font-medium text-gray-600">
+            <Text className="text-sm font-medium text-gray-600 dark:text-gray-300">
               Clear{activeFilterCount > 0 ? ` (${activeFilterCount})` : ' All'}
             </Text>
           </Pressable>
@@ -271,10 +271,10 @@ export function SessionFiltersComponent({
       {/* Session Type Modal */}
       <Modal visible={showTypeModal} transparent animationType="slide" onRequestClose={() => setShowTypeModal(false)}>
         <Pressable className="flex-1 bg-black/50 justify-end" onPress={() => setShowTypeModal(false)}>
-          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white rounded-t-2xl">
-            <View className="p-4 border-b border-gray-100">
+          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white dark:bg-gray-800 rounded-t-2xl">
+            <View className="p-4 border-b border-gray-100 dark:border-gray-700">
               <View className="flex-row justify-between items-center">
-                <Text className="text-lg font-semibold text-gray-900">Session Type</Text>
+                <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">Session Type</Text>
                 <Pressable onPress={() => setShowTypeModal(false)}>
                   <Text className="text-primary font-medium">Done</Text>
                 </Pressable>
@@ -283,9 +283,9 @@ export function SessionFiltersComponent({
             <View className="p-4">
               <Pressable
                 onPress={() => { updateFilter('sessionType', null); setShowTypeModal(false); }}
-                className={`p-3 rounded-lg mb-2 ${!filters.sessionType ? 'bg-primary/10' : 'bg-gray-50'}`}
+                className={`p-3 rounded-lg mb-2 ${!filters.sessionType ? 'bg-primary/10' : 'bg-gray-50 dark:bg-gray-700'}`}
               >
-                <Text className={`text-base ${!filters.sessionType ? 'text-primary font-medium' : 'text-gray-700'}`}>
+                <Text className={`text-base ${!filters.sessionType ? 'text-primary font-medium' : 'text-gray-700 dark:text-gray-300'}`}>
                   All Types
                 </Text>
               </Pressable>
@@ -293,9 +293,9 @@ export function SessionFiltersComponent({
                 <Pressable
                   key={type}
                   onPress={() => { updateFilter('sessionType', type); setShowTypeModal(false); }}
-                  className={`p-3 rounded-lg mb-2 ${filters.sessionType === type ? 'bg-primary/10' : 'bg-gray-50'}`}
+                  className={`p-3 rounded-lg mb-2 ${filters.sessionType === type ? 'bg-primary/10' : 'bg-gray-50 dark:bg-gray-700'}`}
                 >
-                  <Text className={`text-base ${filters.sessionType === type ? 'text-primary font-medium' : 'text-gray-700'}`}>
+                  <Text className={`text-base ${filters.sessionType === type ? 'text-primary font-medium' : 'text-gray-700 dark:text-gray-300'}`}>
                     {SESSION_TYPE_LABELS[type]}
                   </Text>
                 </Pressable>
@@ -309,18 +309,18 @@ export function SessionFiltersComponent({
       {/* Surah Filter Modal */}
       <Modal visible={showSurahModal} transparent animationType="slide" onRequestClose={() => { setShowSurahModal(false); setSurahSearch(''); }}>
         <Pressable className="flex-1 bg-black/50 justify-end" onPress={() => { setShowSurahModal(false); setSurahSearch(''); }}>
-          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white rounded-t-2xl max-h-[70%]">
-            <View className="p-4 border-b border-gray-100">
+          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white dark:bg-gray-800 rounded-t-2xl max-h-[70%]">
+            <View className="p-4 border-b border-gray-100 dark:border-gray-700">
               <View className="flex-row justify-between items-center mb-3">
-                <Text className="text-lg font-semibold text-gray-900">Filter by Surah</Text>
+                <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">Filter by Surah</Text>
                 <Pressable onPress={() => { setShowSurahModal(false); setSurahSearch(''); }}>
                   <Text className="text-primary font-medium">Done</Text>
                 </Pressable>
               </View>
-              <View className="flex-row items-center bg-gray-100 rounded-lg px-3 h-10">
+              <View className="flex-row items-center bg-gray-100 dark:bg-gray-700 rounded-lg px-3 h-10">
                 <Text className="text-gray-400 mr-2">🔍</Text>
                 <TextInput
-                  className="flex-1 text-base text-gray-900"
+                  className="flex-1 text-base text-gray-900 dark:text-gray-100"
                   placeholder="Search surah..."
                   placeholderTextColor="#9CA3AF"
                   value={surahSearch}
@@ -336,9 +336,9 @@ export function SessionFiltersComponent({
               renderItem={({ item }) => (
                 <Pressable
                   onPress={() => { updateFilter('surahName', item.transliteration); setShowSurahModal(false); setSurahSearch(''); }}
-                  className={`p-3 mx-4 rounded-lg mb-1 ${filters.surahName === item.transliteration ? 'bg-primary/10' : 'bg-gray-50'}`}
+                  className={`p-3 mx-4 rounded-lg mb-1 ${filters.surahName === item.transliteration ? 'bg-primary/10' : 'bg-gray-50 dark:bg-gray-700'}`}
                 >
-                  <Text className={`text-base ${filters.surahName === item.transliteration ? 'text-primary font-medium' : 'text-gray-700'}`}>
+                  <Text className={`text-base ${filters.surahName === item.transliteration ? 'text-primary font-medium' : 'text-gray-700 dark:text-gray-300'}`}>
                     {item.transliteration ? `${item.number}. ${item.transliteration}` : 'All Surahs'}
                   </Text>
                 </Pressable>
@@ -352,10 +352,10 @@ export function SessionFiltersComponent({
       {/* Date Range Modal */}
       <Modal visible={showDateModal} transparent animationType="slide" onRequestClose={() => setShowDateModal(false)}>
         <Pressable className="flex-1 bg-black/50 justify-end" onPress={() => setShowDateModal(false)}>
-          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white rounded-t-2xl">
-            <View className="p-4 border-b border-gray-100">
+          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white dark:bg-gray-800 rounded-t-2xl">
+            <View className="p-4 border-b border-gray-100 dark:border-gray-700">
               <View className="flex-row justify-between items-center">
-                <Text className="text-lg font-semibold text-gray-900">Date Range</Text>
+                <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">Date Range</Text>
                 <Pressable onPress={() => setShowDateModal(false)}>
                   <Text className="text-primary font-medium">Done</Text>
                 </Pressable>
@@ -377,9 +377,9 @@ export function SessionFiltersComponent({
               />
               <Pressable
                 onPress={() => { updateFilters({ dateFrom: null, dateTo: null }); }}
-                className="p-3 rounded-lg bg-gray-100 mt-2"
+                className="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 mt-2"
               >
-                <Text className="text-base text-center text-gray-700">Clear Date Filter</Text>
+                <Text className="text-base text-center text-gray-700 dark:text-gray-300">Clear Date Filter</Text>
               </Pressable>
             </View>
             <View className="h-8" />
@@ -390,10 +390,10 @@ export function SessionFiltersComponent({
       {/* Performance Score Modal */}
       <Modal visible={showPerformanceModal} transparent animationType="slide" onRequestClose={() => setShowPerformanceModal(false)}>
         <Pressable className="flex-1 bg-black/50 justify-end" onPress={() => setShowPerformanceModal(false)}>
-          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white rounded-t-2xl">
-            <View className="p-4 border-b border-gray-100">
+          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white dark:bg-gray-800 rounded-t-2xl">
+            <View className="p-4 border-b border-gray-100 dark:border-gray-700">
               <View className="flex-row justify-between items-center">
-                <Text className="text-lg font-semibold text-gray-900">Performance Score</Text>
+                <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">Performance Score</Text>
                 <Pressable onPress={() => setShowPerformanceModal(false)}>
                   <Text className="text-primary font-medium">Done</Text>
                 </Pressable>
@@ -410,13 +410,13 @@ export function SessionFiltersComponent({
                   className={`p-3 rounded-lg mb-2 ${
                     filters.performanceMin === range.min && filters.performanceMax === range.max
                       ? 'bg-primary/10'
-                      : 'bg-gray-50'
+                      : 'bg-gray-50 dark:bg-gray-700'
                   }`}
                 >
                   <Text className={`text-base ${
                     filters.performanceMin === range.min && filters.performanceMax === range.max
                       ? 'text-primary font-medium'
-                      : 'text-gray-700'
+                      : 'text-gray-700 dark:text-gray-300'
                   }`}>
                     {range.label}
                   </Text>
@@ -431,10 +431,10 @@ export function SessionFiltersComponent({
       {/* Mistakes Filter Modal */}
       <Modal visible={showMistakeModal} transparent animationType="slide" onRequestClose={() => setShowMistakeModal(false)}>
         <Pressable className="flex-1 bg-black/50 justify-end" onPress={() => setShowMistakeModal(false)}>
-          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white rounded-t-2xl">
-            <View className="p-4 border-b border-gray-100">
+          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white dark:bg-gray-800 rounded-t-2xl">
+            <View className="p-4 border-b border-gray-100 dark:border-gray-700">
               <View className="flex-row justify-between items-center">
-                <Text className="text-lg font-semibold text-gray-900">Filter by Mistakes</Text>
+                <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">Filter by Mistakes</Text>
                 <Pressable onPress={() => setShowMistakeModal(false)}>
                   <Text className="text-primary font-medium">Done</Text>
                 </Pressable>
@@ -445,9 +445,9 @@ export function SessionFiltersComponent({
                 <Pressable
                   key={option}
                   onPress={() => { updateFilter('mistakeFilter', option); setShowMistakeModal(false); }}
-                  className={`p-3 rounded-lg mb-2 ${filters.mistakeFilter === option ? 'bg-primary/10' : 'bg-gray-50'}`}
+                  className={`p-3 rounded-lg mb-2 ${filters.mistakeFilter === option ? 'bg-primary/10' : 'bg-gray-50 dark:bg-gray-700'}`}
                 >
-                  <Text className={`text-base ${filters.mistakeFilter === option ? 'text-primary font-medium' : 'text-gray-700'}`}>
+                  <Text className={`text-base ${filters.mistakeFilter === option ? 'text-primary font-medium' : 'text-gray-700 dark:text-gray-300'}`}>
                     {MISTAKE_FILTER_LABELS[option]}
                   </Text>
                 </Pressable>
@@ -461,10 +461,10 @@ export function SessionFiltersComponent({
       {/* Recency Category Modal */}
       <Modal visible={showRecencyModal} transparent animationType="slide" onRequestClose={() => setShowRecencyModal(false)}>
         <Pressable className="flex-1 bg-black/50 justify-end" onPress={() => setShowRecencyModal(false)}>
-          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white rounded-t-2xl">
-            <View className="p-4 border-b border-gray-100">
+          <Pressable onPress={(e) => e.stopPropagation()} className="bg-white dark:bg-gray-800 rounded-t-2xl">
+            <View className="p-4 border-b border-gray-100 dark:border-gray-700">
               <View className="flex-row justify-between items-center">
-                <Text className="text-lg font-semibold text-gray-900">Recency Category</Text>
+                <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recency Category</Text>
                 <Pressable onPress={() => setShowRecencyModal(false)}>
                   <Text className="text-primary font-medium">Done</Text>
                 </Pressable>
@@ -473,9 +473,9 @@ export function SessionFiltersComponent({
             <View className="p-4">
               <Pressable
                 onPress={() => { updateFilter('recencyCategory', null); setShowRecencyModal(false); }}
-                className={`p-3 rounded-lg mb-2 ${!filters.recencyCategory ? 'bg-primary/10' : 'bg-gray-50'}`}
+                className={`p-3 rounded-lg mb-2 ${!filters.recencyCategory ? 'bg-primary/10' : 'bg-gray-50 dark:bg-gray-700'}`}
               >
-                <Text className={`text-base ${!filters.recencyCategory ? 'text-primary font-medium' : 'text-gray-700'}`}>
+                <Text className={`text-base ${!filters.recencyCategory ? 'text-primary font-medium' : 'text-gray-700 dark:text-gray-300'}`}>
                   All Categories
                 </Text>
               </Pressable>
@@ -483,9 +483,9 @@ export function SessionFiltersComponent({
                 <Pressable
                   key={cat}
                   onPress={() => { updateFilter('recencyCategory', cat); setShowRecencyModal(false); }}
-                  className={`p-3 rounded-lg mb-2 ${filters.recencyCategory === cat ? 'bg-primary/10' : 'bg-gray-50'}`}
+                  className={`p-3 rounded-lg mb-2 ${filters.recencyCategory === cat ? 'bg-primary/10' : 'bg-gray-50 dark:bg-gray-700'}`}
                 >
-                  <Text className={`text-base ${filters.recencyCategory === cat ? 'text-primary font-medium' : 'text-gray-700'}`}>
+                  <Text className={`text-base ${filters.recencyCategory === cat ? 'text-primary font-medium' : 'text-gray-700 dark:text-gray-300'}`}>
                     {RECENCY_LABELS[cat]}
                   </Text>
                 </Pressable>

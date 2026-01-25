@@ -43,14 +43,14 @@ export function ChatMessage({
         className={`max-w-[85%] px-4 py-3 ${
           isUser
             ? 'bg-blue-500 rounded-2xl rounded-br-sm'
-            : 'bg-gray-100 rounded-2xl rounded-bl-sm'
+            : 'bg-gray-100 dark:bg-gray-800 rounded-2xl rounded-bl-sm'
         }`}
       >
         <Text
           testID={`${testID}-content`}
           accessibilityRole="text"
           accessibilityLabel={isUser ? 'Your message' : 'Assistant message'}
-          className={`text-base ${isUser ? 'text-white' : 'text-gray-900'}`}
+          className={`text-base ${isUser ? 'text-white' : 'text-gray-900 dark:text-gray-100'}`}
         >
           {message.content}
         </Text>

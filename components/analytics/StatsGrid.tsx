@@ -22,7 +22,7 @@ export function StatsGrid({ testID }: StatsGridProps) {
           {[1, 2].map((i) => (
             <View
               key={i}
-              className="flex-1 bg-gray-100 rounded-xl p-4 h-28 items-center justify-center"
+              className="flex-1 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 h-28 items-center justify-center"
             >
               <ActivityIndicator size="small" color="#6366f1" />
             </View>
@@ -32,7 +32,7 @@ export function StatsGrid({ testID }: StatsGridProps) {
           {[3, 4].map((i) => (
             <View
               key={i}
-              className="flex-1 bg-gray-100 rounded-xl p-4 h-28 items-center justify-center"
+              className="flex-1 bg-gray-100 dark:bg-gray-800 rounded-xl p-4 h-28 items-center justify-center"
             >
               <ActivityIndicator size="small" color="#6366f1" />
             </View>

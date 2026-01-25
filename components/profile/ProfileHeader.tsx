@@ -18,7 +18,7 @@ export function ProfileHeader({ user, testID = 'profile-header' }: ProfileHeader
   return (
     <View
       testID={testID}
-      className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 items-center"
+      className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 items-center"
     >
       {/* Avatar */}
       {hasAvatar ? (
@@ -31,7 +31,7 @@ export function ProfileHeader({ user, testID = 'profile-header' }: ProfileHeader
       ) : (
         <View
           testID="user-avatar"
-          className="w-24 h-24 rounded-full mb-4 bg-gray-200 items-center justify-center"
+          className="w-24 h-24 rounded-full mb-4 bg-gray-200 dark:bg-gray-700 items-center justify-center"
         >
           <Ionicons name="person" size={48} color="#9ca3af" />
         </View>
@@ -40,7 +40,7 @@ export function ProfileHeader({ user, testID = 'profile-header' }: ProfileHeader
       {/* Name */}
       <Text
         testID="user-name"
-        className="text-xl font-bold text-gray-900 mb-1"
+        className="text-xl font-bold text-gray-900 dark:text-white mb-1"
       >
         {user.name ?? 'User'}
       </Text>
@@ -48,7 +48,7 @@ export function ProfileHeader({ user, testID = 'profile-header' }: ProfileHeader
       {/* Email */}
       <Text
         testID="user-email"
-        className="text-sm text-gray-500"
+        className="text-sm text-gray-500 dark:text-gray-400"
       >
         {user.email}
       </Text>

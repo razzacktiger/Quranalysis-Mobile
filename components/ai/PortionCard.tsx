@@ -124,20 +124,20 @@ export function PortionCard({
     <>
       <View
         testID={testID}
-        className="bg-white border border-gray-200 rounded-xl p-4 mb-3"
+        className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 mb-3"
       >
         {/* Header row: Surah name and actions */}
         <View className="flex-row items-start justify-between mb-2">
           <View className="flex-1 mr-2">
             <Text
               testID={`${testID}-surah`}
-              className="text-base font-semibold text-gray-900"
+              className="text-base font-semibold text-gray-900 dark:text-gray-100"
               numberOfLines={1}
             >
               {portion.surah_name || 'Unknown Surah'}
             </Text>
             {ayahDisplay && (
-              <Text className="text-sm text-gray-500 mt-0.5">{ayahDisplay}</Text>
+              <Text className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{ayahDisplay}</Text>
             )}
           </View>
 
@@ -146,7 +146,7 @@ export function PortionCard({
             <Pressable
               testID={`${testID}-edit`}
               onPress={() => setEditModalVisible(true)}
-              className="w-8 h-8 items-center justify-center rounded-full bg-gray-100 active:bg-gray-200"
+              className="w-8 h-8 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
               accessibilityLabel="Edit portion"
               accessibilityRole="button"
             >
@@ -155,7 +155,7 @@ export function PortionCard({
             <Pressable
               testID={`${testID}-remove`}
               onPress={handleRemove}
-              className="w-8 h-8 items-center justify-center rounded-full bg-red-50 active:bg-red-100"
+              className="w-8 h-8 items-center justify-center rounded-full bg-red-50 dark:bg-red-900/30 active:bg-red-100 dark:active:bg-red-900/50"
               accessibilityLabel="Remove portion"
               accessibilityRole="button"
             >
@@ -178,7 +178,7 @@ export function PortionCard({
             </View>
           )}
           {portion.repetition_count !== null && portion.repetition_count > 0 && (
-            <Text className="text-xs text-gray-500">
+            <Text className="text-xs text-gray-500 dark:text-gray-400">
               {portion.repetition_count}x repetitions
             </Text>
           )}
@@ -197,15 +197,15 @@ export function PortionCard({
           onPress={handleEditCancel}
         >
           <Pressable
-            className="bg-white rounded-t-3xl"
+            className="bg-white dark:bg-gray-800 rounded-t-3xl"
             onPress={(e) => e.stopPropagation()}
           >
             {/* Modal header */}
-            <View className="flex-row items-center justify-between px-4 py-4 border-b border-gray-100">
+            <View className="flex-row items-center justify-between px-4 py-4 border-b border-gray-100 dark:border-gray-700">
               <Pressable testID={`${testID}-modal-cancel`} onPress={handleEditCancel}>
                 <Text className="text-base text-gray-500">Cancel</Text>
               </Pressable>
-              <Text className="text-lg font-semibold text-gray-900">
+              <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 Edit Portion
               </Text>
               <Pressable
@@ -227,9 +227,9 @@ export function PortionCard({
             <ScrollView className="px-4 py-4">
               {/* Surah Name */}
               <View className="mb-4">
-                <Text className="text-sm text-gray-500 mb-1">Surah Name</Text>
-                <View className="border border-gray-200 rounded-lg px-3 py-3 bg-gray-50">
-                  <Text className="text-base text-gray-900">
+                <Text className="text-sm text-gray-500 dark:text-gray-400 mb-1">Surah Name</Text>
+                <View className="border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-3 bg-gray-50 dark:bg-gray-700">
+                  <Text className="text-base text-gray-900 dark:text-gray-100">
                     {editedPortion.surah_name || 'Not specified'}
                   </Text>
                 </View>
@@ -237,7 +237,7 @@ export function PortionCard({
 
               {/* Surah ayah count hint */}
               {surahInfo && (
-                <Text className="text-xs text-gray-500 mb-2">
+                <Text className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                   {surahInfo.transliteration} has {surahInfo.ayah_count} ayahs
                 </Text>
               )}
@@ -245,7 +245,7 @@ export function PortionCard({
               {/* Ayah Range - Editable */}
               <View className="flex-row gap-3 mb-4">
                 <View className="flex-1">
-                  <Text className="text-sm text-gray-500 mb-1">Start Ayah</Text>
+                  <Text className="text-sm text-gray-500 dark:text-gray-400 mb-1">Start Ayah</Text>
                   <TextInput
                     testID={`${testID}-modal-ayah-start`}
                     value={editedPortion.ayah_start?.toString() ?? ''}
@@ -257,9 +257,10 @@ export function PortionCard({
                       });
                     }}
                     placeholder="1"
+                    placeholderTextColor="#9CA3AF"
                     keyboardType="numeric"
-                    className={`border rounded-lg px-3 py-3 text-base text-gray-900 ${
-                      ayahStartError ? 'border-red-400 bg-red-50' : 'border-gray-200'
+                    className={`border rounded-lg px-3 py-3 text-base text-gray-900 dark:text-gray-100 ${
+                      ayahStartError ? 'border-red-400 bg-red-50 dark:bg-red-900/30' : 'border-gray-200 dark:border-gray-600 dark:bg-gray-700'
                     }`}
                   />
                   {ayahStartError && (
@@ -267,7 +268,7 @@ export function PortionCard({
                   )}
                 </View>
                 <View className="flex-1">
-                  <Text className="text-sm text-gray-500 mb-1">End Ayah</Text>
+                  <Text className="text-sm text-gray-500 dark:text-gray-400 mb-1">End Ayah</Text>
                   <TextInput
                     testID={`${testID}-modal-ayah-end`}
                     value={editedPortion.ayah_end?.toString() ?? ''}
@@ -279,9 +280,10 @@ export function PortionCard({
                       });
                     }}
                     placeholder={surahInfo?.ayah_count.toString() ?? '7'}
+                    placeholderTextColor="#9CA3AF"
                     keyboardType="numeric"
-                    className={`border rounded-lg px-3 py-3 text-base text-gray-900 ${
-                      ayahEndError ? 'border-red-400 bg-red-50' : 'border-gray-200'
+                    className={`border rounded-lg px-3 py-3 text-base text-gray-900 dark:text-gray-100 ${
+                      ayahEndError ? 'border-red-400 bg-red-50 dark:bg-red-900/30' : 'border-gray-200 dark:border-gray-600 dark:bg-gray-700'
                     }`}
                   />
                   {ayahEndError && (
@@ -292,7 +294,7 @@ export function PortionCard({
 
               {/* Repetition Count - Editable */}
               <View className="mb-4">
-                <Text className="text-sm text-gray-500 mb-1">Repetitions</Text>
+                <Text className="text-sm text-gray-500 dark:text-gray-400 mb-1">Repetitions</Text>
                 <TextInput
                   testID={`${testID}-modal-repetitions`}
                   value={editedPortion.repetition_count?.toString() ?? ''}
@@ -304,14 +306,15 @@ export function PortionCard({
                     });
                   }}
                   placeholder="1"
+                  placeholderTextColor="#9CA3AF"
                   keyboardType="numeric"
-                  className="border border-gray-200 rounded-lg px-3 py-3 text-base text-gray-900"
+                  className="border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-3 text-base text-gray-900 dark:text-gray-100 dark:bg-gray-700"
                 />
               </View>
 
               {/* Recency Category */}
               <View className="mb-4">
-                <Text className="text-sm text-gray-500 mb-2">Recency</Text>
+                <Text className="text-sm text-gray-500 dark:text-gray-400 mb-2">Recency</Text>
                 <View testID={`${testID}-modal-recency`} className="flex-row flex-wrap gap-2">
                   {RECENCY_CATEGORIES.map((category) => {
                     const isSelected = editedPortion.recency_category === category;
@@ -326,12 +329,12 @@ export function PortionCard({
                         className={`px-3 py-2 rounded-full border-2 ${
                           isSelected
                             ? 'border-primary bg-primary/10'
-                            : 'border-gray-200 bg-white'
+                            : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700'
                         }`}
                       >
                         <Text
                           className={`text-sm font-medium ${
-                            isSelected ? 'text-primary' : 'text-gray-600'
+                            isSelected ? 'text-primary' : 'text-gray-600 dark:text-gray-300'
                           }`}
                         >
                           {style.label}

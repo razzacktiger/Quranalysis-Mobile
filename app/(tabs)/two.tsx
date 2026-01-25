@@ -1,14 +1,15 @@
 import React, { useMemo } from 'react';
-import { View, Text, ScrollView, Pressable, ActivityIndicator, Linking } from 'react-native';
+import { View, Text, ScrollView, Pressable, ActivityIndicator, Linking, Switch } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import { useAuth } from '@/lib/auth';
-import { useSessions } from '@/lib/hooks';
+import { useSessions, useTheme } from '@/lib/hooks';
 import { ProfileHeader, AccountStats } from '@/components/profile';
 
 export default function ProfileScreen() {
   const { user, signOut, isLoading: authLoading } = useAuth();
   const { data: sessions } = useSessions();
+  const { colorScheme, toggleTheme } = useTheme();
 
   // Calculate account stats from sessions
   const accountStats = useMemo(() => {
@@ -80,7 +81,7 @@ export default function ProfileScreen() {
 
   if (!user) {
     return (
-      <View testID="profile-screen" className="flex-1 bg-gray-50 items-center justify-center">
+      <View testID="profile-screen" className="flex-1 bg-gray-50 dark:bg-gray-900 items-center justify-center">
         <ActivityIndicator size="large" color="#6366f1" />
       </View>
     );
@@ -89,7 +90,7 @@ export default function ProfileScreen() {
   return (
     <ScrollView
       testID="profile-screen"
-      className="flex-1 bg-gray-50"
+      className="flex-1 bg-gray-50 dark:bg-gray-900"
       contentContainerClassName="p-4"
     >
       {/* Profile Header */}
@@ -102,20 +103,44 @@ export default function ProfileScreen() {
         <AccountStats {...accountStats} />
       </View>
 
+      {/* Settings Section */}
+      <View className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 mb-4">
+        <Text className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Settings</Text>
+
+        {/* Dark Mode Toggle */}
+        <View testID="theme-toggle" className="flex-row items-center py-3">
+          <View className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-700 items-center justify-center mr-3">
+            <Ionicons
+              name={colorScheme === 'dark' ? 'moon' : 'sunny'}
+              size={20}
+              color="#6366f1"
+            />
+          </View>
+          <Text className="flex-1 text-gray-700 dark:text-gray-200">Dark Mode</Text>
+          <Switch
+            testID="theme-switch"
+            value={colorScheme === 'dark'}
+            onValueChange={toggleTheme}
+            trackColor={{ false: '#d1d5db', true: '#6366f1' }}
+            thumbColor="#fff"
+          />
+        </View>
+      </View>
+
       {/* About Section */}
-      <View className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
-        <Text className="text-lg font-semibold text-gray-900 mb-4">About</Text>
+      <View className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 mb-4">
+        <Text className="text-lg font-semibold text-gray-900 dark:text-white mb-4">About</Text>
 
         {/* Help & Support */}
         <Pressable
           testID="help-link"
           onPress={handleHelpPress}
-          className="flex-row items-center py-3 border-b border-gray-100"
+          className="flex-row items-center py-3 border-b border-gray-100 dark:border-gray-700"
         >
-          <View className="w-8 h-8 rounded-lg bg-gray-100 items-center justify-center mr-3">
+          <View className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-700 items-center justify-center mr-3">
             <Ionicons name="help-circle-outline" size={20} color="#6366f1" />
           </View>
-          <Text className="flex-1 text-gray-700">Help & Support</Text>
+          <Text className="flex-1 text-gray-700 dark:text-gray-200">Help & Support</Text>
           <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
         </Pressable>
 
@@ -123,21 +148,21 @@ export default function ProfileScreen() {
         <Pressable
           testID="privacy-link"
           onPress={handlePrivacyPress}
-          className="flex-row items-center py-3 border-b border-gray-100"
+          className="flex-row items-center py-3 border-b border-gray-100 dark:border-gray-700"
         >
-          <View className="w-8 h-8 rounded-lg bg-gray-100 items-center justify-center mr-3">
+          <View className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-700 items-center justify-center mr-3">
             <Ionicons name="shield-checkmark-outline" size={20} color="#6366f1" />
           </View>
-          <Text className="flex-1 text-gray-700">Privacy Policy</Text>
+          <Text className="flex-1 text-gray-700 dark:text-gray-200">Privacy Policy</Text>
           <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
         </Pressable>
 
         {/* Version */}
         <View testID="app-version" className="flex-row items-center py-3">
-          <View className="w-8 h-8 rounded-lg bg-gray-100 items-center justify-center mr-3">
+          <View className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-700 items-center justify-center mr-3">
             <Ionicons name="information-circle-outline" size={20} color="#6366f1" />
           </View>
-          <Text className="flex-1 text-gray-700">Version</Text>
+          <Text className="flex-1 text-gray-700 dark:text-gray-200">Version</Text>
           <Text className="text-gray-400">{appVersion}</Text>
         </View>
       </View>

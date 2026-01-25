@@ -66,7 +66,7 @@ export function MistakeChart({ testID }: MistakeChartProps) {
 
   if (isLoading) {
     return (
-      <View testID={`${testID}-loading`} className="bg-white rounded-xl p-4 border border-gray-100">
+      <View testID={`${testID}-loading`} className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700">
         <View style={{ height: CHART_HEIGHT }} className="items-center justify-center">
           <Text className="text-gray-400">Loading mistakes...</Text>
         </View>
@@ -76,9 +76,9 @@ export function MistakeChart({ testID }: MistakeChartProps) {
 
   if (chartData.length === 0) {
     return (
-      <View testID={testID} className="bg-white rounded-xl p-4 border border-gray-100">
+      <View testID={testID} className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700">
         <View style={{ height: CHART_HEIGHT }} className="items-center justify-center">
-          <Text className="text-gray-500 text-center">
+          <Text className="text-gray-500 dark:text-gray-400 text-center">
             🎉 No mistakes recorded yet!
           </Text>
           <Text className="text-gray-400 text-sm mt-2">
@@ -92,10 +92,10 @@ export function MistakeChart({ testID }: MistakeChartProps) {
   const dynamicHeight = Math.max(CHART_HEIGHT, chartData.length * (BAR_HEIGHT + BAR_GAP) + 40);
 
   return (
-    <View testID={testID} className="bg-white rounded-xl p-4 border border-gray-100">
+    <View testID={testID} className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700">
       {/* Header with total */}
       <View className="flex-row justify-between items-center mb-3">
-        <Text className="text-sm font-medium text-gray-600">By Category</Text>
+        <Text className="text-sm font-medium text-gray-600 dark:text-gray-300">By Category</Text>
         <Text className="text-sm text-gray-400">{totalMistakes} total</Text>
       </View>
 
@@ -165,7 +165,7 @@ export function MistakeChart({ testID }: MistakeChartProps) {
                 backgroundColor: CATEGORY_COLORS[category],
               }}
             />
-            <Text className="text-xs text-gray-500">{formatCategory(category)}</Text>
+            <Text className="text-xs text-gray-500 dark:text-gray-400">{formatCategory(category)}</Text>
           </View>
         ))}
       </View>

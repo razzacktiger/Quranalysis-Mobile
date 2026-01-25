@@ -110,20 +110,20 @@ export function MistakeCard({
     <>
       <View
         testID={testID}
-        className="bg-white border border-gray-200 rounded-xl p-4 mb-3"
+        className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 mb-3"
       >
         {/* Header row: Surah and category */}
         <View className="flex-row items-start justify-between mb-2">
           <View className="flex-1 mr-2">
             <Text
               testID={`${testID}-surah`}
-              className="text-base font-semibold text-gray-900"
+              className="text-base font-semibold text-gray-900 dark:text-gray-100"
               numberOfLines={1}
             >
               {mistake.portion_surah} - {formatCategory(mistake.error_category)}
             </Text>
             {mistake.error_subcategory && (
-              <Text className="text-sm text-gray-500 mt-0.5">
+              <Text className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
                 {formatCategory(mistake.error_subcategory)}
               </Text>
             )}
@@ -134,7 +134,7 @@ export function MistakeCard({
             <Pressable
               testID={`${testID}-edit`}
               onPress={() => setEditModalVisible(true)}
-              className="w-8 h-8 items-center justify-center rounded-full bg-gray-100 active:bg-gray-200"
+              className="w-8 h-8 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
               accessibilityLabel="Edit mistake"
               accessibilityRole="button"
             >
@@ -143,7 +143,7 @@ export function MistakeCard({
             <Pressable
               testID={`${testID}-remove`}
               onPress={handleRemove}
-              className="w-8 h-8 items-center justify-center rounded-full bg-red-50 active:bg-red-100"
+              className="w-8 h-8 items-center justify-center rounded-full bg-red-50 dark:bg-red-900/30 active:bg-red-100 dark:active:bg-red-900/50"
               accessibilityLabel="Remove mistake"
               accessibilityRole="button"
             >
@@ -155,7 +155,7 @@ export function MistakeCard({
         {/* Details row: Ayah number and severity badge */}
         <View className="flex-row items-center gap-3 mt-1">
           {mistake.ayah_number && (
-            <Text className="text-sm text-gray-500">Ayah {mistake.ayah_number}</Text>
+            <Text className="text-sm text-gray-500 dark:text-gray-400">Ayah {mistake.ayah_number}</Text>
           )}
           <View className={`px-2 py-1 rounded-full ${severityStyle.bg}`}>
             <Text className={`text-xs font-medium ${severityStyle.text}`}>
@@ -166,7 +166,7 @@ export function MistakeCard({
 
         {/* Additional notes */}
         {mistake.additional_notes && (
-          <Text className="text-sm text-gray-600 mt-2 italic" numberOfLines={2}>
+          <Text className="text-sm text-gray-600 dark:text-gray-300 mt-2 italic" numberOfLines={2}>
             {mistake.additional_notes}
           </Text>
         )}
@@ -184,15 +184,15 @@ export function MistakeCard({
           onPress={handleEditCancel}
         >
           <Pressable
-            className="bg-white rounded-t-3xl max-h-[80%]"
+            className="bg-white dark:bg-gray-800 rounded-t-3xl max-h-[80%]"
             onPress={(e) => e.stopPropagation()}
           >
             {/* Modal header */}
-            <View className="flex-row items-center justify-between px-4 py-4 border-b border-gray-100">
+            <View className="flex-row items-center justify-between px-4 py-4 border-b border-gray-100 dark:border-gray-700">
               <Pressable testID={`${testID}-modal-cancel`} onPress={handleEditCancel}>
                 <Text className="text-base text-gray-500">Cancel</Text>
               </Pressable>
-              <Text className="text-lg font-semibold text-gray-900">
+              <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 Edit Mistake
               </Text>
               <Pressable testID={`${testID}-modal-save`} onPress={handleEditSave}>
@@ -203,7 +203,7 @@ export function MistakeCard({
             <ScrollView className="px-4 py-4">
               {/* Surah - editable if availableSurahs provided */}
               <View className="mb-4">
-                <Text className="text-sm text-gray-500 mb-2">Portion (Surah)</Text>
+                <Text className="text-sm text-gray-500 dark:text-gray-400 mb-2">Portion (Surah)</Text>
                 {availableSurahs.length > 0 ? (
                   <View className="flex-row flex-wrap gap-2">
                     {availableSurahs.map((surah) => {
@@ -220,12 +220,12 @@ export function MistakeCard({
                           className={`px-3 py-2 rounded-full border-2 ${
                             isSelected
                               ? 'border-primary bg-primary/10'
-                              : 'border-gray-200 bg-white'
+                              : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700'
                           }`}
                         >
                           <Text
                             className={`text-sm font-medium ${
-                              isSelected ? 'text-primary' : 'text-gray-600'
+                              isSelected ? 'text-primary' : 'text-gray-600 dark:text-gray-300'
                             }`}
                           >
                             {surah}
@@ -235,16 +235,16 @@ export function MistakeCard({
                     })}
                     {/* Show "Unknown" option if current value is Unknown */}
                     {editedMistake.portion_surah === 'Unknown' && !availableSurahs.includes('Unknown') && (
-                      <View className="px-3 py-2 rounded-full border-2 border-orange-300 bg-orange-50">
-                        <Text className="text-sm font-medium text-orange-600">
+                      <View className="px-3 py-2 rounded-full border-2 border-orange-300 dark:border-orange-600 bg-orange-50 dark:bg-orange-900/30">
+                        <Text className="text-sm font-medium text-orange-600 dark:text-orange-400">
                           Unknown (select a surah above)
                         </Text>
                       </View>
                     )}
                   </View>
                 ) : (
-                  <View className="border border-gray-200 rounded-lg px-3 py-3 bg-gray-50">
-                    <Text className="text-base text-gray-900">
+                  <View className="border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-3 bg-gray-50 dark:bg-gray-700">
+                    <Text className="text-base text-gray-900 dark:text-gray-100">
                       {editedMistake.portion_surah}
                     </Text>
                   </View>
@@ -253,7 +253,7 @@ export function MistakeCard({
 
               {/* Error Category */}
               <View className="mb-4">
-                <Text className="text-sm text-gray-500 mb-2">Category</Text>
+                <Text className="text-sm text-gray-500 dark:text-gray-400 mb-2">Category</Text>
                 <View testID={`${testID}-modal-category`} className="flex-row flex-wrap gap-2">
                   {ERROR_CATEGORIES.map((category) => {
                     const isSelected = editedMistake.error_category === category;
@@ -271,12 +271,12 @@ export function MistakeCard({
                         className={`px-3 py-2 rounded-full border-2 ${
                           isSelected
                             ? 'border-primary bg-primary/10'
-                            : 'border-gray-200 bg-white'
+                            : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700'
                         }`}
                       >
                         <Text
                           className={`text-sm font-medium ${
-                            isSelected ? 'text-primary' : 'text-gray-600'
+                            isSelected ? 'text-primary' : 'text-gray-600 dark:text-gray-300'
                           }`}
                         >
                           {formatCategory(category)}
@@ -289,7 +289,7 @@ export function MistakeCard({
 
               {/* Error Subcategory - filtered by selected category */}
               <View className="mb-4">
-                <Text className="text-sm text-gray-500 mb-2">
+                <Text className="text-sm text-gray-500 dark:text-gray-400 mb-2">
                   Subcategory (optional)
                 </Text>
                 {SUBCATEGORIES_BY_CATEGORY[editedMistake.error_category].length > 0 ? (
@@ -309,12 +309,12 @@ export function MistakeCard({
                           className={`px-3 py-2 rounded-full border ${
                             isSelected
                               ? 'border-primary bg-primary/10'
-                              : 'border-gray-200 bg-white'
+                              : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700'
                           }`}
                         >
                           <Text
                             className={`text-xs ${
-                              isSelected ? 'text-primary font-medium' : 'text-gray-600'
+                              isSelected ? 'text-primary font-medium' : 'text-gray-600 dark:text-gray-300'
                             }`}
                           >
                             {formatCategory(subcategory)}
@@ -324,7 +324,7 @@ export function MistakeCard({
                     })}
                   </View>
                 ) : (
-                  <Text className="text-sm text-gray-400 italic">
+                  <Text className="text-sm text-gray-400 dark:text-gray-500 italic">
                     No subcategories for this category. Use notes below for details.
                   </Text>
                 )}
@@ -332,7 +332,7 @@ export function MistakeCard({
 
               {/* Severity Level */}
               <View className="mb-4">
-                <Text className="text-sm text-gray-500 mb-2">Severity Level</Text>
+                <Text className="text-sm text-gray-500 dark:text-gray-400 mb-2">Severity Level</Text>
                 <View testID={`${testID}-modal-severity`} className="flex-row gap-2">
                   {([1, 2, 3, 4, 5] as SeverityLevel[]).map((level) => {
                     const isSelected = editedMistake.severity_level === level;
@@ -359,7 +359,7 @@ export function MistakeCard({
 
               {/* Ayah Number - Editable */}
               <View className="mb-4">
-                <Text className="text-sm text-gray-500 mb-1">Ayah Number (optional)</Text>
+                <Text className="text-sm text-gray-500 dark:text-gray-400 mb-1">Ayah Number (optional)</Text>
                 <TextInput
                   testID={`${testID}-modal-ayah`}
                   value={editedMistake.ayah_number?.toString() ?? ''}
@@ -371,14 +371,15 @@ export function MistakeCard({
                     });
                   }}
                   placeholder="e.g., 5"
+                  placeholderTextColor="#9CA3AF"
                   keyboardType="numeric"
-                  className="border border-gray-200 rounded-lg px-3 py-3 text-base text-gray-900"
+                  className="border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-3 text-base text-gray-900 dark:text-gray-100 dark:bg-gray-700"
                 />
               </View>
 
               {/* Additional Notes - Editable */}
               <View className="mb-4">
-                <Text className="text-sm text-gray-500 mb-1">Notes (optional)</Text>
+                <Text className="text-sm text-gray-500 dark:text-gray-400 mb-1">Notes (optional)</Text>
                 <TextInput
                   testID={`${testID}-modal-notes`}
                   value={editedMistake.additional_notes ?? ''}
@@ -389,9 +390,10 @@ export function MistakeCard({
                     })
                   }
                   placeholder="Add details about the mistake..."
+                  placeholderTextColor="#9CA3AF"
                   multiline
                   numberOfLines={3}
-                  className="border border-gray-200 rounded-lg px-3 py-3 text-base text-gray-900"
+                  className="border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-3 text-base text-gray-900 dark:text-gray-100 dark:bg-gray-700"
                   style={{ minHeight: 80, textAlignVertical: 'top' }}
                 />
               </View>

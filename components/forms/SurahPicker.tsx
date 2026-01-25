@@ -50,18 +50,18 @@ export function SurahPicker({
   return (
     <View className="mb-4">
       {label && (
-        <Text className="text-sm font-medium text-gray-700 mb-1">{label}</Text>
+        <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{label}</Text>
       )}
       <Pressable
         testID={testID}
         onPress={handleOpen}
         className={`
           border rounded-lg px-4 py-3 flex-row justify-between items-center
-          ${error ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white'}
+          ${error ? 'border-red-500 bg-red-50 dark:bg-red-900/30' : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800'}
         `}
       >
         <Text
-          className={selectedSurah ? 'text-base text-gray-900' : 'text-base text-gray-400'}
+          className={selectedSurah ? 'text-base text-gray-900 dark:text-gray-100' : 'text-base text-gray-400'}
         >
           {selectedSurah
             ? `${selectedSurah.number}. ${selectedSurah.transliteration}`
@@ -86,20 +86,20 @@ export function SurahPicker({
           onPress={handleClose}
         >
           <Pressable
-            className="bg-white rounded-t-2xl max-h-[70%]"
+            className="bg-white dark:bg-gray-800 rounded-t-2xl max-h-[70%]"
             onPress={(e) => e.stopPropagation()}
           >
-            <View className="flex-row justify-between items-center px-4 py-3 border-b border-gray-200">
-              <Text className="text-lg font-semibold">{label ?? 'Select Surah'}</Text>
+            <View className="flex-row justify-between items-center px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+              <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">{label ?? 'Select Surah'}</Text>
               <Pressable onPress={handleClose}>
                 <Text className="text-primary text-base font-medium">Done</Text>
               </Pressable>
             </View>
 
-            <View className="px-4 py-2 border-b border-gray-100">
+            <View className="px-4 py-2 border-b border-gray-100 dark:border-gray-700">
               <TextInput
                 testID={`${testID}-search`}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-base bg-gray-50"
+                className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-base text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700"
                 placeholder="Search by name or number..."
                 placeholderTextColor="#9CA3AF"
                 value={searchQuery}
@@ -117,23 +117,23 @@ export function SurahPicker({
                   testID={`${testID}-option-${item.number}`}
                   onPress={() => handleSelect(item)}
                   className={`
-                    px-4 py-3 border-b border-gray-100 flex-row items-center
+                    px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex-row items-center
                     ${item.transliteration === value ? 'bg-primary/10' : ''}
                   `}
                 >
-                  <Text className="text-gray-500 w-8 text-right mr-3">
+                  <Text className="text-gray-500 dark:text-gray-400 w-8 text-right mr-3">
                     {item.number}
                   </Text>
                   <View className="flex-1">
                     <Text
                       className={`
                         text-base
-                        ${item.transliteration === value ? 'text-primary font-medium' : 'text-gray-900'}
+                        ${item.transliteration === value ? 'text-primary font-medium' : 'text-gray-900 dark:text-gray-100'}
                       `}
                     >
                       {item.transliteration}
                     </Text>
-                    <Text className="text-sm text-gray-500">
+                    <Text className="text-sm text-gray-500 dark:text-gray-400">
                       {item.name} • {item.ayah_count} ayahs
                     </Text>
                   </View>

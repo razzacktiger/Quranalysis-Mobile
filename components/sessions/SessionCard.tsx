@@ -56,15 +56,15 @@ export function SessionCard({
       testID={testID}
       onPress={handlePress}
       onLongPress={handleLongPress}
-      className="bg-white rounded-xl p-4 mb-3 shadow-sm border border-gray-100"
+      className="bg-white dark:bg-gray-800 rounded-xl p-4 mb-3 shadow-sm border border-gray-100 dark:border-gray-700"
     >
       {/* Header row: Date and Session Type */}
       <View className="flex-row justify-between items-start mb-2">
         <View>
-          <Text className="text-base font-semibold text-gray-900">
+          <Text className="text-base font-semibold text-gray-900 dark:text-white">
             {format(new Date(session.session_date), 'EEEE, MMM d')}
           </Text>
-          <Text className="text-sm text-gray-500">
+          <Text className="text-sm text-gray-500 dark:text-gray-400">
             {formatSessionType(session.session_type)}
           </Text>
         </View>
@@ -85,7 +85,7 @@ export function SessionCard({
       <View className="mb-2">
         <Text
           testID={`${testID}-surahs`}
-          className="text-sm text-gray-700"
+          className="text-sm text-gray-700 dark:text-gray-300"
           numberOfLines={1}
         >
           {surahNames.length > 0 ? surahNames.join(', ') : 'No portions'}
@@ -93,13 +93,13 @@ export function SessionCard({
       </View>
 
       {/* Footer row: Duration and Mistake count */}
-      <View className="flex-row justify-between items-center pt-2 border-t border-gray-100">
+      <View className="flex-row justify-between items-center pt-2 border-t border-gray-100 dark:border-gray-700">
         <View className="flex-row items-center">
-          <Text className="text-sm text-gray-500">
+          <Text className="text-sm text-gray-500 dark:text-gray-400">
             {session.duration_minutes} min
           </Text>
-          <Text className="text-gray-300 mx-2">•</Text>
-          <Text className="text-sm text-gray-500">
+          <Text className="text-gray-300 dark:text-gray-600 mx-2">•</Text>
+          <Text className="text-sm text-gray-500 dark:text-gray-400">
             {session.session_portions.length} portion{session.session_portions.length !== 1 ? 's' : ''}
           </Text>
         </View>
@@ -108,9 +108,9 @@ export function SessionCard({
         {mistakeCount > 0 && (
           <View
             testID={`${testID}-mistakes`}
-            className="bg-red-100 px-2 py-1 rounded-full"
+            className="bg-red-100 dark:bg-red-900/30 px-2 py-1 rounded-full"
           >
-            <Text className="text-red-600 text-xs font-medium">
+            <Text className="text-red-600 dark:text-red-400 text-xs font-medium">
               {mistakeCount} mistake{mistakeCount !== 1 ? 's' : ''}
             </Text>
           </View>
@@ -119,7 +119,7 @@ export function SessionCard({
 
       {/* Action buttons (visible on interaction or could be swipe actions) */}
       {(onEdit || onDelete) && (
-        <View className="flex-row justify-end gap-2 mt-3 pt-2 border-t border-gray-100">
+        <View className="flex-row justify-end gap-2 mt-3 pt-2 border-t border-gray-100 dark:border-gray-700">
           {onEdit && (
             <Pressable
               testID={`${testID}-edit`}
@@ -133,9 +133,9 @@ export function SessionCard({
             <Pressable
               testID={`${testID}-delete`}
               onPress={() => onDelete(session.id)}
-              className="bg-red-100 px-3 py-1.5 rounded-lg"
+              className="bg-red-100 dark:bg-red-900/30 px-3 py-1.5 rounded-lg"
             >
-              <Text className="text-red-600 text-sm font-medium">Delete</Text>
+              <Text className="text-red-600 dark:text-red-400 text-sm font-medium">Delete</Text>
             </Pressable>
           )}
         </View>

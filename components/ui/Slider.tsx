@@ -33,7 +33,7 @@ export function Slider({
     <View className="mb-4">
       {label && (
         <View className="flex-row justify-between items-center mb-2">
-          <Text className="text-sm font-medium text-gray-700">{label}</Text>
+          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</Text>
           {showValue && (
             <Text testID={`${testID}-value`} className="text-sm font-semibold text-primary">
               {displayValue}

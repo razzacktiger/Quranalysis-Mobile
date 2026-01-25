@@ -140,7 +140,7 @@ export function PerformanceChart({ testID }: PerformanceChartProps) {
 
   // Unified render - always same structure to prevent layout thrashing
   return (
-    <View testID={testID} className="bg-white rounded-xl p-4 border border-gray-100">
+    <View testID={testID} className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700">
       {/* Filter chips - always render after loading */}
       {!isLoading && (
         <View className="flex-row flex-wrap mb-3">
@@ -148,12 +148,12 @@ export function PerformanceChart({ testID }: PerformanceChartProps) {
             testID="filter-all"
             onPress={() => setSelectedType(null)}
             className={`px-3 py-1.5 rounded-full mr-2 mb-2 ${
-              selectedType === null ? 'bg-emerald-500' : 'bg-gray-100'
+              selectedType === null ? 'bg-emerald-500' : 'bg-gray-100 dark:bg-gray-700'
             }`}
           >
             <Text
               className={`text-sm font-medium ${
-                selectedType === null ? 'text-white' : 'text-gray-600'
+                selectedType === null ? 'text-white' : 'text-gray-600 dark:text-gray-300'
               }`}
             >
               All
@@ -165,12 +165,12 @@ export function PerformanceChart({ testID }: PerformanceChartProps) {
               testID={`filter-${type}`}
               onPress={() => setSelectedType(type)}
               className={`px-3 py-1.5 rounded-full mr-2 mb-2 ${
-                selectedType === type ? 'bg-emerald-500' : 'bg-gray-100'
+                selectedType === type ? 'bg-emerald-500' : 'bg-gray-100 dark:bg-gray-700'
               }`}
             >
               <Text
                 className={`text-sm font-medium ${
-                  selectedType === type ? 'text-white' : 'text-gray-600'
+                  selectedType === type ? 'text-white' : 'text-gray-600 dark:text-gray-300'
                 }`}
               >
                 {formatSessionType(type)}
@@ -190,7 +190,7 @@ export function PerformanceChart({ testID }: PerformanceChartProps) {
       {/* Empty state - use TOTAL_CONTENT_HEIGHT for consistent sizing */}
       {showEmpty && (
         <View style={{ height: TOTAL_CONTENT_HEIGHT }} className="items-center justify-center">
-          <Text className="text-gray-500 text-center">
+          <Text className="text-gray-500 dark:text-gray-400 text-center">
             📊 Need at least {MIN_SESSIONS} sessions{'\n'}to show performance chart
           </Text>
           <Text className="text-gray-400 text-sm mt-2">
@@ -306,15 +306,15 @@ export function PerformanceChart({ testID }: PerformanceChartProps) {
         <View className="flex-row items-center justify-center mt-2 gap-4">
           <View className="flex-row items-center gap-1">
             <View className="w-3 h-3 rounded-sm bg-red-500" />
-            <Text className="text-xs text-gray-500">&lt;5</Text>
+            <Text className="text-xs text-gray-500 dark:text-gray-400">&lt;5</Text>
           </View>
           <View className="flex-row items-center gap-1">
             <View className="w-3 h-3 rounded-sm bg-amber-500" />
-            <Text className="text-xs text-gray-500">5-7</Text>
+            <Text className="text-xs text-gray-500 dark:text-gray-400">5-7</Text>
           </View>
           <View className="flex-row items-center gap-1">
             <View className="w-3 h-3 rounded-sm bg-green-500" />
-            <Text className="text-xs text-gray-500">&gt;7</Text>
+            <Text className="text-xs text-gray-500 dark:text-gray-400">&gt;7</Text>
           </View>
         </View>
         </>

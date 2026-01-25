@@ -20,7 +20,7 @@ export function ChatHeader({
   testID,
 }: ChatHeaderProps) {
   return (
-    <View testID={testID} className="bg-white border-b border-gray-100">
+    <View testID={testID} className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
       {/* Subtle accent line at top */}
       <View className="h-1 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
 
@@ -29,7 +29,7 @@ export function ChatHeader({
         <Pressable
           testID={`${testID}-close`}
           onPress={onClose}
-          className="w-10 h-10 items-center justify-center rounded-full active:bg-gray-100"
+          className="w-10 h-10 items-center justify-center rounded-full active:bg-gray-100 dark:active:bg-gray-800"
           accessibilityLabel="Close chat"
           accessibilityRole="button"
         >
@@ -40,7 +40,7 @@ export function ChatHeader({
         <View className="flex-1 items-center">
           <Text
             testID={`${testID}-title`}
-            className="text-lg font-semibold text-gray-900"
+            className="text-lg font-semibold text-gray-900 dark:text-gray-100"
           >
             AI Assistant
           </Text>

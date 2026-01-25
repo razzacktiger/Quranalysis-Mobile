@@ -71,15 +71,15 @@ export function EditableField({
       <Pressable
         testID={testID}
         onPress={handleOpen}
-        className="flex-row items-center justify-between py-3 px-1 border-b border-gray-100"
+        className="flex-row items-center justify-between py-3 px-1 border-b border-gray-100 dark:border-gray-700"
         accessibilityRole="button"
         accessibilityLabel={`Edit ${label}`}
         accessibilityHint={`Current value: ${displayValue || 'not set'}`}
       >
-        <Text className="text-sm text-gray-500 w-24">{label}</Text>
+        <Text className="text-sm text-gray-500 dark:text-gray-400 w-24">{label}</Text>
         <View className="flex-1 flex-row items-center justify-end">
           <Text
-            className={`text-base mr-2 ${displayValue ? 'text-gray-900' : 'text-gray-400'}`}
+            className={`text-base mr-2 ${displayValue ? 'text-gray-900 dark:text-gray-100' : 'text-gray-400'}`}
             numberOfLines={1}
           >
             {displayValue || placeholder}
@@ -100,12 +100,12 @@ export function EditableField({
           onPress={handleCancel}
         >
           <Pressable
-            className="bg-white rounded-2xl w-full max-w-sm overflow-hidden"
+            className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-sm overflow-hidden"
             onPress={(e) => e.stopPropagation()}
           >
             {/* Modal header */}
-            <View className="px-4 py-3 border-b border-gray-100">
-              <Text className="text-lg font-semibold text-gray-900">
+            <View className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+              <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 Edit {label}
               </Text>
             </View>
@@ -119,7 +119,7 @@ export function EditableField({
                     key={option.value}
                     testID={`${testID}-option-${option.value}`}
                     onPress={() => handleSelectOption(option.value)}
-                    className={`px-4 py-3 border-b border-gray-50 flex-row items-center justify-between ${
+                    className={`px-4 py-3 border-b border-gray-50 dark:border-gray-700 flex-row items-center justify-between ${
                       value === option.value ? 'bg-primary/10' : ''
                     }`}
                   >
@@ -127,7 +127,7 @@ export function EditableField({
                       className={`text-base ${
                         value === option.value
                           ? 'text-primary font-medium'
-                          : 'text-gray-700'
+                          : 'text-gray-700 dark:text-gray-300'
                       }`}
                     >
                       {option.label}
@@ -149,7 +149,7 @@ export function EditableField({
                   placeholderTextColor="#9CA3AF"
                   keyboardType={inputType === 'number' ? 'numeric' : 'default'}
                   autoFocus
-                  className="border border-gray-200 rounded-lg px-4 py-3 text-base text-gray-900"
+                  className="border border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 text-base text-gray-900 dark:text-gray-100 dark:bg-gray-700"
                   style={{
                     paddingVertical: Platform.OS === 'ios' ? 12 : 8,
                   }}
@@ -159,11 +159,11 @@ export function EditableField({
 
             {/* Actions (only for text input, not picker) */}
             {!options && (
-              <View className="flex-row border-t border-gray-100">
+              <View className="flex-row border-t border-gray-100 dark:border-gray-700">
                 <Pressable
                   testID={`${testID}-cancel`}
                   onPress={handleCancel}
-                  className="flex-1 py-3 items-center border-r border-gray-100"
+                  className="flex-1 py-3 items-center border-r border-gray-100 dark:border-gray-700"
                 >
                   <Text className="text-base text-gray-500">Cancel</Text>
                 </Pressable>

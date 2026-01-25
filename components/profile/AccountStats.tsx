@@ -45,9 +45,9 @@ export function AccountStats({
   };
 
   return (
-    <View testID={testID} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+    <View testID={testID} className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
       {/* Section Header */}
-      <Text className="text-lg font-semibold text-gray-900 mb-4">Account</Text>
+      <Text className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Account</Text>
 
       {/* Stats Grid - 2 rows of 2 */}
       <View>
@@ -56,25 +56,25 @@ export function AccountStats({
           {/* Total Sessions */}
           <View
             testID="stat-total-sessions"
-            className="flex-1 bg-gray-50 rounded-lg p-3"
+            className="flex-1 bg-gray-50 dark:bg-gray-700 rounded-lg p-3"
           >
             <View className="flex-row items-center mb-1">
               <Ionicons name="calendar-outline" size={16} color="#6366f1" />
-              <Text className="text-xs text-gray-500 ml-1">Sessions</Text>
+              <Text className="text-xs text-gray-500 dark:text-gray-400 ml-1">Sessions</Text>
             </View>
-            <Text className="text-lg font-bold text-gray-900">{totalSessions}</Text>
+            <Text className="text-lg font-bold text-gray-900 dark:text-white">{totalSessions}</Text>
           </View>
 
           {/* Practice Time */}
           <View
             testID="stat-practice-time"
-            className="flex-1 bg-gray-50 rounded-lg p-3"
+            className="flex-1 bg-gray-50 dark:bg-gray-700 rounded-lg p-3"
           >
             <View className="flex-row items-center mb-1">
               <Ionicons name="time-outline" size={16} color="#6366f1" />
-              <Text className="text-xs text-gray-500 ml-1">Practice Time</Text>
+              <Text className="text-xs text-gray-500 dark:text-gray-400 ml-1">Practice Time</Text>
             </View>
-            <Text className="text-lg font-bold text-gray-900">
+            <Text className="text-lg font-bold text-gray-900 dark:text-white">
               {formatPracticeTime(totalPracticeMinutes)}
             </Text>
           </View>
@@ -85,13 +85,13 @@ export function AccountStats({
           {/* Member Since */}
           <View
             testID="stat-member-since"
-            className="flex-1 bg-gray-50 rounded-lg p-3"
+            className="flex-1 bg-gray-50 dark:bg-gray-700 rounded-lg p-3"
           >
             <View className="flex-row items-center mb-1">
               <Ionicons name="person-add-outline" size={16} color="#6366f1" />
-              <Text className="text-xs text-gray-500 ml-1">Member Since</Text>
+              <Text className="text-xs text-gray-500 dark:text-gray-400 ml-1">Member Since</Text>
             </View>
-            <Text className="text-lg font-bold text-gray-900">
+            <Text className="text-lg font-bold text-gray-900 dark:text-white">
               {formatMemberSince(memberSinceDate)}
             </Text>
           </View>
@@ -99,14 +99,14 @@ export function AccountStats({
           {/* Most Practiced Surah */}
           <View
             testID="stat-most-practiced"
-            className="flex-1 bg-gray-50 rounded-lg p-3"
+            className="flex-1 bg-gray-50 dark:bg-gray-700 rounded-lg p-3"
           >
             <View className="flex-row items-center mb-1">
               <Ionicons name="book-outline" size={16} color="#6366f1" />
-              <Text className="text-xs text-gray-500 ml-1">Most Practiced</Text>
+              <Text className="text-xs text-gray-500 dark:text-gray-400 ml-1">Most Practiced</Text>
             </View>
             <Text
-              className="text-lg font-bold text-gray-900"
+              className="text-lg font-bold text-gray-900 dark:text-white"
               numberOfLines={1}
               ellipsizeMode="tail"
             >

@@ -15,8 +15,8 @@ import { useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/components/useColorScheme';
 import { AuthProvider, useAuth } from '@/lib/auth';
+import { AppThemeProvider, useTheme } from '@/lib/hooks';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -64,15 +64,17 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <RootLayoutNav />
-      </AuthProvider>
+      <AppThemeProvider>
+        <AuthProvider>
+          <RootLayoutNav />
+        </AuthProvider>
+      </AppThemeProvider>
     </QueryClientProvider>
   );
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useTheme();
   const { user, isLoading } = useAuth();
   const router = useRouter();
   const segments = useSegments();
@@ -93,7 +95,7 @@ function RootLayoutNav() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 items-center justify-center bg-white">
+      <View className="flex-1 items-center justify-center bg-white dark:bg-gray-900">
         <ActivityIndicator size="large" color="#10B981" />
       </View>
     );
