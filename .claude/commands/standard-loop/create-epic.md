@@ -65,12 +65,15 @@ Do NOT use flat `FEATURE-N.X.md` files at root or a single root `TASKS.md`.
 This structure enables `/start-epic`, `/next-task`, and `/fix-bug` to navigate consistently.
 
 ### If "add-to EPIC-N":
-Add new FEATURE-N.X-name.md to existing epic folder.
+Add a new feature folder following the canonical structure:
+```
+features/N.X-name/TASKS.md
+```
 Update README.md feature table.
 
 ### If "reopen EPIC-N":
 Move from archive/ to active/.
-Add new feature file.
+Add new feature folder following the canonical structure.
 Update README.md.
 
 ## Step 7: Update Status
