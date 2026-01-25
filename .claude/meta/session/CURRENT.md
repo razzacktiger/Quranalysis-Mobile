@@ -1,33 +1,63 @@
 # Current Session
 
-**Started:** -
-**Epic:** -
-**Branch:** -
+**Started:** 2026-01-24
+**Epic:** EPIC-5-PROFILE
+**Branch:** epic-5-profile
 
 ## Active Task
-- **ID:** -
+- **ID:** None (Feature 5.1 complete - ready for Human QA)
 - **Name:** -
 - **Type:** -
 - **Size:** -
 - **Started:** -
 
 ## Active Agents
-
 _None_
 
 ## This Session (Running)
 
 | Task | Tokens | Turns | Tools | Agent | Bugs Caught |
 |------|--------|-------|-------|-------|-------------|
+| 5.1.1 | ~3k | 4 | 12 | - | 0 |
+| 5.1.2 | ~4k | 3 | 8 | - | 0 |
+| 5.1.3 | ~6k | 5 | 12 | code-reviewer | 1 (Linking error handling) |
+| 5.1.4 | ~3k | 3 | 6 | - | 0 |
 
 ## Running Totals
-- Tasks: 0 complete, 0 in progress
-- Tokens: ~0k
-- Context: ~0%
-- Tool calls: 0
+- Tasks: 4 complete, 0 in progress
+- Tokens: ~16k
+- Context: ~40%
+- Tool calls: 38
 
 ## Files Read This Session
-(none yet)
+- .claude/epics/active/EPIC-5-PROFILE/README.md
+- .claude/epics/active/EPIC-5-PROFILE/features/5.1-profile-screen/TASKS.md
+- .claude/epics/active/EPIC-5-PROFILE/features/5.2-settings/TASKS.md
+- .claude/status/CURRENT.md
+- .claude/learnings/react-native.md
+- .claude/learnings/common-mistakes.md
+- .claude/standards/components.md
+- .claude/standards/styling.md
+- .claude/standards/testing.md
+- lib/auth/AuthContext.tsx
+- types/auth.ts
+- components/analytics/StatCard.tsx
+- lib/hooks/useStats.ts
+- lib/hooks/useSessions.ts
+- types/session.ts
+- lib/api/sessions.ts
+- app/(tabs)/two.tsx
+- app/(tabs)/index.tsx
+- app/(tabs)/_layout.tsx
+- app.json
+- tests/e2e/auth/logout.yaml
+- tests/e2e/dashboard/main.yaml
 
 ## Notes
-(fresh session - run `/start-session` to begin)
+- All tasks in this epic are UI-focused
+- No blocking bugs from previous epics
+- Profile depends on auth (EPIC-1) and useStats (EPIC-3)
+- Code reviewer caught missing Linking.openURL error handling
+- Feature 5.1 complete - ready for Human QA
+- Feature 5.2 (Theme Toggle) is optional
+- Bug logged: BUG-5.1.1 - Most Practiced stat may be misleading (Severity: 3)

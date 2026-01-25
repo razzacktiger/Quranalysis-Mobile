@@ -1,15 +1,15 @@
 # Feature 5.1: Profile Screen
 
-**Status:** Not Started
+**Status:** Complete
 
 ## Tasks
 
 | ID | Task | Size | Status |
 |----|------|------|--------|
-| 5.1.1 | Create Profile Header Component | S | Not Started |
-| 5.1.2 | Create Account Stats Component | S | Not Started |
-| 5.1.3 | Create Profile Screen | M | Not Started |
-| 5.1.4 | E2E Test - Profile Screen | S | Not Started |
+| 5.1.1 | Create Profile Header Component | S | Complete |
+| 5.1.2 | Create Account Stats Component | S | Complete |
+| 5.1.3 | Create Profile Screen | M | Complete |
+| 5.1.4 | E2E Test - Profile Screen | S | Complete |
 
 ---
 

@@ -19,6 +19,10 @@ Last 20 tasks with full breakdown.
 | 01-22 | 4.3.2 | 4 | M | API | 12k | 12 | 18 | direct | ~2k | Voice hook, require() fallback for Expo Go |
 | 01-22 | 4.3.3 | 4 | S | UI | 6k | 6 | 12 | direct | ~1k | Voice button with pulse animation |
 | 01-24 | 4.3.4 | 4 | S | Test | 5k | 4 | 12 | direct | ~3k | Voice E2E test (written, not verified) |
+| 01-24 | 5.1.1 | 5 | S | UI | 3k | 4 | 12 | direct | ~1k | ProfileHeader component |
+| 01-24 | 5.1.2 | 5 | S | UI | 4k | 3 | 8 | direct | ~1k | AccountStats component |
+| 01-24 | 5.1.3 | 5 | M | UI | 6k | 5 | 12 | code-reviewer | ~2k | Profile screen, 1 bug caught |
+| 01-24 | 5.1.4 | 5 | S | Test | 3k | 3 | 6 | direct | ~1k | Profile E2E tests |
 
 ## Task Types
 

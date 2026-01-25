@@ -1,6 +1,6 @@
 # EPIC-5: User Profile
 
-**Status:** Not Started
+**Status:** In Progress (5.1 Complete, 5.2 Optional)
 **Priority:** Low - implement last
 
 ## Goal
@@ -10,7 +10,7 @@ Users can view their profile and manage settings.
 
 | ID | Feature | Status | Tasks | Folder |
 |----|---------|--------|-------|--------|
-| 5.1 | Profile Screen | Not Started | 0/4 | [features/5.1-profile-screen](./features/5.1-profile-screen/) |
+| 5.1 | Profile Screen | Complete | 4/4 | [features/5.1-profile-screen](./features/5.1-profile-screen/) |
 | 5.2 | Settings (Optional) | Not Started | 0/1 | [features/5.2-settings](./features/5.2-settings/) |
 
 ## Dependencies

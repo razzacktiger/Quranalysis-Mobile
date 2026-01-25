@@ -1,18 +1,19 @@
 # Current Work
 
 ## Active
-- **Epic:** EPIC-4-AI-CHAT ✅ COMPLETE
-- **Feature:** 4.3 - Voice Input (optional) ✅
-- **Task:** All tasks complete
-- **Branch:** epic-4-ai-chat
+- **Epic:** EPIC-5-PROFILE
+- **Feature:** 5.1 - Profile Screen
+- **Task:** Human QA (5.2 Theme Toggle is optional)
+- **Branch:** epic-5-profile
 - **Session Started:** 2026-01-24
 
 ## Blockers
 - None
 
 ## Next Up
-- Merge epic-4-ai-chat to main
-- Start EPIC-5: Profile
+- 5.1.2 - Create Account Stats Component
+- 5.1.3 - Create Profile Screen
+- 5.1.4 - E2E Test - Profile Screen
 
 ## Progress Overview
 
@@ -23,7 +24,7 @@
 | EPIC-2: Sessions | Archived | 21/21 |
 | EPIC-3: Dashboard | Archived | 10/10 |
 | EPIC-4: AI Chat | Complete | 13/13 |
-| EPIC-5: Profile | Not Started | 0/5 |
+| EPIC-5: Profile | In Progress | 4/5 |
 
 ## Notes
 - Expo SDK 54 with React Native 0.81.5
