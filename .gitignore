@@ -34,9 +34,8 @@ yarn-error.*
 .env
 .env*.local
 
-# Firebase config files (contain API keys)
-google-services.json
-GoogleService-Info.plist
+# Firebase config files - safe to commit per Firebase docs
+# Security is enforced via Firebase Security Rules, not these files
 
 # typescript
 *.tsbuildinfo

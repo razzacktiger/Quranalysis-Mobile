@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1052291845591",
+    "project_id": "quranalysis",
+    "storage_bucket": "quranalysis.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052291845591:android:ed403240c74e4945afcf92",
+        "android_client_info": {
+          "package_name": "com.quranalysis.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGI5XfeS_nRoHxwF2M_kkcHmrfoqOUTvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

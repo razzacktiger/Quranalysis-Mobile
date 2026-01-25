@@ -2,6 +2,7 @@
   "expo": {
     "name": "Quranalysis",
     "slug": "quranalysis-mobile",
+    "owner": "razzacktiger",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,16 +16,25 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.quranalysis.mobile"
+      "bundleIdentifier": "com.quranalysis.mobile",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "infoPlist": {
+        "NSSpeechRecognitionUsageDescription": "Allow Quranalysis to use speech recognition for session logging.",
+        "NSMicrophoneUsageDescription": "Allow Quranalysis to use the microphone for voice input."
+      }
     },
     "android": {
       "package": "com.quranalysis.mobile",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -45,6 +55,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e035a3ea-368a-4bfc-a607-6e04b3731a42"
+      }
     }
   }
 }
