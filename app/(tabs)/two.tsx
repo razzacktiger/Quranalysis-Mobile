@@ -36,12 +36,13 @@ export default function ProfileScreen() {
     );
     const memberSinceDate = sortedByDate[0]?.session_date ?? null;
 
-    // Most practiced surah (count occurrences across all portions)
+    // Most practiced surah (weighted by repetition count)
     const surahCounts: Record<string, number> = {};
     for (const session of sessions) {
       for (const portion of session.session_portions ?? []) {
         const surah = portion.surah_name;
-        surahCounts[surah] = (surahCounts[surah] ?? 0) + 1;
+        const reps = portion.repetition_count ?? 1;
+        surahCounts[surah] = (surahCounts[surah] ?? 0) + reps;
       }
     }
     const mostPracticedSurah =
