@@ -1,15 +1,11 @@
 # Current Session
 
-**Started:** 2026-01-24
-**Epic:** EPIC-5-PROFILE
-**Branch:** epic-5-profile
+**Started:** (will be set by /start-epic or /next-task)
+**Epic:** -
+**Branch:** -
 
 ## Active Task
-- **ID:** None (Feature 5.2 complete)
-- **Name:** -
-- **Type:** -
-- **Size:** -
-- **Started:** -
+(none)
 
 ## Active Agents
 _None_
@@ -18,48 +14,14 @@ _None_
 
 | Task | Tokens | Turns | Tools | Agent | Bugs Caught |
 |------|--------|-------|-------|-------|-------------|
-| 5.1.1 | ~3k | 4 | 12 | - | 0 |
-| 5.1.2 | ~4k | 3 | 8 | - | 0 |
-| 5.1.3 | ~6k | 5 | 12 | code-reviewer | 1 (Linking error handling) |
-| 5.1.4 | ~3k | 3 | 6 | - | 0 |
-| 5.2.1 | ~15k | 8 | 45 | - | 0 |
 
 ## Running Totals
-- Tasks: 5 complete, 0 in progress
-- Tokens: ~31k
-- Context: ~60%
-- Tool calls: 83
+- Tasks: 0 complete
+- Tokens: 0
+- Tool calls: 0
 
 ## Files Read This Session
-- .claude/epics/active/EPIC-5-PROFILE/README.md
-- .claude/epics/active/EPIC-5-PROFILE/features/5.1-profile-screen/TASKS.md
-- .claude/epics/active/EPIC-5-PROFILE/features/5.2-settings/TASKS.md
-- .claude/status/CURRENT.md
-- .claude/learnings/react-native.md
-- .claude/learnings/common-mistakes.md
-- .claude/standards/components.md
-- .claude/standards/styling.md
-- .claude/standards/testing.md
-- lib/auth/AuthContext.tsx
-- types/auth.ts
-- components/analytics/StatCard.tsx
-- lib/hooks/useStats.ts
-- lib/hooks/useSessions.ts
-- types/session.ts
-- lib/api/sessions.ts
-- app/(tabs)/two.tsx
-- app/(tabs)/index.tsx
-- app/(tabs)/_layout.tsx
-- app.json
-- tests/e2e/auth/logout.yaml
-- tests/e2e/dashboard/main.yaml
+(none yet)
 
 ## Notes
-- All tasks in this epic are UI-focused
-- No blocking bugs from previous epics
-- Profile depends on auth (EPIC-1) and useStats (EPIC-3)
-- Code reviewer caught missing Linking.openURL error handling
-- Feature 5.1 complete - ready for Human QA
-- Feature 5.2 (Theme Toggle) complete - 42 files updated with dark mode
-- Bug logged: BUG-5.1.1 - Most Practiced stat may be misleading (Severity: 3)
-- Theme uses NativeWind colorScheme API + React Navigation ThemeProvider
+(fresh session)

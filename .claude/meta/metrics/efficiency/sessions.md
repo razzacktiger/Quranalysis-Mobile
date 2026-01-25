@@ -9,6 +9,7 @@
 | 01-22 | 4 | 9+2+1 | 142k | ~85% | 95 | ~4h | Tasks 4.1.2-4.2.3, BUG-3.1, bug workflow, PR #5 merged |
 | 01-22 | 2 | 1 bug | 15k | ~25% | 12 | ~30m | BUG-2.1 ayah validation, +1 bug found (pages_read), PR #6 |
 | 01-24 | 4 | 1+meta | ~8k | ~10% | 15 | ~30m | Task 4.3.4 + /start-session workflow, EPIC-4 complete, PR #7 |
+| 01-24 | 5 | 5 | ~31k | ~60% | 23 | ~1h | EPIC-5 complete (5.1.1-5.1.4, 5.2.1), dark mode (42 files) |
 
 ## Session Averages
 
