@@ -203,4 +203,12 @@ When running code-reviewer, check for:
 - [ ] BUGS.md updated: moved to Fixed section with commit hash
 - [ ] Epic README blockers section updated (if was listed)
 
+### 6. Epic Completion (if this was the last task)
+If all tasks in the epic are now complete:
+- [ ] Update epic README.md status to "✅ Complete"
+- [ ] Update all feature statuses in the feature table
+- [ ] Check Definition of Done boxes
+- [ ] Update REQUIREMENTS.md epic status (change "In Progress" → "Complete")
+- [ ] Note: Consider running `/sync-docs` to verify all references
+
 **Only report to user after ALL applicable items are checked.**

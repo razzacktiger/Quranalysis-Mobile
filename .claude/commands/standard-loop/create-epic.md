@@ -44,17 +44,36 @@ For each task, note:
 ### If "new N-name":
 Create `epics/active/EPIC-N-NAME/`:
 - README.md (epic overview)
-- FEATURE-N.1-name.md
-- FEATURE-N.2-name.md
+- features/N.1-name/TASKS.md
+- features/N.2-name/TASKS.md
 - etc.
 
+**IMPORTANT - Canonical Structure:**
+Use the subdirectory pattern (like EPIC-4):
+```
+EPIC-N-NAME/
+├── README.md           # Epic overview, feature table
+└── features/
+    ├── N.1-name/
+    │   ├── TASKS.md    # Task list for this feature
+    │   └── BUGS.md     # (created by /add-bug if needed)
+    └── N.2-name/
+        └── TASKS.md
+```
+
+Do NOT use flat `FEATURE-N.X.md` files at root or a single root `TASKS.md`.
+This structure enables `/start-epic`, `/next-task`, and `/fix-bug` to navigate consistently.
+
 ### If "add-to EPIC-N":
-Add new FEATURE-N.X-name.md to existing epic folder.
+Add a new feature folder following the canonical structure:
+```
+features/N.X-name/TASKS.md
+```
 Update README.md feature table.
 
 ### If "reopen EPIC-N":
 Move from archive/ to active/.
-Add new feature file.
+Add new feature folder following the canonical structure.
 Update README.md.
 
 ## Step 7: Update Status
@@ -65,25 +84,43 @@ Update status/CURRENT.md:
 ## Step 8: Record Metrics
 Update meta/session/CURRENT.md
 
-## Step 9: Report
+## Step 9: Update Cross-References
+
+### Update REQUIREMENTS.md
+Add or update the epic entry in the Epics table:
+
+```markdown
+| EPIC-N: Name | Not Started | [epics/active/EPIC-N-NAME/](./epics/active/EPIC-N-NAME/) |
+```
+
+### Update .claude/README.md (if needed)
+If this is a new epic type or changes the directory structure, verify the Directory Index is accurate.
+
+**Note:** For major structural changes, run `/sync-docs` to verify all references.
+
+## Step 10: Report
 Show summary:
 - "Epic created/updated with X features, Y tasks"
 - Feature breakdown with task counts
+- "REQUIREMENTS.md updated with epic link"
 - "Ready for /start-epic N-name?"
 
 ## Epic README Template
 ```markdown
 # EPIC-N: {Name}
 
+**Status:** Not Started
+**Priority:** {High/Medium/Low}
+
 ## Goal
 {1-2 sentences}
 
 ## Features
 
-| ID | Feature | Status | Tasks |
-|----|---------|--------|-------|
-| N.1 | {name} | Not Started | X |
-| N.2 | {name} | Not Started | X |
+| ID | Feature | Status | Tasks | Folder |
+|----|---------|--------|-------|--------|
+| N.1 | {name} | Not Started | X | [features/N.1-name](./features/N.1-name/) |
+| N.2 | {name} | Not Started | X | [features/N.2-name](./features/N.2-name/) |
 
 ## Dependencies
 - Requires: {epics}
@@ -95,7 +132,8 @@ Show summary:
 - [ ] Human QA approved
 ```
 
-## Feature File Template
+## Feature TASKS.md Template
+File: `features/N.X-name/TASKS.md`
 ```markdown
 # Feature N.X: {Name}
 
@@ -111,6 +149,9 @@ Show summary:
 
 ## Acceptance Criteria
 - [ ] {criterion}
+
+## Human QA
+- [ ] {manual verification}
 ```
 
 ## Example Usage

@@ -12,21 +12,24 @@
 
 | Document | Purpose |
 |----------|---------|
-| [STATUS.md](./STATUS.md) | Current sprint status & task tracking |
-| [LEARNINGS.md](./LEARNINGS.md) | Issue resolution patterns |
-| [AGENT-WORKFLOW-GUIDE.md](./AGENT-WORKFLOW-GUIDE.md) | Claude Code optimization & context management |
-| [CODE-STANDARDS.md](./CODE-STANDARDS.md) | Clean code practices & conventions |
+| [status/CURRENT.md](./status/CURRENT.md) | Current epic/task status |
+| [learnings/index.md](./learnings/index.md) | Issue resolution patterns |
+| [README.md](./README.md) | Workflow overview & skills reference |
+| [standards/overview.md](./standards/overview.md) | Coding standards & conventions |
 | [reference/TYPES.md](./reference/TYPES.md) | TypeScript types to implement |
 | [reference/ENUMS.md](./reference/ENUMS.md) | All enum values |
 | [reference/API-PATTERNS.md](./reference/API-PATTERNS.md) | Supabase integration patterns |
 
-### Epics (in order)
-1. [EPIC-0-SETUP.md](./epics/EPIC-0-SETUP.md) - Project initialization
-2. [EPIC-1-AUTH.md](./epics/EPIC-1-AUTH.md) - Authentication
-3. [EPIC-2-SESSIONS.md](./epics/EPIC-2-SESSIONS.md) - Session CRUD (largest)
-4. [EPIC-3-DASHBOARD.md](./epics/EPIC-3-DASHBOARD.md) - Stats & analytics
-5. [EPIC-4-AI-CHAT.md](./epics/EPIC-4-AI-CHAT.md) - AI chatbot with voice
-6. [EPIC-5-PROFILE.md](./epics/EPIC-5-PROFILE.md) - User profile
+### Epics
+
+| Epic | Status | Location |
+|------|--------|----------|
+| EPIC-0: Setup | ✅ Archived | [epics/archive/EPIC-0-SETUP/](./epics/archive/EPIC-0-SETUP/) |
+| EPIC-1: Auth | ✅ Archived | [epics/archive/EPIC-1-AUTH/](./epics/archive/EPIC-1-AUTH/) |
+| EPIC-2: Sessions | ✅ Archived | [epics/archive/EPIC-2-SESSIONS/](./epics/archive/EPIC-2-SESSIONS/) |
+| EPIC-3: Dashboard | ✅ Archived | [epics/archive/EPIC-3-DASHBOARD/](./epics/archive/EPIC-3-DASHBOARD/) |
+| EPIC-4: AI Chat | ✅ Complete | [epics/active/EPIC-4-AI-CHAT/](./epics/active/EPIC-4-AI-CHAT/) |
+| EPIC-5: Profile | Not Started | [epics/active/EPIC-5-PROFILE/](./epics/active/EPIC-5-PROFILE/) |
 
 ---
 
@@ -329,4 +332,4 @@ npm test
 
 ---
 
-**For detailed implementation tasks, see the epic files in `./epics/`**
+**For detailed implementation tasks, see the epic folders in `./epics/active/` and `./epics/archive/`**

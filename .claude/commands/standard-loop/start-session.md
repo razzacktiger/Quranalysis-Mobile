@@ -29,16 +29,16 @@ Skip to Step 3.
 - Last active task: {task_id or "None (completed)"}
 - Tokens used: {running total}
 
-Archiving to: meta/session/archived/{YYYY-MM-DD}-session.md
+Archiving to: meta/session/archive/{YYYY-MM-DD}-{N}.md
 ```
 
 ## Step 2: Archive and Reset (If Stale)
 
 ### 2a. Archive the Session
-Copy `meta/session/CURRENT.md` to `meta/session/archived/{date}-session.md`
+Copy `meta/session/CURRENT.md` to `meta/session/archive/{date}-{N}.md`
 
 If there's already a file for that date (multiple sessions same day), use:
-`{date}-session-{N}.md` where N is the next available number.
+`{date}-{N}.md` where N is the next available number (matching /end-session format).
 
 ### 2b. Reset CURRENT.md
 Write a fresh session file:
@@ -114,7 +114,7 @@ Agent: ⚠️ Found stale session from 2026-01-22:
        - Last active task: 4.3.4 (completed)
        - Tokens used: ~31k
 
-       Archiving to: meta/session/archived/2026-01-22-session.md
+       Archiving to: meta/session/archive/2026-01-22-1.md
        Session reset for today.
 
        📋 Session Ready
