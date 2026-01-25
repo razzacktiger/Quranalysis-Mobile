@@ -1,13 +1,13 @@
 # Feature 5.2: Settings (Optional)
 
-**Status:** Not Started
+**Status:** Complete
 **Priority:** Optional - skip if time constrained
 
 ## Tasks
 
 | ID | Task | Size | Status |
 |----|------|------|--------|
-| 5.2.1 | Add Theme Toggle | S | Not Started |
+| 5.2.1 | Add Theme Toggle | L | Complete |
 
 ---
 
@@ -18,10 +18,11 @@
 **Deps:** 5.1.3
 
 **Acceptance Criteria:**
-- [ ] Theme state persisted in AsyncStorage
-- [ ] Toggle switch on profile
-- [ ] App respects theme setting
-- [ ] Default to system preference
+- [x] Theme state persisted in AsyncStorage
+- [x] Toggle switch on profile
+- [x] App respects theme setting
+- [x] Default to system preference
+- [x] Dark mode applied to all screens, components, and modals
 
 **Test:**
 ```bash

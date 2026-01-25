@@ -31,7 +31,7 @@ export default function DashboardScreen() {
   return (
     <ScrollView
       testID="dashboard-screen"
-      className="flex-1 bg-gray-50"
+      className="flex-1 bg-gray-50 dark:bg-gray-900"
       contentContainerClassName="p-4"
       refreshControl={
         <RefreshControl refreshing={isRefetching} onRefresh={handleRefresh} />
@@ -39,17 +39,17 @@ export default function DashboardScreen() {
     >
       {/* Welcome Header */}
       <View className="mb-6">
-        <Text testID="dashboard-welcome" className="text-2xl font-bold text-gray-900">
+        <Text testID="dashboard-welcome" className="text-2xl font-bold text-gray-900 dark:text-white">
           Welcome, {firstName}!
         </Text>
-        <Text className="text-gray-500 mt-1">
+        <Text className="text-gray-500 dark:text-gray-400 mt-1">
           Here's your practice overview
         </Text>
       </View>
 
       {/* Stats Grid */}
       <View className="mb-6">
-        <Text className="text-lg font-semibold text-gray-800 mb-3">
+        <Text className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">
           Your Stats
         </Text>
         <StatsGrid testID="stats-grid" />
@@ -57,7 +57,7 @@ export default function DashboardScreen() {
 
       {/* Activity Heatmap */}
       <View className="mb-6">
-        <Text className="text-lg font-semibold text-gray-800 mb-3">
+        <Text className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">
           Activity
         </Text>
         <ActivityHeatmap testID="activity-heatmap" />
@@ -65,7 +65,7 @@ export default function DashboardScreen() {
 
       {/* Performance Chart */}
       <View className="mb-6">
-        <Text className="text-lg font-semibold text-gray-800 mb-3">
+        <Text className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">
           Performance Trend
         </Text>
         <PerformanceChart testID="performance-chart" />
@@ -73,7 +73,7 @@ export default function DashboardScreen() {
 
       {/* Mistake Chart */}
       <View className="mb-6">
-        <Text className="text-lg font-semibold text-gray-800 mb-3">
+        <Text className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">
           Mistake Analysis
         </Text>
         <MistakeChart testID="mistake-chart" />
@@ -82,7 +82,7 @@ export default function DashboardScreen() {
       {/* Recent Sessions */}
       <View className="mb-6">
         <View className="flex-row justify-between items-center mb-3">
-          <Text className="text-lg font-semibold text-gray-800">
+          <Text className="text-lg font-semibold text-gray-800 dark:text-gray-100">
             Recent Sessions
           </Text>
           {recentSessions.length > 0 && (
@@ -91,14 +91,14 @@ export default function DashboardScreen() {
               onPress={() => router.push('/(tabs)/sessions')}
               className="px-3 py-1"
             >
-              <Text className="text-emerald-600 font-medium">View All</Text>
+              <Text className="text-emerald-600 dark:text-emerald-400 font-medium">View All</Text>
             </Pressable>
           )}
         </View>
 
         {/* Loading state */}
         {isLoading && (
-          <View testID="recent-sessions-loading" className="bg-white rounded-xl p-8 border border-gray-100 items-center">
+          <View testID="recent-sessions-loading" className="bg-white dark:bg-gray-800 rounded-xl p-8 border border-gray-100 dark:border-gray-700 items-center">
             <ActivityIndicator size="small" color="#10B981" />
             <Text className="text-gray-400 mt-2">Loading sessions...</Text>
           </View>
@@ -106,9 +106,9 @@ export default function DashboardScreen() {
 
         {/* Empty state for new users */}
         {hasNoSessions && (
-          <View testID="recent-sessions-empty" className="bg-white rounded-xl p-6 border border-gray-100 items-center">
+          <View testID="recent-sessions-empty" className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700 items-center">
             <Text className="text-4xl mb-3">📚</Text>
-            <Text className="text-gray-600 font-medium text-center">
+            <Text className="text-gray-600 dark:text-gray-300 font-medium text-center">
               No sessions yet
             </Text>
             <Text className="text-gray-400 text-sm text-center mt-1">

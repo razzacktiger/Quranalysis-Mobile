@@ -54,7 +54,7 @@ export function QuickActionChips({
   testID,
 }: QuickActionChipsProps) {
   return (
-    <View testID={testID} className="py-2 bg-gray-50/50">
+    <View testID={testID} className="py-2 bg-gray-50/50 dark:bg-gray-800/50">
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -70,8 +70,8 @@ export function QuickActionChips({
             className={`
               flex-row items-center px-4 py-2 rounded-full border
               ${disabled
-                ? 'bg-gray-100 border-gray-200 opacity-50'
-                : 'bg-white border-gray-200 active:bg-gray-50 active:border-gray-300'
+                ? 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 opacity-50'
+                : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 active:bg-gray-50 dark:active:bg-gray-700 active:border-gray-300'
               }
             `}
             accessibilityLabel={action.label}
@@ -81,7 +81,7 @@ export function QuickActionChips({
             <Text className="text-base mr-2">{action.emoji}</Text>
             <Text
               className={`text-sm font-medium ${
-                disabled ? 'text-gray-400' : 'text-gray-700'
+                disabled ? 'text-gray-400' : 'text-gray-700 dark:text-gray-300'
               }`}
             >
               {action.label}

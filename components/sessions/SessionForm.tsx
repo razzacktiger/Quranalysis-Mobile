@@ -174,12 +174,12 @@ export function SessionForm({ testID }: SessionFormProps) {
   return (
     <ScrollView
       testID={testID}
-      className="flex-1 bg-white"
+      className="flex-1 bg-white dark:bg-gray-900"
       contentContainerClassName="p-4 pb-20"
       keyboardShouldPersistTaps="handled"
     >
       {/* Session Metadata Section */}
-      <Text className="text-lg font-bold text-gray-800 mb-4">Session Details</Text>
+      <Text className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Session Details</Text>
 
       {/* Date Picker */}
       <Controller
@@ -286,7 +286,7 @@ export function SessionForm({ testID }: SessionFormProps) {
       {/* Portions Section */}
       <View className="mt-6 mb-4">
         <View className="flex-row justify-between items-center mb-3">
-          <Text className="text-lg font-bold text-gray-800">Portions</Text>
+          <Text className="text-lg font-bold text-gray-800 dark:text-gray-100">Portions</Text>
           <Pressable
             testID="add-portion-btn"
             onPress={handleAddPortion}
@@ -316,7 +316,7 @@ export function SessionForm({ testID }: SessionFormProps) {
       {/* Mistakes Section */}
       <View className="mt-4 mb-4">
         <View className="flex-row justify-between items-center mb-3">
-          <Text className="text-lg font-bold text-gray-800">Mistakes (optional)</Text>
+          <Text className="text-lg font-bold text-gray-800 dark:text-gray-100">Mistakes (optional)</Text>
           <Pressable
             testID="add-mistake-btn"
             onPress={handleAddMistake}
@@ -340,7 +340,7 @@ export function SessionForm({ testID }: SessionFormProps) {
         ))}
 
         {mistakes.length === 0 && (
-          <Text className="text-gray-400 text-center py-4">
+          <Text className="text-gray-400 dark:text-gray-500 text-center py-4">
             No mistakes logged yet
           </Text>
         )}

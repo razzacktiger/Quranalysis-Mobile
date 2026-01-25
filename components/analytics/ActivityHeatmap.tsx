@@ -17,7 +17,7 @@ export interface ActivityHeatmapProps {
  * Get color intensity based on session count
  */
 function getIntensityColor(count: number): string {
-  if (count === 0) return 'bg-gray-200';
+  if (count === 0) return 'bg-gray-200 dark:bg-gray-600';
   if (count === 1) return 'bg-green-300';
   if (count === 2) return 'bg-green-500';
   return 'bg-green-700';
@@ -114,7 +114,7 @@ export function ActivityHeatmap({ testID, onDayPress }: ActivityHeatmapProps) {
 
   if (isLoading) {
     return (
-      <View testID={`${testID}-loading`} className="bg-white rounded-xl p-4 border border-gray-100">
+      <View testID={`${testID}-loading`} className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700">
         <View className="h-32 items-center justify-center">
           <Text className="text-gray-400">Loading activity...</Text>
         </View>
@@ -125,7 +125,7 @@ export function ActivityHeatmap({ testID, onDayPress }: ActivityHeatmapProps) {
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <View testID={testID} className="bg-white rounded-xl p-4 border border-gray-100" onLayout={handleLayout}>
+    <View testID={testID} className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700" onLayout={handleLayout}>
       <View>
         {/* Month labels row */}
         <View
@@ -135,7 +135,7 @@ export function ActivityHeatmap({ testID, onDayPress }: ActivityHeatmapProps) {
           {monthLabels.map(({ month, weekIndex }, idx) => (
             <Text
               key={`${month}-${idx}`}
-              className="text-xs text-gray-500"
+              className="text-xs text-gray-500 dark:text-gray-400"
               style={{
                 position: 'absolute',
                 left: weekIndex * columnWidth,
@@ -157,7 +157,7 @@ export function ActivityHeatmap({ testID, onDayPress }: ActivityHeatmapProps) {
                 className="justify-center"
               >
                 {index % 2 === 1 && (
-                  <Text className="text-xs text-gray-400">{label}</Text>
+                  <Text className="text-xs text-gray-400 dark:text-gray-500">{label}</Text>
                 )}
               </View>
             ))}
@@ -194,12 +194,12 @@ export function ActivityHeatmap({ testID, onDayPress }: ActivityHeatmapProps) {
 
       {/* Legend */}
       <View className="flex-row items-center justify-end mt-3 gap-1">
-        <Text className="text-xs text-gray-400 mr-2">Less</Text>
-        <View style={{ width: 12, height: 12, borderRadius: 2 }} className="bg-gray-200" />
+        <Text className="text-xs text-gray-400 dark:text-gray-500 mr-2">Less</Text>
+        <View style={{ width: 12, height: 12, borderRadius: 2 }} className="bg-gray-200 dark:bg-gray-600" />
         <View style={{ width: 12, height: 12, borderRadius: 2 }} className="bg-green-300" />
         <View style={{ width: 12, height: 12, borderRadius: 2 }} className="bg-green-500" />
         <View style={{ width: 12, height: 12, borderRadius: 2 }} className="bg-green-700" />
-        <Text className="text-xs text-gray-400 ml-2">More</Text>
+        <Text className="text-xs text-gray-400 dark:text-gray-500 ml-2">More</Text>
       </View>
     </View>
   );

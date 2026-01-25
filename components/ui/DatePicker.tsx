@@ -112,7 +112,7 @@ export function DatePicker({
   return (
     <View className="mb-4">
       {label && (
-        <Text className="text-sm font-medium text-gray-700 mb-1">{label}</Text>
+        <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{label}</Text>
       )}
       <Pressable
         testID={testID}
@@ -123,10 +123,10 @@ export function DatePicker({
         }}
         className={`
           border rounded-lg px-4 py-3 flex-row justify-between items-center
-          ${error ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white'}
+          ${error ? 'border-red-500 bg-red-50 dark:bg-red-900/30' : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800'}
         `}
       >
-        <Text className="text-base text-gray-900">{formatDate(value)}</Text>
+        <Text className="text-base text-gray-900 dark:text-gray-100">{formatDate(value)}</Text>
         <Text className="text-gray-400">📅</Text>
       </Pressable>
       {error && (
@@ -136,12 +136,12 @@ export function DatePicker({
       )}
 
       {show && Platform.OS === 'ios' && (
-        <View className="bg-white border border-gray-200 rounded-lg mt-2">
-          <View className="flex-row justify-between items-center px-4 py-2 border-b border-gray-200">
+        <View className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg mt-2">
+          <View className="flex-row justify-between items-center px-4 py-2 border-b border-gray-200 dark:border-gray-700">
             <Pressable onPress={handleCancel}>
               <Text className="text-gray-500 font-medium">Cancel</Text>
             </Pressable>
-            <Text className="text-gray-700 font-medium">{getPickerTitle()}</Text>
+            <Text className="text-gray-700 dark:text-gray-300 font-medium">{getPickerTitle()}</Text>
             <Pressable onPress={handleDone}>
               <Text className="text-primary font-medium">{getDoneButtonText()}</Text>
             </Pressable>

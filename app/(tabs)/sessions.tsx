@@ -23,19 +23,19 @@ function LoadingSkeleton() {
       {[1, 2, 3].map((i) => (
         <View
           key={i}
-          className="bg-gray-100 rounded-xl p-4 mb-3 animate-pulse"
+          className="bg-gray-100 dark:bg-gray-800 rounded-xl p-4 mb-3 animate-pulse"
         >
           <View className="flex-row justify-between mb-3">
             <View>
-              <View className="bg-gray-200 h-5 w-32 rounded mb-2" />
-              <View className="bg-gray-200 h-4 w-24 rounded" />
+              <View className="bg-gray-200 dark:bg-gray-700 h-5 w-32 rounded mb-2" />
+              <View className="bg-gray-200 dark:bg-gray-700 h-4 w-24 rounded" />
             </View>
-            <View className="bg-gray-200 h-8 w-16 rounded-full" />
+            <View className="bg-gray-200 dark:bg-gray-700 h-8 w-16 rounded-full" />
           </View>
-          <View className="bg-gray-200 h-4 w-48 rounded mb-3" />
-          <View className="flex-row justify-between pt-2 border-t border-gray-200">
-            <View className="bg-gray-200 h-4 w-20 rounded" />
-            <View className="bg-gray-200 h-4 w-16 rounded" />
+          <View className="bg-gray-200 dark:bg-gray-700 h-4 w-48 rounded mb-3" />
+          <View className="flex-row justify-between pt-2 border-t border-gray-200 dark:border-gray-700">
+            <View className="bg-gray-200 dark:bg-gray-700 h-4 w-20 rounded" />
+            <View className="bg-gray-200 dark:bg-gray-700 h-4 w-16 rounded" />
           </View>
         </View>
       ))}
@@ -47,10 +47,10 @@ function EmptyState({ hasFilters }: { hasFilters: boolean }) {
   return (
     <View className="items-center justify-center p-8 pt-16">
       <Text className="text-6xl mb-4">{hasFilters ? '🔍' : '📖'}</Text>
-      <Text className="text-xl font-semibold text-gray-800 mb-2">
+      <Text className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
         {hasFilters ? 'No Matching Sessions' : 'No Sessions Yet'}
       </Text>
-      <Text className="text-gray-500 text-center">
+      <Text className="text-gray-500 dark:text-gray-400 text-center">
         {hasFilters
           ? 'Try adjusting your filters or search query.'
           : 'Start tracking your Quran practice by creating your first session.'}
@@ -63,10 +63,10 @@ function ErrorState({ message, onRetry }: { message: string; onRetry: () => void
   return (
     <View className="flex-1 items-center justify-center p-8">
       <Text className="text-6xl mb-4">⚠️</Text>
-      <Text className="text-xl font-semibold text-gray-800 mb-2">
+      <Text className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
         Something went wrong
       </Text>
-      <Text className="text-gray-500 text-center mb-4">{message}</Text>
+      <Text className="text-gray-500 dark:text-gray-400 text-center mb-4">{message}</Text>
       <Text
         className="text-primary font-medium"
         onPress={onRetry}
@@ -134,7 +134,7 @@ export default function SessionsScreen() {
 
   if (isLoading) {
     return (
-      <View testID="sessions-loading" className="flex-1 bg-gray-50">
+      <View testID="sessions-loading" className="flex-1 bg-gray-50 dark:bg-gray-900">
         <LoadingSkeleton />
       </View>
     );
@@ -142,7 +142,7 @@ export default function SessionsScreen() {
 
   if (isError) {
     return (
-      <View testID="sessions-error" className="flex-1 bg-gray-50">
+      <View testID="sessions-error" className="flex-1 bg-gray-50 dark:bg-gray-900">
         <ErrorState
           message={error?.message ?? 'Failed to load sessions'}
           onRetry={refetch}
@@ -154,14 +154,14 @@ export default function SessionsScreen() {
   // Show empty state if no sessions at all
   if (!sessions || sessions.length === 0) {
     return (
-      <View testID="sessions-empty" className="flex-1 bg-gray-50">
+      <View testID="sessions-empty" className="flex-1 bg-gray-50 dark:bg-gray-900">
         <EmptyState hasFilters={false} />
       </View>
     );
   }
 
   return (
-    <View testID="session-list" className="flex-1 bg-gray-50">
+    <View testID="session-list" className="flex-1 bg-gray-50 dark:bg-gray-900">
       <FlatList
         data={filteredSessions}
         renderItem={renderItem}
@@ -183,7 +183,7 @@ export default function SessionsScreen() {
               onFiltersChange={setFilters}
               availableSurahs={availableSurahs}
             />
-            <Text className="text-sm text-gray-500 mb-3">
+            <Text className="text-sm text-gray-500 dark:text-gray-400 mb-3">
               {filteredSessions.length} session{filteredSessions.length !== 1 ? 's' : ''}
               {hasActiveFilters && sessions.length !== filteredSessions.length
                 ? ` (filtered from ${sessions.length})`

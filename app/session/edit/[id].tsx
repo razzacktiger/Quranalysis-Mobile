@@ -117,11 +117,11 @@ function extractErrors(
 // Loading skeleton
 function LoadingSkeleton() {
   return (
-    <View testID="edit-session-loading" className="flex-1 bg-white p-4">
-      <View className="bg-gray-200 h-12 rounded-lg mb-4 animate-pulse" />
-      <View className="bg-gray-200 h-12 rounded-lg mb-4 animate-pulse" />
-      <View className="bg-gray-200 h-12 rounded-lg mb-4 animate-pulse" />
-      <View className="bg-gray-200 h-24 rounded-lg mb-4 animate-pulse" />
+    <View testID="edit-session-loading" className="flex-1 bg-white dark:bg-gray-900 p-4">
+      <View className="bg-gray-200 dark:bg-gray-700 h-12 rounded-lg mb-4 animate-pulse" />
+      <View className="bg-gray-200 dark:bg-gray-700 h-12 rounded-lg mb-4 animate-pulse" />
+      <View className="bg-gray-200 dark:bg-gray-700 h-12 rounded-lg mb-4 animate-pulse" />
+      <View className="bg-gray-200 dark:bg-gray-700 h-24 rounded-lg mb-4 animate-pulse" />
     </View>
   );
 }
@@ -129,9 +129,9 @@ function LoadingSkeleton() {
 // Error state
 function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }) {
   return (
-    <View testID="edit-session-error" className="flex-1 bg-white items-center justify-center p-4">
-      <Text className="text-lg font-semibold text-gray-900 mb-2">Error Loading Session</Text>
-      <Text className="text-gray-500 text-center mb-4">{message}</Text>
+    <View testID="edit-session-error" className="flex-1 bg-white dark:bg-gray-900 items-center justify-center p-4">
+      <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Error Loading Session</Text>
+      <Text className="text-gray-500 dark:text-gray-400 text-center mb-4">{message}</Text>
       <Pressable
         testID="retry-button"
         onPress={onRetry}
@@ -327,12 +327,12 @@ export default function EditSessionScreen() {
       />
       <ScrollView
         testID="edit-session-screen"
-        className="flex-1 bg-white"
+        className="flex-1 bg-white dark:bg-gray-900"
         contentContainerClassName="p-4 pb-20"
         keyboardShouldPersistTaps="handled"
       >
         {/* Session Metadata Section */}
-        <Text className="text-lg font-bold text-gray-800 mb-4">Session Details</Text>
+        <Text className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Session Details</Text>
 
         {/* Date Picker */}
         <Controller
@@ -439,7 +439,7 @@ export default function EditSessionScreen() {
         {/* Portions Section */}
         <View className="mt-6 mb-4">
           <View className="flex-row justify-between items-center mb-3">
-            <Text className="text-lg font-bold text-gray-800">Portions</Text>
+            <Text className="text-lg font-bold text-gray-800 dark:text-gray-100">Portions</Text>
             <Pressable
               testID="add-portion-btn"
               onPress={handleAddPortion}
@@ -469,7 +469,7 @@ export default function EditSessionScreen() {
         {/* Mistakes Section */}
         <View className="mt-4 mb-4">
           <View className="flex-row justify-between items-center mb-3">
-            <Text className="text-lg font-bold text-gray-800">Mistakes (optional)</Text>
+            <Text className="text-lg font-bold text-gray-800 dark:text-gray-100">Mistakes (optional)</Text>
             <Pressable
               testID="add-mistake-btn"
               onPress={handleAddMistake}
@@ -493,7 +493,7 @@ export default function EditSessionScreen() {
           ))}
 
           {mistakes.length === 0 && (
-            <Text className="text-gray-400 text-center py-4">
+            <Text className="text-gray-400 dark:text-gray-500 text-center py-4">
               No mistakes logged yet
             </Text>
           )}

@@ -1,6 +1,6 @@
 # EPIC-5: User Profile
 
-**Status:** Not Started
+**Status:** Complete
 **Priority:** Low - implement last
 
 ## Goal
@@ -10,8 +10,8 @@ Users can view their profile and manage settings.
 
 | ID | Feature | Status | Tasks | Folder |
 |----|---------|--------|-------|--------|
-| 5.1 | Profile Screen | Not Started | 0/4 | [features/5.1-profile-screen](./features/5.1-profile-screen/) |
-| 5.2 | Settings (Optional) | Not Started | 0/1 | [features/5.2-settings](./features/5.2-settings/) |
+| 5.1 | Profile Screen | Complete | 4/4 | [features/5.1-profile-screen](./features/5.1-profile-screen/) |
+| 5.2 | Settings | Complete | 1/1 | [features/5.2-settings](./features/5.2-settings/) |
 
 ## Dependencies
 - EPIC-0: Setup
@@ -40,8 +40,10 @@ Users can view their profile and manage settings.
 2. 5.2.1 (optional)
 
 ## Definition of Done
-- [ ] Profile shows correct user info
-- [ ] Stats are accurate
-- [ ] Sign out works
-- [ ] Links open correctly
-- [ ] All Maestro tests pass
+- [x] Profile shows correct user info
+- [x] Stats are accurate
+- [x] Sign out works
+- [x] Links open correctly
+- [x] All Maestro tests pass
+- [x] Theme toggle works with system/light/dark options
+- [x] Dark mode applied across entire app

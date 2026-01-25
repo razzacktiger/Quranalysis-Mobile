@@ -47,7 +47,7 @@ export function ExtractionSummary({
       <Pressable
         testID={`${testID}-toggle`}
         onPress={toggleExpanded}
-        className="bg-primary/5 rounded-xl border border-primary/10 overflow-hidden"
+        className="bg-primary/5 dark:bg-primary/10 rounded-xl border border-primary/10 overflow-hidden"
         accessibilityLabel={`Extraction summary: ${totalItems} items. ${isExpanded ? 'Tap to collapse' : 'Tap to expand'}`}
         accessibilityRole="button"
       >
@@ -58,10 +58,10 @@ export function ExtractionSummary({
               <Ionicons name="checkmark-circle" size={18} color="#10B981" />
             </View>
             <View className="flex-1">
-              <Text className="text-sm font-medium text-gray-900">
+              <Text className="text-sm font-medium text-gray-900 dark:text-gray-100">
                 Extracted Data
               </Text>
-              <Text className="text-xs text-gray-500">
+              <Text className="text-xs text-gray-500 dark:text-gray-400">
                 {portionCount > 0 && `${portionCount} portion${portionCount !== 1 ? 's' : ''}`}
                 {portionCount > 0 && mistakeCount > 0 && ' • '}
                 {mistakeCount > 0 && `${mistakeCount} mistake${mistakeCount !== 1 ? 's' : ''}`}
@@ -88,27 +88,27 @@ export function ExtractionSummary({
             {/* Session info */}
             {hasSession && (
               <View className="mt-3">
-                <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
+                <Text className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
                   Session
                 </Text>
                 <View className="flex-row flex-wrap gap-2">
                   {session.session_type && (
-                    <View className="bg-white px-3 py-1.5 rounded-lg border border-gray-100">
-                      <Text className="text-xs text-gray-600">
+                    <View className="bg-white dark:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-700">
+                      <Text className="text-xs text-gray-600 dark:text-gray-300">
                         {formatSessionType(session.session_type)}
                       </Text>
                     </View>
                   )}
                   {session.duration_minutes && (
-                    <View className="bg-white px-3 py-1.5 rounded-lg border border-gray-100">
-                      <Text className="text-xs text-gray-600">
+                    <View className="bg-white dark:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-700">
+                      <Text className="text-xs text-gray-600 dark:text-gray-300">
                         {session.duration_minutes} min
                       </Text>
                     </View>
                   )}
                   {session.performance_score != null && (
-                    <View className="bg-white px-3 py-1.5 rounded-lg border border-gray-100">
-                      <Text className="text-xs text-gray-600">
+                    <View className="bg-white dark:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-700">
+                      <Text className="text-xs text-gray-600 dark:text-gray-300">
                         Score: {session.performance_score}/10
                       </Text>
                     </View>
@@ -120,7 +120,7 @@ export function ExtractionSummary({
             {/* Portions */}
             {portionCount > 0 && (
               <View className="mt-3">
-                <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
+                <Text className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
                   Portions
                 </Text>
                 <View className="gap-1.5">
@@ -129,12 +129,12 @@ export function ExtractionSummary({
                     .map((portion, index) => (
                       <View
                         key={index}
-                        className="flex-row items-center bg-white px-3 py-2 rounded-lg border border-gray-100"
+                        className="flex-row items-center bg-white dark:bg-gray-800 px-3 py-2 rounded-lg border border-gray-100 dark:border-gray-700"
                       >
-                        <View className="w-6 h-6 rounded-full bg-blue-50 items-center justify-center mr-2">
+                        <View className="w-6 h-6 rounded-full bg-blue-50 dark:bg-blue-900/30 items-center justify-center mr-2">
                           <Text className="text-xs">📖</Text>
                         </View>
-                        <Text className="text-sm text-gray-700 flex-1">
+                        <Text className="text-sm text-gray-700 dark:text-gray-300 flex-1">
                           {portion.surah_name}
                           {portion.ayah_start && portion.ayah_end && (
                             <Text className="text-gray-400">
@@ -158,19 +158,19 @@ export function ExtractionSummary({
             {/* Mistakes */}
             {mistakeCount > 0 && (
               <View className="mt-3">
-                <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
+                <Text className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
                   Mistakes
                 </Text>
                 <View className="gap-1.5">
                   {mistakes.map((mistake, index) => (
                     <View
                       key={index}
-                      className="flex-row items-center bg-white px-3 py-2 rounded-lg border border-gray-100"
+                      className="flex-row items-center bg-white dark:bg-gray-800 px-3 py-2 rounded-lg border border-gray-100 dark:border-gray-700"
                     >
-                      <View className="w-6 h-6 rounded-full bg-red-50 items-center justify-center mr-2">
+                      <View className="w-6 h-6 rounded-full bg-red-50 dark:bg-red-900/30 items-center justify-center mr-2">
                         <Text className="text-xs">⚠️</Text>
                       </View>
-                      <Text className="text-sm text-gray-700 flex-1">
+                      <Text className="text-sm text-gray-700 dark:text-gray-300 flex-1">
                         {mistake.portion_surah} - {formatCategory(mistake.error_category)}
                       </Text>
                       <View

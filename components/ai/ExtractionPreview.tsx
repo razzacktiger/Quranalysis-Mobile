@@ -34,10 +34,10 @@ export function ExtractionPreview({
       {hasPortions && (
         <View
           testID={`${testID}-portions`}
-          className="flex-row items-center bg-blue-50 px-2 py-1 rounded-full"
+          className="flex-row items-center bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded-full"
         >
           <Text className="text-sm mr-1">📖</Text>
-          <Text className="text-xs text-blue-700 font-medium">
+          <Text className="text-xs text-blue-700 dark:text-blue-300 font-medium">
             {extraction.portions.length} portion
             {extraction.portions.length !== 1 ? 's' : ''}
           </Text>
@@ -48,10 +48,10 @@ export function ExtractionPreview({
       {hasDuration && (
         <View
           testID={`${testID}-duration`}
-          className="flex-row items-center bg-green-50 px-2 py-1 rounded-full"
+          className="flex-row items-center bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded-full"
         >
           <Text className="text-sm mr-1">⏱</Text>
-          <Text className="text-xs text-green-700 font-medium">
+          <Text className="text-xs text-green-700 dark:text-green-300 font-medium">
             {extraction.session?.duration_minutes} min
           </Text>
         </View>
@@ -61,10 +61,10 @@ export function ExtractionPreview({
       {hasPerformance && (
         <View
           testID={`${testID}-performance`}
-          className="flex-row items-center bg-purple-50 px-2 py-1 rounded-full"
+          className="flex-row items-center bg-purple-50 dark:bg-purple-900/30 px-2 py-1 rounded-full"
         >
           <Text className="text-sm mr-1">⭐</Text>
-          <Text className="text-xs text-purple-700 font-medium">
+          <Text className="text-xs text-purple-700 dark:text-purple-300 font-medium">
             {extraction.session?.performance_score}/10
           </Text>
         </View>
@@ -74,10 +74,10 @@ export function ExtractionPreview({
       {hasMistakes && (
         <View
           testID={`${testID}-mistakes`}
-          className="flex-row items-center bg-red-50 px-2 py-1 rounded-full"
+          className="flex-row items-center bg-red-50 dark:bg-red-900/30 px-2 py-1 rounded-full"
         >
           <Text className="text-sm mr-1">⚠️</Text>
-          <Text className="text-xs text-red-700 font-medium">
+          <Text className="text-xs text-red-700 dark:text-red-300 font-medium">
             {extraction.mistakes.length} mistake
             {extraction.mistakes.length !== 1 ? 's' : ''}
           </Text>

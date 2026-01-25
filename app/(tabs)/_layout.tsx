@@ -5,7 +5,7 @@ import { Pressable, View, Modal } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
+import { useTheme } from '@/lib/hooks';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { FloatingChatButton, ChatModal, SessionConfirmation, VoiceInputButton } from '@/components/ai';
 import { useAIChat } from '@/lib/hooks/useAIChat';
@@ -19,7 +19,7 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useTheme();
   const insets = useSafeAreaInsets();
 
   // Chat and confirmation state
@@ -65,7 +65,7 @@ export default function TabLayout() {
     <View style={{ flex: 1 }}>
       <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors[colorScheme].tint,
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
@@ -82,7 +82,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="info-circle"
                     size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
+                    color={Colors[colorScheme].text}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}

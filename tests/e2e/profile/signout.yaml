@@ -1,0 +1,59 @@
+# Profile Sign Out Flow E2E Test
+# Run with: maestro test tests/e2e/profile/signout.yaml
+#
+# Prerequisites:
+# - User must be logged in before running this test
+# - This test will sign the user out
+#
+# Bundle IDs:
+# - Development build: com.quranalysis.mobile
+# - Expo Go: host.exp.Exponent
+appId: host.exp.Exponent
+name: Profile - Sign Out Flow
+---
+# Launch Expo Go without clearing state to preserve login
+- launchApp:
+    clearState: false
+
+# Wait for app to be ready
+- extendedWaitUntil:
+    visible: "Quranalysis|Welcome|Profile"
+    timeout: 15000
+
+# Tap on Quranalysis project to load it (if on Expo Go home)
+- runFlow:
+    when:
+      visible: "Quranalysis"
+    commands:
+      - tapOn: "Quranalysis"
+
+# Wait for app to load
+- extendedWaitUntil:
+    visible: "Welcome|Profile"
+    timeout: 30000
+
+# Navigate to Profile tab
+- tapOn: "Profile"
+
+# Wait for Profile screen to load
+- extendedWaitUntil:
+    visible:
+      id: "profile-screen"
+    timeout: 5000
+
+# Verify sign out button is visible
+- assertVisible:
+    id: "sign-out-button"
+
+# Tap the sign out button
+- tapOn:
+    id: "sign-out-button"
+
+# Wait for sign out to complete and verify we're back at login
+- extendedWaitUntil:
+    visible: "Sign in with Google"
+    timeout: 10000
+
+# Verify we're on the login screen
+- assertVisible:
+    id: "login-screen"

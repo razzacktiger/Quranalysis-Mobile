@@ -75,7 +75,7 @@ function PortionCard({
   return (
     <View
       testID={`portion-card-${index}`}
-      className="bg-white rounded-xl mb-3 overflow-hidden border border-gray-100"
+      className="bg-white dark:bg-gray-800 rounded-xl mb-3 overflow-hidden border border-gray-100 dark:border-gray-700"
     >
       <Pressable
         testID={`portion-toggle-${index}`}
@@ -84,18 +84,18 @@ function PortionCard({
       >
         <View className="flex-row items-center justify-between">
           <View className="flex-1">
-            <Text className="text-lg font-semibold text-gray-900">
+            <Text className="text-lg font-semibold text-gray-900 dark:text-white">
               {portion.surah_name}
             </Text>
-            <Text className="text-sm text-gray-500 mt-1">
+            <Text className="text-sm text-gray-500 dark:text-gray-400 mt-1">
               Ayahs {portion.ayah_start} - {portion.ayah_end} • Juz{' '}
               {portion.juz_number}
             </Text>
           </View>
           <View className="flex-row items-center gap-3">
             {portionMistakes.length > 0 && (
-              <View className="bg-red-100 px-2 py-1 rounded-full">
-                <Text className="text-red-700 text-xs font-medium">
+              <View className="bg-red-100 dark:bg-red-900/30 px-2 py-1 rounded-full">
+                <Text className="text-red-700 dark:text-red-400 text-xs font-medium">
                   {portionMistakes.length} mistake
                   {portionMistakes.length !== 1 ? 's' : ''}
                 </Text>
@@ -110,19 +110,19 @@ function PortionCard({
         </View>
 
         <View className="flex-row flex-wrap gap-2 mt-3">
-          <View className="bg-gray-100 px-2 py-1 rounded">
-            <Text className="text-xs text-gray-600">
+          <View className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+            <Text className="text-xs text-gray-600 dark:text-gray-300">
               {formatRecency(portion.recency_category)}
             </Text>
           </View>
-          <View className="bg-gray-100 px-2 py-1 rounded">
-            <Text className="text-xs text-gray-600">
+          <View className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+            <Text className="text-xs text-gray-600 dark:text-gray-300">
               {portion.repetition_count}x repetitions
             </Text>
           </View>
           {portion.pages_read > 0 && (
-            <View className="bg-gray-100 px-2 py-1 rounded">
-              <Text className="text-xs text-gray-600">
+            <View className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+              <Text className="text-xs text-gray-600 dark:text-gray-300">
                 {portion.pages_read} pages
               </Text>
             </View>
@@ -133,16 +133,16 @@ function PortionCard({
       {expanded && portionMistakes.length > 0 && (
         <View
           testID={`portion-mistakes-${index}`}
-          className="border-t border-gray-100 bg-gray-50 p-4"
+          className="border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 p-4"
         >
-          <Text className="text-sm font-medium text-gray-700 mb-3">
+          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
             Mistakes
           </Text>
           {portionMistakes.map((mistake, mIndex) => (
             <View
               key={mistake.id}
               testID={`mistake-${index}-${mIndex}`}
-              className="bg-white rounded-lg p-3 mb-2 border border-gray-100"
+              className="bg-white dark:bg-gray-800 rounded-lg p-3 mb-2 border border-gray-100 dark:border-gray-700"
             >
               <View className="flex-row items-center justify-between">
                 <View className="flex-row items-center gap-2">
@@ -150,21 +150,21 @@ function PortionCard({
                     style={{ backgroundColor: getSeverityColor(mistake.severity_level) }}
                     className="w-2 h-2 rounded-full"
                   />
-                  <Text className="font-medium text-gray-900 capitalize">
+                  <Text className="font-medium text-gray-900 dark:text-white capitalize">
                     {mistake.error_category.replace('_', ' ')}
                   </Text>
                 </View>
-                <Text className="text-xs text-gray-500">
+                <Text className="text-xs text-gray-500 dark:text-gray-400">
                   Ayah {mistake.ayah_number}
                 </Text>
               </View>
               {mistake.error_subcategory && (
-                <Text className="text-sm text-gray-600 mt-1 capitalize">
+                <Text className="text-sm text-gray-600 dark:text-gray-400 mt-1 capitalize">
                   {mistake.error_subcategory.replace('_', ' ')}
                 </Text>
               )}
               {mistake.additional_notes && (
-                <Text className="text-sm text-gray-500 mt-2 italic">
+                <Text className="text-sm text-gray-500 dark:text-gray-400 mt-2 italic">
                   {mistake.additional_notes}
                 </Text>
               )}
@@ -179,16 +179,16 @@ function PortionCard({
 // Loading Skeleton
 function LoadingSkeleton() {
   return (
-    <View testID="session-detail-loading" className="flex-1 bg-gray-50 p-4">
-      <View className="bg-gray-200 h-8 w-3/4 rounded mb-4 animate-pulse" />
-      <View className="bg-gray-200 h-4 w-1/2 rounded mb-6 animate-pulse" />
-      <View className="bg-white rounded-xl p-4 mb-4">
-        <View className="bg-gray-200 h-6 w-full rounded mb-3 animate-pulse" />
-        <View className="bg-gray-200 h-4 w-2/3 rounded animate-pulse" />
+    <View testID="session-detail-loading" className="flex-1 bg-gray-50 dark:bg-gray-900 p-4">
+      <View className="bg-gray-200 dark:bg-gray-700 h-8 w-3/4 rounded mb-4 animate-pulse" />
+      <View className="bg-gray-200 dark:bg-gray-700 h-4 w-1/2 rounded mb-6 animate-pulse" />
+      <View className="bg-white dark:bg-gray-800 rounded-xl p-4 mb-4">
+        <View className="bg-gray-200 dark:bg-gray-700 h-6 w-full rounded mb-3 animate-pulse" />
+        <View className="bg-gray-200 dark:bg-gray-700 h-4 w-2/3 rounded animate-pulse" />
       </View>
-      <View className="bg-white rounded-xl p-4 mb-4">
-        <View className="bg-gray-200 h-6 w-full rounded mb-3 animate-pulse" />
-        <View className="bg-gray-200 h-4 w-2/3 rounded animate-pulse" />
+      <View className="bg-white dark:bg-gray-800 rounded-xl p-4 mb-4">
+        <View className="bg-gray-200 dark:bg-gray-700 h-6 w-full rounded mb-3 animate-pulse" />
+        <View className="bg-gray-200 dark:bg-gray-700 h-4 w-2/3 rounded animate-pulse" />
       </View>
     </View>
   );
@@ -197,12 +197,12 @@ function LoadingSkeleton() {
 // Error State
 function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }) {
   return (
-    <View testID="session-detail-error" className="flex-1 bg-gray-50 items-center justify-center p-4">
+    <View testID="session-detail-error" className="flex-1 bg-gray-50 dark:bg-gray-900 items-center justify-center p-4">
       <FontAwesome name="exclamation-circle" size={48} color="#EF4444" />
-      <Text className="text-lg font-semibold text-gray-900 mt-4">
+      <Text className="text-lg font-semibold text-gray-900 dark:text-white mt-4">
         Session Not Found
       </Text>
-      <Text className="text-gray-500 text-center mt-2">{message}</Text>
+      <Text className="text-gray-500 dark:text-gray-400 text-center mt-2">{message}</Text>
       <Pressable
         testID="retry-button"
         onPress={onRetry}
@@ -290,41 +290,41 @@ export default function SessionDetailScreen() {
       />
       <ScrollView
         testID="session-detail-screen"
-        className="flex-1 bg-gray-50"
+        className="flex-1 bg-gray-50 dark:bg-gray-900"
         contentContainerClassName="p-4 pb-8"
       >
         {/* Header Section */}
         <View testID="session-header" className="mb-6">
-          <Text className="text-2xl font-bold text-gray-900">
+          <Text className="text-2xl font-bold text-gray-900 dark:text-white">
             {formatSessionType(session.session_type)}
           </Text>
-          <Text className="text-gray-500 mt-1">
+          <Text className="text-gray-500 dark:text-gray-400 mt-1">
             {formatDate(session.session_date)}
           </Text>
         </View>
 
         {/* Stats Row */}
         <View testID="session-stats" className="flex-row gap-3 mb-6">
-          <View className="flex-1 bg-white rounded-xl p-4 items-center border border-gray-100">
+          <View className="flex-1 bg-white dark:bg-gray-800 rounded-xl p-4 items-center border border-gray-100 dark:border-gray-700">
             <Text
               style={{ color: getScoreColor(session.performance_score) }}
               className="text-3xl font-bold"
             >
               {session.performance_score}
             </Text>
-            <Text className="text-xs text-gray-500 mt-1">Score</Text>
+            <Text className="text-xs text-gray-500 dark:text-gray-400 mt-1">Score</Text>
           </View>
-          <View className="flex-1 bg-white rounded-xl p-4 items-center border border-gray-100">
-            <Text className="text-3xl font-bold text-gray-900">
+          <View className="flex-1 bg-white dark:bg-gray-800 rounded-xl p-4 items-center border border-gray-100 dark:border-gray-700">
+            <Text className="text-3xl font-bold text-gray-900 dark:text-white">
               {session.duration_minutes}
             </Text>
-            <Text className="text-xs text-gray-500 mt-1">Minutes</Text>
+            <Text className="text-xs text-gray-500 dark:text-gray-400 mt-1">Minutes</Text>
           </View>
-          <View className="flex-1 bg-white rounded-xl p-4 items-center border border-gray-100">
-            <Text className="text-3xl font-bold text-gray-900">{totalAyahs}</Text>
-            <Text className="text-xs text-gray-500 mt-1">Ayahs</Text>
+          <View className="flex-1 bg-white dark:bg-gray-800 rounded-xl p-4 items-center border border-gray-100 dark:border-gray-700">
+            <Text className="text-3xl font-bold text-gray-900 dark:text-white">{totalAyahs}</Text>
+            <Text className="text-xs text-gray-500 dark:text-gray-400 mt-1">Ayahs</Text>
           </View>
-          <View className="flex-1 bg-white rounded-xl p-4 items-center border border-gray-100">
+          <View className="flex-1 bg-white dark:bg-gray-800 rounded-xl p-4 items-center border border-gray-100 dark:border-gray-700">
             <Text
               className={`text-3xl font-bold ${
                 totalMistakes > 0 ? 'text-red-500' : 'text-emerald-500'
@@ -332,23 +332,23 @@ export default function SessionDetailScreen() {
             >
               {totalMistakes}
             </Text>
-            <Text className="text-xs text-gray-500 mt-1">Mistakes</Text>
+            <Text className="text-xs text-gray-500 dark:text-gray-400 mt-1">Mistakes</Text>
           </View>
         </View>
 
         {/* Session Goal */}
         {session.session_goal && (
-          <View testID="session-goal" className="bg-white rounded-xl p-4 mb-6 border border-gray-100">
-            <Text className="text-sm font-medium text-gray-700 mb-2">
+          <View testID="session-goal" className="bg-white dark:bg-gray-800 rounded-xl p-4 mb-6 border border-gray-100 dark:border-gray-700">
+            <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Session Goal
             </Text>
-            <Text className="text-gray-900">{session.session_goal}</Text>
+            <Text className="text-gray-900 dark:text-white">{session.session_goal}</Text>
           </View>
         )}
 
         {/* Portions Section */}
         <View testID="portions-section" className="mb-6">
-          <Text className="text-lg font-semibold text-gray-900 mb-3">
+          <Text className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
             Portions ({session.session_portions.length})
           </Text>
           {session.session_portions.map((portion, index) => (
@@ -363,11 +363,11 @@ export default function SessionDetailScreen() {
 
         {/* Notes Section */}
         {session.additional_notes && (
-          <View testID="session-notes" className="bg-white rounded-xl p-4 mb-6 border border-gray-100">
-            <Text className="text-sm font-medium text-gray-700 mb-2">
+          <View testID="session-notes" className="bg-white dark:bg-gray-800 rounded-xl p-4 mb-6 border border-gray-100 dark:border-gray-700">
+            <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Additional Notes
             </Text>
-            <Text className="text-gray-900">{session.additional_notes}</Text>
+            <Text className="text-gray-900 dark:text-white">{session.additional_notes}</Text>
           </View>
         )}
 

@@ -17,7 +17,7 @@ export function LoadingMessage({ testID }: LoadingMessageProps) {
       accessibilityLabel="AI is thinking"
     >
       <View
-        className="flex-row items-center bg-gray-100 px-4 py-3 rounded-2xl rounded-bl-sm"
+        className="flex-row items-center bg-gray-100 dark:bg-gray-800 px-4 py-3 rounded-2xl rounded-bl-sm"
         accessibilityRole="progressbar"
       >
         <ActivityIndicator
@@ -26,7 +26,7 @@ export function LoadingMessage({ testID }: LoadingMessageProps) {
           color="#6B7280"
           accessibilityLabel="Loading"
         />
-        <Text className="text-gray-500 ml-2 text-base">Thinking...</Text>
+        <Text className="text-gray-500 dark:text-gray-400 ml-2 text-base">Thinking...</Text>
       </View>
     </View>
   );

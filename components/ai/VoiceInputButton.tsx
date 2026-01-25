@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useColorScheme } from 'nativewind';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -37,6 +38,9 @@ export function VoiceInputButton({
   disabled = false,
   testID = 'voice-input-button',
 }: VoiceInputButtonProps) {
+  const { colorScheme } = useColorScheme();
+  const isDark = colorScheme === 'dark';
+
   const {
     isListening,
     isSupported,
@@ -104,7 +108,8 @@ export function VoiceInputButton({
 
   const iconName = hasError ? 'alert-circle' : isActive ? 'mic' : 'mic-outline';
   const iconColor = isActive ? '#FFFFFF' : hasError ? '#ef4444' : '#6B7280';
-  const backgroundColor = isActive ? '#ef4444' : '#f3f4f6';
+  // Use dark gray in dark mode for inactive state
+  const backgroundColor = isActive ? '#ef4444' : isDark ? '#374151' : '#f3f4f6';
   const opacity = disabled ? 0.5 : 1;
 
   return (
@@ -162,10 +167,10 @@ export function VoiceInputButton({
       {hasError && (
         <View
           testID={`${testID}-error`}
-          className="absolute top-12 left-1/2 -translate-x-1/2 bg-red-50 border border-red-200 px-2 py-1 rounded"
+          className="absolute top-12 left-1/2 -translate-x-1/2 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 px-2 py-1 rounded"
           style={{ transform: [{ translateX: -60 }], minWidth: 120 }}
         >
-          <Text className="text-red-600 text-xs text-center" numberOfLines={2}>
+          <Text className="text-red-600 dark:text-red-400 text-xs text-center" numberOfLines={2}>
             {error}
           </Text>
         </View>

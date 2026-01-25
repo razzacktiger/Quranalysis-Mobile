@@ -55,12 +55,12 @@ export function StatCard({
   return (
     <View
       testID={testID}
-      className={`${bgColor} rounded-xl p-4 shadow-sm border border-gray-100`}
+      className={`${bgColor} dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700`}
       style={{ minHeight: 110 }}
     >
       {/* Header: Icon and Trend */}
       <View className="flex-row justify-between items-start mb-2">
-        <View className="bg-gray-100 rounded-lg p-2">
+        <View className="bg-gray-100 dark:bg-gray-700 rounded-lg p-2">
           <Ionicons name={icon} size={20} color={iconColor} />
         </View>
         {trendIcon && (
@@ -77,13 +77,13 @@ export function StatCard({
       {/* Value */}
       <Text
         testID={`${testID}-value`}
-        className="text-2xl font-bold text-gray-900 mb-1"
+        className="text-2xl font-bold text-gray-900 dark:text-white mb-1"
       >
         {value}
       </Text>
 
       {/* Label */}
-      <Text className="text-sm text-gray-500">{label}</Text>
+      <Text className="text-sm text-gray-500 dark:text-gray-400">{label}</Text>
 
       {/* Subtitle (optional) */}
       {subtitle && (

@@ -136,11 +136,11 @@ export function MistakeForm({
   return (
     <View
       testID={testID}
-      className="bg-red-50 rounded-lg p-4 mb-4 border border-red-200"
+      className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4 mb-4 border border-red-200 dark:border-red-800"
     >
       {/* Header with remove button */}
       <View className="flex-row justify-between items-center mb-3">
-        <Text className="text-base font-semibold text-gray-800">
+        <Text className="text-base font-semibold text-gray-800 dark:text-gray-100">
           Mistake {index + 1}
         </Text>
         <Pressable

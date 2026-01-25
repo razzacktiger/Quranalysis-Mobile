@@ -221,11 +221,11 @@ export function SessionConfirmation({
   };
 
   return (
-    <View testID={testID} className="flex-1 bg-gray-50">
+    <View testID={testID} className="flex-1 bg-gray-50 dark:bg-gray-900">
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Session Details Section */}
-        <View className="bg-white mx-4 mt-4 rounded-xl px-4 py-2">
-          <Text className="text-lg font-semibold text-gray-900 py-3 border-b border-gray-100">
+        <View className="bg-white dark:bg-gray-800 mx-4 mt-4 rounded-xl px-4 py-2">
+          <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100 py-3 border-b border-gray-100 dark:border-gray-700">
             Session Details
           </Text>
 
@@ -277,14 +277,14 @@ export function SessionConfirmation({
 
         {/* Portions Section */}
         <View className="mx-4 mt-4">
-          <Text className="text-lg font-semibold text-gray-900 mb-3">
+          <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
             Portions ({portions.length})
           </Text>
 
           {portions.length === 0 ? (
-            <View className="bg-white border border-gray-200 rounded-xl p-6 items-center">
+            <View className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 items-center">
               <Ionicons name="book-outline" size={32} color="#9CA3AF" />
-              <Text className="text-gray-500 mt-2">No portions extracted</Text>
+              <Text className="text-gray-500 dark:text-gray-400 mt-2">No portions extracted</Text>
               <Pressable
                 onPress={onAddMore}
                 className="mt-3 px-4 py-2 bg-primary/10 rounded-full"
@@ -307,14 +307,14 @@ export function SessionConfirmation({
 
         {/* Mistakes Section */}
         <View className="mx-4 mt-4">
-          <Text className="text-lg font-semibold text-gray-900 mb-3">
+          <Text className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
             Mistakes ({mistakes.length})
           </Text>
 
           {mistakes.length === 0 ? (
-            <View className="bg-white border border-gray-200 rounded-xl p-6 items-center">
+            <View className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 items-center">
               <Ionicons name="alert-circle-outline" size={32} color="#9CA3AF" />
-              <Text className="text-gray-500 mt-2">No mistakes recorded</Text>
+              <Text className="text-gray-500 dark:text-gray-400 mt-2">No mistakes recorded</Text>
               <Text className="text-gray-400 text-sm">That's great!</Text>
             </View>
           ) : (
@@ -336,10 +336,10 @@ export function SessionConfirmation({
           <Pressable
             testID={`${testID}-add-more`}
             onPress={onAddMore}
-            className="flex-row items-center justify-center py-3 border-2 border-dashed border-gray-300 rounded-xl"
+            className="flex-row items-center justify-center py-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl"
           >
             <Ionicons name="chatbubble-ellipses" size={20} color="#6B7280" />
-            <Text className="text-gray-600 font-medium ml-2">
+            <Text className="text-gray-600 dark:text-gray-400 font-medium ml-2">
               Add More via Chat
             </Text>
           </Pressable>
@@ -347,14 +347,14 @@ export function SessionConfirmation({
       </ScrollView>
 
       {/* Bottom Action Bar */}
-      <View className="flex-row px-4 py-4 bg-white border-t border-gray-100 gap-3">
+      <View className="flex-row px-4 py-4 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 gap-3">
         <Pressable
           testID={`${testID}-cancel`}
           onPress={onCancel}
           disabled={createSession.isPending}
-          className="flex-1 py-3 items-center rounded-xl border border-gray-300"
+          className="flex-1 py-3 items-center rounded-xl border border-gray-300 dark:border-gray-600"
         >
-          <Text className="text-gray-700 font-semibold">Cancel</Text>
+          <Text className="text-gray-700 dark:text-gray-300 font-semibold">Cancel</Text>
         </Pressable>
 
         <Pressable

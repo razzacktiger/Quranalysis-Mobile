@@ -132,11 +132,11 @@ export function PortionForm({
   return (
     <View
       testID={testID}
-      className="bg-gray-50 rounded-lg p-4 mb-4 border border-gray-200"
+      className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 mb-4 border border-gray-200 dark:border-gray-700"
     >
       {/* Header with remove button */}
       <View className="flex-row justify-between items-center mb-3">
-        <Text className="text-base font-semibold text-gray-800">
+        <Text className="text-base font-semibold text-gray-800 dark:text-gray-100">
           Portion {index + 1}
         </Text>
         <Pressable
@@ -185,7 +185,7 @@ export function PortionForm({
 
       {/* Ayah count hint */}
       {selectedSurah && (
-        <Text className="text-xs text-gray-500 -mt-2 mb-3">
+        <Text className="text-xs text-gray-500 dark:text-gray-400 -mt-2 mb-3">
           {selectedSurah.transliteration} has {selectedSurah.ayah_count} ayahs
         </Text>
       )}
@@ -217,15 +217,15 @@ export function PortionForm({
 
       {/* Calculated values display */}
       {(calculatedValues.juz_number || calculatedValues.pages_read) && (
-        <View className="flex-row justify-between bg-primary/5 rounded-lg px-3 py-2 mt-2">
+        <View className="flex-row justify-between bg-primary/5 dark:bg-primary/10 rounded-lg px-3 py-2 mt-2">
           <View className="flex-row items-center">
-            <Text className="text-sm text-gray-600">Juz: </Text>
+            <Text className="text-sm text-gray-600 dark:text-gray-400">Juz: </Text>
             <Text testID={`${testID}-juz`} className="text-sm font-semibold text-primary">
               {calculatedValues.juz_number ?? '—'}
             </Text>
           </View>
           <View className="flex-row items-center">
-            <Text className="text-sm text-gray-600">Pages: </Text>
+            <Text className="text-sm text-gray-600 dark:text-gray-400">Pages: </Text>
             <Text testID={`${testID}-pages`} className="text-sm font-semibold text-primary">
               {calculatedValues.pages_read ?? '—'}
             </Text>

@@ -58,7 +58,7 @@ export function ChatInput({
   return (
     <View
       testID={testID}
-      className="flex-row items-end px-4 py-3 bg-white border-t border-gray-100"
+      className="flex-row items-end px-4 py-3 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800"
     >
       {/* Voice input button placeholder */}
       {voiceButton && (
@@ -71,7 +71,7 @@ export function ChatInput({
       <View
         className={`
           flex-1 flex-row items-end rounded-2xl border px-4 py-2
-          ${disabled ? 'bg-gray-50 border-gray-200' : 'bg-gray-50 border-gray-200'}
+          ${disabled ? 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700' : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'}
         `}
         style={{ minHeight: 44 }}
       >
@@ -91,7 +91,7 @@ export function ChatInput({
           returnKeyType="default"
           className={`
             flex-1 text-base leading-6
-            ${disabled ? 'text-gray-400' : 'text-gray-900'}
+            ${disabled ? 'text-gray-400' : 'text-gray-900 dark:text-gray-100'}
           `}
           style={{
             height: inputHeight,

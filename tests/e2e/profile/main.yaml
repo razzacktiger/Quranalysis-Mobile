@@ -1,0 +1,91 @@
+# Profile Screen E2E Test
+# Run with: maestro test tests/e2e/profile/main.yaml
+#
+# Prerequisites:
+# - User must be logged in before running this test
+# - Expo dev server must be running (npx expo start)
+#
+# Bundle IDs:
+# - Development build: com.quranalysis.mobile
+# - Expo Go: host.exp.Exponent
+appId: host.exp.Exponent
+name: Profile - Screen Elements
+---
+# Launch Expo Go without clearing state to preserve login
+- launchApp:
+    clearState: false
+
+# Wait for app to be ready
+- extendedWaitUntil:
+    visible: "Quranalysis|Welcome|Profile"
+    timeout: 15000
+
+# Tap on Quranalysis project to load it (if on Expo Go home)
+- runFlow:
+    when:
+      visible: "Quranalysis"
+    commands:
+      - tapOn: "Quranalysis"
+
+# Wait for app to load
+- extendedWaitUntil:
+    visible: "Welcome|Profile"
+    timeout: 30000
+
+# Navigate to Profile tab
+- tapOn: "Profile"
+
+# Wait for Profile screen to load
+- extendedWaitUntil:
+    visible:
+      id: "profile-screen"
+    timeout: 5000
+
+# ===== Verify Profile Header =====
+- assertVisible:
+    id: "profile-header"
+
+- assertVisible:
+    id: "user-avatar"
+
+- assertVisible:
+    id: "user-name"
+
+- assertVisible:
+    id: "user-email"
+
+# ===== Verify Account Stats =====
+- assertVisible:
+    id: "account-stats"
+
+- assertVisible:
+    id: "stat-total-sessions"
+
+- assertVisible:
+    id: "stat-practice-time"
+
+- assertVisible:
+    id: "stat-member-since"
+
+- assertVisible:
+    id: "stat-most-practiced"
+
+# ===== Verify About Section =====
+- assertVisible: "About"
+
+- assertVisible:
+    id: "help-link"
+
+- assertVisible:
+    id: "privacy-link"
+
+- assertVisible:
+    id: "app-version"
+
+# ===== Verify Sign Out Button =====
+- assertVisible:
+    id: "sign-out-button"
+
+# ===== Final Verification =====
+- assertVisible:
+    id: "profile-screen"
