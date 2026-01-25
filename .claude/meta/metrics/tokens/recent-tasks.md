@@ -23,6 +23,7 @@ Last 20 tasks with full breakdown.
 | 01-24 | 5.1.2 | 5 | S | UI | 4k | 3 | 8 | direct | ~1k | AccountStats component |
 | 01-24 | 5.1.3 | 5 | M | UI | 6k | 5 | 12 | code-reviewer | ~2k | Profile screen, 1 bug caught |
 | 01-24 | 5.1.4 | 5 | S | Test | 3k | 3 | 6 | direct | ~1k | Profile E2E tests |
+| 01-24 | 5.2.1 | 5 | L | UI | 15k | 8 | 45 | direct | ~3k | Theme toggle + app-wide dark mode (42 files) |
 
 ## Task Types
 

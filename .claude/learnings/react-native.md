@@ -110,3 +110,59 @@ if (!moduleAvailable) {
 }
 ```
 **Prevention:** When using native modules that require development builds (speech recognition, camera, etc.), always use `require()` with try-catch to allow graceful fallback in Expo Go
+
+## NativeWind 4.x Dark Mode Implementation
+
+**Symptom:** Need to implement app-wide dark mode that persists and syncs with system preference
+**Context:** NativeWind 4.x uses a different API than v2.x for managing dark mode
+
+**Fix:** Create a theme provider that combines three systems:
+1. **NativeWind** - Uses `useColorScheme().setColorScheme()` to control Tailwind `dark:` classes
+2. **React Navigation** - Requires `ThemeProvider` with custom light/dark themes for headers/tabs
+3. **AsyncStorage** - Persist user preference with key like `@theme_preference`
+
+```typescript
+// lib/hooks/useTheme.ts
+import { useColorScheme } from 'nativewind';
+import { ThemeProvider, DefaultTheme, DarkTheme } from '@react-navigation/native';
+
+export function AppThemeProvider({ children }) {
+  const { colorScheme, setColorScheme } = useColorScheme();
+  const [preference, setPreference] = useState<'system' | 'light' | 'dark'>('system');
+
+  // Apply theme when preference changes
+  useEffect(() => {
+    if (preference === 'system') {
+      setColorScheme('system');  // NativeWind follows device
+    } else {
+      setColorScheme(preference); // NativeWind uses explicit value
+    }
+  }, [preference, setColorScheme]);
+
+  // React Navigation needs explicit theme object
+  const navigationTheme = colorScheme === 'dark' ? DarkTheme : DefaultTheme;
+
+  return (
+    <ThemeProvider value={navigationTheme}>
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+**Dark mode class patterns:**
+- Backgrounds: `bg-white dark:bg-gray-800` or `dark:bg-gray-900`
+- Borders: `border-gray-200 dark:border-gray-700`
+- Primary text: `text-gray-900 dark:text-gray-100`
+- Secondary text: `text-gray-500 dark:text-gray-400`
+- Input fields: `dark:bg-gray-700 dark:border-gray-600`
+- Colored badges: `bg-blue-50 dark:bg-blue-900/30`, `text-blue-700 dark:text-blue-300`
+
+**For inline styles (StyleSheet or Animated):**
+```typescript
+const { colorScheme } = useColorScheme();
+const isDark = colorScheme === 'dark';
+const backgroundColor = isDark ? '#374151' : '#f3f4f6';
+```
+
+**Prevention:** When implementing dark mode in NativeWind 4.x apps, plan to update ALL screens and components. Use the AppThemeProvider pattern to centralize theme management and ensure both NativeWind and React Navigation stay in sync

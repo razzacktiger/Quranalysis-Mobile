@@ -5,7 +5,7 @@
 **Branch:** epic-5-profile
 
 ## Active Task
-- **ID:** None (Feature 5.1 complete - ready for Human QA)
+- **ID:** None (Feature 5.2 complete)
 - **Name:** -
 - **Type:** -
 - **Size:** -
@@ -22,12 +22,13 @@ _None_
 | 5.1.2 | ~4k | 3 | 8 | - | 0 |
 | 5.1.3 | ~6k | 5 | 12 | code-reviewer | 1 (Linking error handling) |
 | 5.1.4 | ~3k | 3 | 6 | - | 0 |
+| 5.2.1 | ~15k | 8 | 45 | - | 0 |
 
 ## Running Totals
-- Tasks: 4 complete, 0 in progress
-- Tokens: ~16k
-- Context: ~40%
-- Tool calls: 38
+- Tasks: 5 complete, 0 in progress
+- Tokens: ~31k
+- Context: ~60%
+- Tool calls: 83
 
 ## Files Read This Session
 - .claude/epics/active/EPIC-5-PROFILE/README.md
@@ -59,5 +60,6 @@ _None_
 - Profile depends on auth (EPIC-1) and useStats (EPIC-3)
 - Code reviewer caught missing Linking.openURL error handling
 - Feature 5.1 complete - ready for Human QA
-- Feature 5.2 (Theme Toggle) is optional
+- Feature 5.2 (Theme Toggle) complete - 42 files updated with dark mode
 - Bug logged: BUG-5.1.1 - Most Practiced stat may be misleading (Severity: 3)
+- Theme uses NativeWind colorScheme API + React Navigation ThemeProvider
