@@ -45,6 +45,7 @@
       "expo-router",
       "@react-native-community/datetimepicker",
       "@react-native-firebase/app",
+      "./plugins/withModularHeaders",
       [
         "expo-speech-recognition",
         {
