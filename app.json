@@ -20,7 +20,8 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "NSSpeechRecognitionUsageDescription": "Allow Quranalysis to use speech recognition for session logging.",
-        "NSMicrophoneUsageDescription": "Allow Quranalysis to use the microphone for voice input."
+        "NSMicrophoneUsageDescription": "Allow Quranalysis to use the microphone for voice input.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
