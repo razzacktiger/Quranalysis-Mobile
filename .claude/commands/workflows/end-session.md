@@ -100,6 +100,23 @@ Update `status/CURRENT.md` with:
 - Any blockers
 - Next task
 
+## Step 5b: Check for Structural Changes
+
+Ask: "Did this session include any structural changes?"
+
+Structural changes include:
+- Created new epic (`/create-epic`)
+- Archived an epic
+- Refactored epic/feature folders
+- Changed workflow commands
+- Major documentation updates
+
+**If yes:**
+- Recommend running `/sync-docs` before ending
+- Or note in session summary: "Run `/sync-docs` next session"
+
+**If no:** Continue
+
 ## Step 6: Calculate Session Stats
 ```
 Session Summary:

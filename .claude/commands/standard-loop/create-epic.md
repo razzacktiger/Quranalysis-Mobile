@@ -84,10 +84,25 @@ Update status/CURRENT.md:
 ## Step 8: Record Metrics
 Update meta/session/CURRENT.md
 
-## Step 9: Report
+## Step 9: Update Cross-References
+
+### Update REQUIREMENTS.md
+Add or update the epic entry in the Epics table:
+
+```markdown
+| EPIC-N: Name | Not Started | [epics/active/EPIC-N-NAME/](./epics/active/EPIC-N-NAME/) |
+```
+
+### Update .claude/README.md (if needed)
+If this is a new epic type or changes the directory structure, verify the Directory Index is accurate.
+
+**Note:** For major structural changes, run `/sync-docs` to verify all references.
+
+## Step 10: Report
 Show summary:
 - "Epic created/updated with X features, Y tasks"
 - Feature breakdown with task counts
+- "REQUIREMENTS.md updated with epic link"
 - "Ready for /start-epic N-name?"
 
 ## Epic README Template
