@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:improve-workflow",
+  "title": "improve-workflow",
+  "description": "Analyze metrics and propose workflow improvements",
+  "type": "object",
+  "properties": {
+    "focus_area": {
+      "type": "string",
+      "description": "Specific area to focus improvement analysis on"
+    }
+  },
+  "x-workflow": {
+    "aliases": ["/improve-workflow"],
+    "requires": {
+      "params": [],
+      "optional_params": ["focus_area"],
+      "state": []
+    },
+    "state_reads": [
+      "state/metrics.json",
+      "state/session.json"
+    ],
+    "state_writes": [
+      {
+        "file": "state/metrics.json",
+        "action": "update",
+        "fields": ["signals"]
+      }
+    ],
+    "output": "Analysis report with recommendations",
+    "instructions": "../instructions/workflows/improve-workflow.md"
+  }
+}

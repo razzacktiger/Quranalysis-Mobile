@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:next-task",
+  "title": "next-task",
+  "description": "Continue to the next pending task in the current epic/feature",
+  "type": "object",
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "description": "Specific task ID to start (optional, otherwise picks next pending)"
+    }
+  },
+  "x-workflow": {
+    "aliases": ["/next-task"],
+    "requires": {
+      "params": [],
+      "optional_params": ["task_id"],
+      "state": ["project.active.epic_id"]
+    },
+    "state_reads": [
+      "state/project.json",
+      "state/tasks.json",
+      "state/session.json"
+    ],
+    "state_writes": [
+      {
+        "file": "state/project.json",
+        "action": "update",
+        "fields": ["active.task_id", "active.feature_id"]
+      },
+      {
+        "file": "state/session.json",
+        "action": "update",
+        "fields": ["active_task"]
+      },
+      {
+        "file": "state/tasks.json",
+        "action": "update",
+        "fields": ["tasks[next].status"]
+      }
+    ],
+    "logic": {
+      "find_next": "First pending task in current epic, ordered by feature then task ID"
+    },
+    "instructions": "../instructions/standard-loop/next-task.md"
+  }
+}

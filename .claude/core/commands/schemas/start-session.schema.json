@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:start-session",
+  "title": "start-session",
+  "description": "Initialize session tracking without epic context",
+  "type": "object",
+  "properties": {
+    "epic_id": {
+      "type": "string",
+      "description": "Optional epic to start with"
+    }
+  },
+  "x-workflow": {
+    "aliases": ["/start-session"],
+    "requires": {
+      "params": [],
+      "optional_params": ["epic_id"],
+      "state": []
+    },
+    "state_reads": [
+      "state/project.json"
+    ],
+    "state_writes": [
+      {
+        "file": "state/session.json",
+        "action": "reset",
+        "fields": ["all"]
+      },
+      {
+        "file": "state/session.json",
+        "action": "update",
+        "fields": ["started", "epic_id"]
+      }
+    ],
+    "instructions": "../instructions/standard-loop/start-session.md"
+  }
+}

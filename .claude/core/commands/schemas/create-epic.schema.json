@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:create-epic",
+  "title": "create-epic",
+  "description": "Convert feature specification to epic structure with tasks",
+  "type": "object",
+  "properties": {
+    "epic_number": {
+      "type": "integer",
+      "description": "Numeric identifier for the epic"
+    },
+    "epic_name": {
+      "type": "string",
+      "description": "Name/title of the epic"
+    },
+    "spec_file": {
+      "type": "string",
+      "description": "Path to specification file to base epic on"
+    }
+  },
+  "required": ["epic_number", "epic_name"],
+  "x-workflow": {
+    "aliases": ["/create-epic"],
+    "requires": {
+      "params": ["epic_number", "epic_name"],
+      "optional_params": ["spec_file"],
+      "state": []
+    },
+    "state_reads": [
+      "state/project.json",
+      "state/tasks.json"
+    ],
+    "state_writes": [
+      {
+        "file": "state/project.json",
+        "action": "update",
+        "fields": ["progress"]
+      },
+      {
+        "file": "state/tasks.json",
+        "action": "append",
+        "fields": ["tasks"]
+      }
+    ],
+    "creates_files": [
+      "epics/active/EPIC-{N}-{NAME}/README.md"
+    ],
+    "instructions": "../instructions/standard-loop/create-epic.md"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:add-bug",
+  "title": "add-bug",
+  "description": "Log a bug for tracking",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Short title describing the bug"
+    },
+    "severity": {
+      "type": "integer",
+      "enum": [1, 2, 3, 4],
+      "description": "Bug severity (1=critical, 4=minor)"
+    },
+    "epic_id": {
+      "type": "string",
+      "description": "Epic where bug was found"
+    },
+    "feature_id": {
+      "type": "string",
+      "description": "Feature where bug was found"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the bug"
+    },
+    "found_in": {
+      "type": "string",
+      "enum": ["implementation", "code_review", "human_qa", "production", "testing"],
+      "description": "Stage where bug was discovered"
+    }
+  },
+  "required": ["title", "severity"],
+  "x-workflow": {
+    "aliases": ["/add-bug"],
+    "requires": {
+      "params": ["title", "severity"],
+      "optional_params": ["epic_id", "feature_id", "description", "found_in"],
+      "state": []
+    },
+    "state_reads": [
+      "state/bugs.json",
+      "state/project.json"
+    ],
+    "state_writes": [
+      {
+        "file": "state/bugs.json",
+        "action": "append",
+        "fields": ["bugs"]
+      },
+      {
+        "file": "state/metrics.json",
+        "action": "update",
+        "fields": ["quality.bugs_by_stage", "quality.bugs_by_severity"]
+      }
+    ],
+    "auto_fields": {
+      "id": "BUG-{epic_number}.{feature_number}.{next_bug_number}",
+      "found_date": "today",
+      "status": "open"
+    },
+    "instructions": "../instructions/standard-loop/add-bug.md"
+  }
+}

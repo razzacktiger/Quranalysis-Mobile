@@ -1,0 +1,17 @@
+{
+  "$schema": "../core/schemas/session.schema.json",
+  "started": null,
+  "epic_id": null,
+  "branch": null,
+  "active_task": null,
+  "active_agents": [],
+  "completed_tasks": [],
+  "totals": {
+    "tasks_completed": 0,
+    "tokens": 0,
+    "context_percent": 0,
+    "tool_calls": 0
+  },
+  "files_read": [],
+  "notes": []
+}

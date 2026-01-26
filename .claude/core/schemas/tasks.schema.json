@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tasks.schema.json",
+  "title": "Tasks Collection",
+  "description": "All tasks across all epics and features",
+  "type": "object",
+  "required": ["tasks"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/task"
+      }
+    }
+  },
+  "definitions": {
+    "task": {
+      "type": "object",
+      "required": ["id", "epic_id", "feature_id", "name", "status"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Task identifier (e.g., 5.1.1)"
+        },
+        "epic_id": {
+          "type": "string",
+          "description": "Parent epic (e.g., EPIC-5-PROFILE)"
+        },
+        "feature_id": {
+          "type": "string",
+          "description": "Parent feature (e.g., 5.1)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Task name/title"
+        },
+        "size": {
+          "type": "string",
+          "enum": ["S", "M", "L", "XL"],
+          "description": "Task size estimate"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["UI", "API", "Setup", "Test", "Bug", "Meta"],
+          "description": "Task type category"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "complete", "blocked", "cancelled"],
+          "description": "Current task status"
+        },
+        "files": {
+          "type": "array",
+          "description": "Files to create/modify",
+          "items": { "type": "string" }
+        },
+        "deps": {
+          "type": "array",
+          "description": "Task dependencies (other task IDs)",
+          "items": { "type": "string" }
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "description": "Criteria for task completion",
+          "items": { "type": "string" }
+        },
+        "test_command": {
+          "type": "string",
+          "description": "Command to verify task"
+        },
+        "completed_at": {
+          "type": ["string", "null"],
+          "format": "date",
+          "description": "Date completed"
+        },
+        "metrics": {
+          "type": ["object", "null"],
+          "description": "Completion metrics",
+          "properties": {
+            "tokens": { "type": "integer", "minimum": 0 },
+            "turns": { "type": "integer", "minimum": 0 },
+            "tools": { "type": "integer", "minimum": 0 },
+            "agent": { "type": ["string", "null"] },
+            "overhead": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional notes"
+        }
+      }
+    }
+  }
+}

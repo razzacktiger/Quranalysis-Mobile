@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "session.schema.json",
+  "title": "Session State",
+  "description": "Active session metrics and tracking",
+  "type": "object",
+  "required": ["started", "completed_tasks", "totals"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "started": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Session start timestamp (ISO 8601)"
+    },
+    "epic_id": {
+      "type": ["string", "null"],
+      "description": "Epic being worked on"
+    },
+    "branch": {
+      "type": ["string", "null"],
+      "description": "Git branch for this session"
+    },
+    "active_task": {
+      "type": ["object", "null"],
+      "description": "Currently active task",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "size": { "type": "string" },
+        "started_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "active_agents": {
+      "type": "array",
+      "description": "Currently running agents",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "task_id": { "type": "string" },
+          "started_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "completed_tasks": {
+      "type": "array",
+      "description": "Tasks completed this session",
+      "items": {
+        "type": "object",
+        "required": ["task_id"],
+        "properties": {
+          "task_id": { "type": "string" },
+          "tokens": { "type": "integer", "minimum": 0 },
+          "turns": { "type": "integer", "minimum": 0 },
+          "tools": { "type": "integer", "minimum": 0 },
+          "agent": { "type": ["string", "null"] },
+          "bugs_caught": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "description": "Running totals for session",
+      "properties": {
+        "tasks_completed": { "type": "integer", "minimum": 0 },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "context_percent": { "type": "number", "minimum": 0, "maximum": 100 },
+        "tool_calls": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "files_read": {
+      "type": "array",
+      "description": "Files read during this session",
+      "items": { "type": "string" }
+    },
+    "notes": {
+      "type": "array",
+      "description": "Session notes",
+      "items": { "type": "string" }
+    }
+  }
+}

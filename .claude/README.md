@@ -1,109 +1,181 @@
 # Claude Code Workflow - Quranalysis Mobile
 
-**Version:** 2.1.0 | [Changelog](meta/CHANGELOG.md)
+**Version:** 3.0.0 | [Changelog](meta/CHANGELOG.md)
+
+## What's New in v3.0
+
+This version introduces a **JSON-based state system** for efficient multi-agent querying:
+
+- All dynamic state moved to `state/*.json` files
+- Centralized state manager utility (`lib/state-manager.ts`)
+- Hybrid command format (JSON schemas + markdown instructions)
+- Learnings indexed for fast semantic search
+- Backward-compatible with existing workflow commands
 
 ## Quick Start
+
 1. `/clear` - Fresh session
 2. `/start-epic N-name` - Begin epic (initializes session tracking)
 3. `/next-task` - Continue work
-4. `/complete-task` - Commit with review + **mandatory checklist** (status, metrics, learnings)
+4. `/complete-task` - Commit with review + metrics
 5. `/end-session` - Archive session + aggregate metrics
 
-## Directory Index
+## Directory Structure
 
-| Folder | Purpose | When to Read |
-|--------|---------|--------------|
-| [guides/](guides/) | Workflow guides | Session start, debugging |
-| [standards/](standards/) | Coding standards | Before implementing |
-| [learnings/](learnings/) | Issue patterns | When stuck |
-| [status/](status/) | Project status | Session start |
-| [epics/](epics/) | Epic/Feature/Task specs | Task implementation |
-| [specs/](specs/) | Feature specs & research | Planning new features |
-| [meta/](meta/) | Metrics & self-improvement | End of session |
-| [commands/](commands/) | Skill definitions | Reference |
-| [reference/](reference/) | Types, enums, patterns | Implementation |
+```
+.claude/
+├── core/                           # Reusable workflow framework
+│   ├── commands/                   # Command system
+│   │   ├── schemas/                # JSON Schema definitions
+│   │   └── instructions/           # Step-by-step guides
+│   ├── schemas/                    # Core data schemas
+│   ├── agents/                     # Agent framework
+│   │   ├── types/
+│   │   ├── workflows/
+│   │   └── examples/
+│   └── lib/                        # Utilities (state-manager)
+│
+├── project/                        # Project-specific content
+│   ├── epics/                      # Active + archive
+│   ├── standards/                  # Coding standards
+│   ├── learnings/                  # Captured patterns
+│   ├── specs/                      # Research docs
+│   └── reference/                  # API, ENUMS, TYPES
+│
+├── state/                          # Queryable JSON state
+│   ├── project.json                # Current work status
+│   ├── session.json                # Active session metrics
+│   ├── metrics.json                # Aggregated metrics
+│   ├── tasks.json                  # All tasks across epics
+│   ├── bugs.json                   # All bugs across features
+│   ├── learnings-index.json        # Searchable learnings index
+│   └── archive/                    # Archived sessions
+├── status/                         # Human-readable views
+├── meta/                           # Changelog, backlog
+├── guides/                         # Workflow guides
+├── templates/                      # Templates
+└── workflow-audits/                # Workflow improvement docs
+```
+
+## State Files Reference
+
+| File                         | Purpose                      | When to Read   |
+| ---------------------------- | ---------------------------- | -------------- |
+| `state/project.json`         | Current epic, task, progress | Session start  |
+| `state/session.json`         | Active session metrics       | During work    |
+| `state/tasks.json`           | All tasks with status        | Task selection |
+| `state/bugs.json`            | All bugs with status         | Bug fixing     |
+| `state/metrics.json`         | Aggregated metrics           | End of session |
+| `state/learnings-index.json` | Searchable learnings         | When stuck     |
+
+## Using the State Manager
+
+The state manager (`core/lib/state-manager.ts`) provides typed functions for all state operations:
+
+```typescript
+import * as state from ".claude/core/lib/state-manager";
+
+// Read state
+const project = state.getProject();
+const tasks = state.getTasks({ epic_id: "EPIC-5-PROFILE", status: "pending" });
+const bugs = state.getOpenBugs("EPIC-5-PROFILE");
+
+// Update state
+state.updateTask("5.1.1", { status: "complete", completed_at: "2026-01-24" });
+state.createBug({ id: "BUG-5.1.2", severity: 3, title: "Issue description" });
+
+// Session management
+state.startSession("EPIC-5-PROFILE", "epic-5-profile");
+state.recordTaskCompletion({ task_id: "5.1.1", tokens: 3000, turns: 4 });
+state.endSession(60); // duration in minutes
+
+// Search learnings
+const results = state.searchLearnings("dark mode");
+const testingLearnings = state.getLearningsByCategory("testing");
+const expoLearnings = state.getLearningsByTag("expo");
+
+// Generic query (for multi-agent use)
+const completedTasks = state.query("tasks", { status: "complete", type: "UI" });
+```
+
+## Command Reference
+
+Commands use a hybrid format:
+
+- **JSON Schema** (`core/commands/schemas/*.json`): Defines inputs, outputs, state changes
+- **Instructions** (`core/commands/instructions/*.md`): Detailed execution steps
+
+| Command             | Purpose                      | Schema                         |
+| ------------------- | ---------------------------- | ------------------------------ |
+| `/start-epic`       | Begin epic with branch setup | `start-epic.schema.json`       |
+| `/next-task`        | Continue to next task        | `next-task.schema.json`        |
+| `/complete-task`    | Commit with code review      | `complete-task.schema.json`    |
+| `/end-session`      | Archive and aggregate        | `end-session.schema.json`      |
+| `/add-bug`          | Log a bug                    | `add-bug.schema.json`          |
+| `/fix-bug`          | Start fixing bugs            | `fix-bug.schema.json`          |
+| `/agent-dispatch`   | Launch specialized agent     | `agent-dispatch.schema.json`   |
+| `/research-tech`    | Research technology          | `research-tech.schema.json`    |
+| `/spec-feature`     | Create feature spec          | `spec-feature.schema.json`     |
+| `/create-epic`      | Convert spec to epic         | `create-epic.schema.json`      |
+| `/refactor-check`   | Scan for quality issues      | `refactor-check.schema.json`   |
+| `/improve-workflow` | Analyze and improve          | `improve-workflow.schema.json` |
 
 ## Context-Efficient Reading
 
-**Session Start:** Read only status/CURRENT.md (~30 lines)
+**Session Start:** Read only `state/project.json` (~30 lines of JSON)
 
 **By Task Type:**
-- UI: standards/components.md, standards/styling.md
-- API: standards/api-patterns.md
-- Test: standards/testing.md
-- DB: reference/API-PATTERNS.md
 
-**When Stuck:** learnings/index.md -> specific category
+- UI: `project/standards/components.md`, `project/standards/styling.md`
+- API: `project/standards/api-patterns.md`
+- Test: `project/standards/testing.md`
+- DB: `project/reference/API-PATTERNS.md`
 
-## Skills Reference
+**When Stuck:** Query `state/learnings-index.json` by tag or category, then read specific learning file
 
-| Skill | Purpose |
-|-------|---------|
-| /start-epic | Begin epic with branch setup |
-| /start-epic N --bugs | Start bug-fixing mode for an epic |
-| /next-task | Continue to next task |
-| /complete-task | Commit with code review |
-| /add-bug | Log a bug for tracking |
-| /fix-bug | Start fixing bugs for a feature |
-| /end-session | Save state and metrics |
-| /research-tech | Research technology options |
-| /spec-feature | Create feature specification |
-| /create-epic | Convert spec to epic |
-| /improve-workflow | Analyze and improve workflow |
-| /refactor-check | Scan for code quality issues |
-| /run-workflow | Execute a saved workflow |
-| /sync-docs | Verify and update cross-references |
+## Workflows
 
-## Common Workflows
+| Workflow          | Guide                                                  | When to Use            |
+| ----------------- | ------------------------------------------------------ | ---------------------- |
+| **Continue Work** | `/start-epic` → `/next-task` (repeat) → `/end-session` | Daily development      |
+| **Bug Fixing**    | `/add-bug` → `/start-epic N --bugs` → `/fix-bug`       | Dedicated bug sessions |
+| **New Feature**   | `/research-tech` → `/spec-feature` → `/create-epic`    | Planning from scratch  |
+| **Revise Epic**   | `guides/workflows/epic-revision-workflow.md`           | Restructure epic       |
 
-| Workflow | Guide | When to Use |
-|----------|-------|-------------|
-| **Revise Epic** | [guides/epic-revision-workflow.md](guides/epic-revision-workflow.md) | Reconsider technologies, restructure epic |
-| **New Feature** | /research-tech → /spec-feature → /create-epic | Planning from scratch |
-| **Continue Work** | /start-epic → /next-task (repeat) → /end-session | Daily development |
-| **Bug Fixing** | /add-bug → /start-epic N --bugs → /fix-bug → /complete-task | Dedicated bug sessions |
-| **Ad-hoc Bug** | /add-bug → (fix immediately or defer) | Found bug during development |
+## Migration from v2.x
 
-### Loading a Workflow
+If you have existing markdown state files:
 
-In a new session after `/clear`:
+1. The JSON state files contain migrated data from:
+   - `status/CURRENT.md` → `state/project.json`
+   - `meta/session/CURRENT.md` → `state/session.json`
+   - `meta/metrics/**/*.md` → `state/metrics.json`
+   - All `TASKS.md` files → `state/tasks.json`
+   - All `BUGS.md` files → `state/bugs.json`
+
+2. Original markdown files can be removed after verifying the migration
+
+3. Commands now reference JSON state instead of markdown tables
+
+## Multi-Agent Integration
+
+The JSON state format enables:
+
+- **Fast queries**: Filter tasks by epic, status, type, size
+- **Schema validation**: All state files have JSON Schema definitions
+- **Consistent access**: State manager utility works across agents
+- **Searchable learnings**: Index by category, tag, or text search
+
+Example queries agents can perform:
+
+```typescript
+// Get all pending UI tasks for current epic
+state.getTasks({ epic_id: "EPIC-5-PROFILE", status: "pending", type: "UI" });
+
+// Get bugs by severity
+state.getBugs({ severity: [1, 2] }); // Critical and High
+
+// Find relevant learnings
+state.searchLearnings("validation"); // Text search
+state.getLearningsByTag("zod"); // Tag lookup
 ```
-Read guides/epic-revision-workflow.md and help me revise EPIC-4
-```
-
-## Session Management
-
-**Session = one Claude conversation (until `/clear`)**
-
-| File | Purpose | Lifecycle |
-|------|---------|-----------|
-| `status/CURRENT.md` | Project state (epic, task, progress) | Persists across sessions |
-| `meta/session/CURRENT.md` | Current conversation metrics | Resets on `/end-session` |
-| `meta/session/archive/` | Archived sessions | One file per session |
-
-**Flow:**
-```
-/start-epic → Init CURRENT.md
-    ↓
-Work → Rows added to session table
-    ↓
-/complete-task → Commit + update metrics + capture learnings
-    ↓
-/end-session → Archive to YYYY-MM-DD-N.md → Reset CURRENT.md
-    ↓
-/clear → Ready for next session
-```
-
-## Metrics Tracking
-
-| Metric | Tracked In | Per-Task | Per-Session |
-|--------|------------|----------|-------------|
-| Tokens | recent-tasks.md | ✅ | ✅ |
-| Turns | recent-tasks.md | ✅ | ✅ |
-| Overhead | recent-tasks.md | ✅ | - |
-| Duration | sessions.md | estimate | ✅ (user provides) |
-| Bugs caught | session/CURRENT.md | ✅ | ✅ |
-
-**Overhead:** The "completion tax" - tokens spent on /complete-task checklist (~1-3k)
-
-**Duration estimate:** `turns * 2.5 + 5 min`

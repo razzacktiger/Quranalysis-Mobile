@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:run-workflow",
+  "title": "run-workflow",
+  "description": "Execute a saved workflow from guides",
+  "type": "object",
+  "properties": {
+    "workflow_name": {
+      "type": "string",
+      "description": "Name of the workflow to execute"
+    }
+  },
+  "required": ["workflow_name"],
+  "x-workflow": {
+    "aliases": ["/run-workflow"],
+    "requires": {
+      "params": ["workflow_name"],
+      "optional_params": [],
+      "state": []
+    },
+    "state_reads": [],
+    "state_writes": [],
+    "workflow_files": "guides/workflows/*.md",
+    "instructions": "../instructions/workflows/run-workflow.md"
+  }
+}

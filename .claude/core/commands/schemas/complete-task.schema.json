@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:complete-task",
+  "title": "complete-task",
+  "description": "Commit work with code review and metrics tracking",
+  "type": "object",
+  "properties": {
+    "commit_message": {
+      "type": "string",
+      "description": "Git commit message for the completed work"
+    }
+  },
+  "required": ["commit_message"],
+  "x-workflow": {
+    "aliases": ["/complete-task"],
+    "requires": {
+      "params": ["commit_message"],
+      "optional_params": [],
+      "state": ["session.active_task"]
+    },
+    "state_reads": [
+      "state/project.json",
+      "state/session.json",
+      "state/tasks.json"
+    ],
+    "state_writes": [
+      {
+        "file": "state/tasks.json",
+        "action": "update",
+        "fields": ["tasks[active].status", "tasks[active].completed_at", "tasks[active].metrics"]
+      },
+      {
+        "file": "state/session.json",
+        "action": "append",
+        "fields": ["completed_tasks"]
+      },
+      {
+        "file": "state/session.json",
+        "action": "update",
+        "fields": ["totals", "active_task"]
+      },
+      {
+        "file": "state/project.json",
+        "action": "update",
+        "fields": ["progress[epic].completed"]
+      }
+    ],
+    "triggers_agent": "code-reviewer",
+    "git_operations": ["add", "commit"],
+    "checklist": [
+      "Run code review",
+      "Update task status to complete",
+      "Record metrics (tokens, turns, tools)",
+      "Update session totals",
+      "Check for new learnings to capture"
+    ],
+    "instructions": "../instructions/standard-loop/complete-task.md"
+  }
+}

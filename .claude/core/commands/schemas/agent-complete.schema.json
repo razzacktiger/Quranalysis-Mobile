@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:agent-complete",
+  "title": "agent-complete",
+  "description": "Complete agent task and record results",
+  "type": "object",
+  "properties": {
+    "agent_name": {
+      "type": "string",
+      "description": "Name of the agent that completed"
+    },
+    "bugs_caught": {
+      "type": "integer",
+      "description": "Number of bugs caught by the agent"
+    },
+    "tokens_used": {
+      "type": "integer",
+      "description": "Tokens consumed by the agent"
+    }
+  },
+  "required": ["agent_name"],
+  "x-workflow": {
+    "aliases": ["/agent-complete"],
+    "requires": {
+      "params": ["agent_name"],
+      "optional_params": ["bugs_caught", "tokens_used"],
+      "state": ["session.active_agents"]
+    },
+    "state_reads": [
+      "state/session.json",
+      "state/metrics.json"
+    ],
+    "state_writes": [
+      {
+        "file": "state/session.json",
+        "action": "remove",
+        "fields": ["active_agents[name]"]
+      },
+      {
+        "file": "state/metrics.json",
+        "action": "update",
+        "fields": ["tools.agents"]
+      }
+    ],
+    "instructions": "../instructions/standard-loop/agent-complete.md"
+  }
+}

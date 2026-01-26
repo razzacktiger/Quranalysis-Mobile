@@ -1,0 +1,543 @@
+{
+  "$schema": "../core/schemas/learnings.schema.json",
+  "entries": [
+    {
+      "id": "auth-google-oauth-redirect",
+      "category": "auth",
+      "title": "Google OAuth redirect fails in Expo Go",
+      "file": "learnings/auth.md",
+      "line_start": 3,
+      "line_end": 13,
+      "tags": ["oauth", "expo", "google", "redirect", "development-build"],
+      "summary": "Expo Go doesn't support custom URL schemes - use development builds for OAuth",
+      "key_points": [
+        "Expo Go doesn't support custom URL schemes (quranalysis://), only exp://",
+        "Use npx expo run:ios with expo-dev-client for OAuth testing",
+        "Never test OAuth in Expo Go"
+      ]
+    },
+    {
+      "id": "auth-infinite-render-loop",
+      "category": "auth",
+      "title": "Auth state causes infinite render loop",
+      "file": "learnings/auth.md",
+      "line_start": 15,
+      "line_end": 28,
+      "tags": ["auth", "redirect", "react", "useEffect"],
+      "summary": "Using <Redirect /> causes AuthProvider to remount - use router.replace() instead",
+      "key_points": [
+        "Never use <Redirect /> that could cause parent context to remount",
+        "Use router.replace() in useEffect for auth redirects"
+      ]
+    },
+    {
+      "id": "testing-maestro-expo-go",
+      "category": "testing",
+      "title": "Maestro with Expo Go - Complete Setup Guide",
+      "file": "learnings/testing.md",
+      "line_start": 3,
+      "line_end": 58,
+      "tags": ["maestro", "expo", "e2e", "testing", "bundle-id"],
+      "summary": "Maestro E2E testing requires specific configuration for Expo Go vs development builds",
+      "key_points": [
+        "Bundle ID differs: host.exp.Exponent vs com.quranalysis.mobile",
+        "Tab bar requires coordinate-based tapping",
+        "Use conditional flows for network-dependent tests",
+        "assertVisible does NOT support timeout - use extendedWaitUntil"
+      ]
+    },
+    {
+      "id": "testing-mobile-framework-comparison",
+      "category": "testing",
+      "title": "Mobile E2E Testing Framework Comparison",
+      "file": "learnings/testing.md",
+      "line_start": 60,
+      "line_end": 72,
+      "tags": ["maestro", "detox", "appium", "testing", "ios", "android"],
+      "summary": "Framework comparison for mobile E2E testing - Maestro for dev, Detox for builds",
+      "key_points": [
+        "Maestro works with iOS Simulator but not physical iOS",
+        "Physical iOS testing requires AWS Device Farm or BrowserStack",
+        "Use Maestro with Expo Go during dev, Detox for development builds"
+      ]
+    },
+    {
+      "id": "testing-ios-network-dropout",
+      "category": "testing",
+      "title": "iOS Simulator Network Dropout Issue",
+      "file": "learnings/testing.md",
+      "line_start": 74,
+      "line_end": 81,
+      "tags": ["ios", "simulator", "network", "testing"],
+      "summary": "iOS Simulator has known network connectivity dropout bug",
+      "key_points": [
+        "Reset simulator with Device -> Erase All Content and Settings",
+        "Use physical device for reliable E2E testing",
+        "Add retry logic to API calls"
+      ]
+    },
+    {
+      "id": "testing-jest-asyncstorage",
+      "category": "testing",
+      "title": "Jest tests fail with AsyncStorage/Supabase errors",
+      "file": "learnings/testing.md",
+      "line_start": 90,
+      "line_end": 108,
+      "tags": ["jest", "asyncstorage", "supabase", "mocking", "testing"],
+      "summary": "Jest needs proper mocks for AsyncStorage and env-dependent modules",
+      "key_points": [
+        "Create jest.setup.js with AsyncStorage mock",
+        "Mock API modules BEFORE imports in test files",
+        "Always mock native modules and API layers that depend on env vars"
+      ]
+    },
+    {
+      "id": "common-multi-layer-validation",
+      "category": "common-mistakes",
+      "title": "Numeric inputs without bounds validation (multi-layer approach)",
+      "file": "learnings/common-mistakes.md",
+      "line_start": 3,
+      "line_end": 24,
+      "tags": ["validation", "zod", "api", "forms", "ayah"],
+      "summary": "Implement validation at multiple layers when data enters through multiple paths",
+      "key_points": [
+        "Zod schema - Primary validation with helpful error messages",
+        "API layer - Safety net before DB writes",
+        "UI layer - Immediate feedback",
+        "Use superRefine for context-aware validation"
+      ]
+    },
+    {
+      "id": "common-silent-clamping",
+      "category": "common-mistakes",
+      "title": "Silent value clamping hides validation errors",
+      "file": "learnings/common-mistakes.md",
+      "line_start": 26,
+      "line_end": 39,
+      "tags": ["validation", "forms", "ux"],
+      "summary": "Don't silently fix user input - use validation schemas to show proper error messages",
+      "key_points": [
+        "Let Zod validation show error messages instead of clamping",
+        "Use validation schemas for error messaging"
+      ]
+    },
+    {
+      "id": "common-uuid-polyfill",
+      "category": "common-mistakes",
+      "title": "uuid library fails in React Native",
+      "file": "learnings/common-mistakes.md",
+      "line_start": 51,
+      "line_end": 63,
+      "tags": ["uuid", "polyfill", "react-native", "crypto"],
+      "summary": "React Native needs react-native-get-random-values polyfill for uuid",
+      "key_points": [
+        "Install react-native-get-random-values",
+        "Import at top of app/_layout.tsx before uuid imports"
+      ]
+    },
+    {
+      "id": "common-firebase-abortsignal",
+      "category": "common-mistakes",
+      "title": "Firebase AI SDK fails with AbortSignal.any error",
+      "file": "learnings/common-mistakes.md",
+      "line_start": 94,
+      "line_end": 118,
+      "tags": ["firebase", "ai", "gemini", "polyfill", "abortsignal"],
+      "summary": "React Native needs AbortSignal.any polyfill for Firebase AI SDK",
+      "key_points": [
+        "Create polyfill in lib/polyfills.ts",
+        "Import at very top of app/_layout.tsx before Firebase imports",
+        "AbortSignal.any is a newer browser API not in React Native"
+      ]
+    },
+    {
+      "id": "common-iso-date-mismatch",
+      "category": "common-mistakes",
+      "title": "ISO timestamp vs date-only string mismatch",
+      "file": "learnings/common-mistakes.md",
+      "line_start": 153,
+      "line_end": 165,
+      "tags": ["date", "timestamp", "iso", "comparison", "heatmap", "streak"],
+      "summary": "Normalize dates with .split('T')[0] when comparing ISO timestamps to date strings",
+      "key_points": [
+        "Data stored as ISO timestamps but compared against date-only strings",
+        "Use .split('T')[0] to normalize",
+        "Add regression tests with full ISO timestamps"
+      ]
+    },
+    {
+      "id": "common-context-exhaustion",
+      "category": "common-mistakes",
+      "title": "Context exhaustion from accumulated bug fixes",
+      "file": "learnings/common-mistakes.md",
+      "line_start": 167,
+      "line_end": 185,
+      "tags": ["context", "bugs", "testing", "workflow"],
+      "summary": "Run code-reviewer and test incrementally during L-size tasks to avoid context exhaustion",
+      "key_points": [
+        "Run code-reviewer after each component, not just at task end",
+        "Test business logic incrementally during implementation",
+        "Check DB constraints match default values before testing"
+      ]
+    },
+    {
+      "id": "common-workflow-complete-task",
+      "category": "common-mistakes",
+      "title": "Workflow: Skipping /complete-task after implementation",
+      "file": "learnings/common-mistakes.md",
+      "line_start": 120,
+      "line_end": 130,
+      "tags": ["workflow", "complete-task", "metrics", "commit"],
+      "summary": "Always run /complete-task after implementation before /next-task",
+      "key_points": [
+        "After presenting results, ALWAYS prompt user to run /complete-task",
+        "Never suggest /next-task until /complete-task has been executed"
+      ]
+    },
+    {
+      "id": "rn-layout-thrashing",
+      "category": "react-native",
+      "title": "Layout thrashing when sibling component heights change",
+      "file": "learnings/react-native.md",
+      "line_start": 3,
+      "line_end": 26,
+      "tags": ["react-native", "layout", "flex", "scrollview", "minHeight"],
+      "summary": "Use explicit minHeight instead of flex-1 to prevent sibling collapse during relayout",
+      "key_points": [
+        "Remove flex-1 from cards, use explicit minHeight",
+        "Ensure components with multiple states have consistent total height",
+        "Use constant heights for chart containers across all states"
+      ]
+    },
+    {
+      "id": "rn-flex-wrap-grid",
+      "category": "react-native",
+      "title": "NativeWind flex-wrap doesn't constrain height properly",
+      "file": "learnings/react-native.md",
+      "line_start": 28,
+      "line_end": 47,
+      "tags": ["react-native", "nativewind", "grid", "flex-wrap", "layout"],
+      "summary": "Use explicit row containers instead of flex-wrap for 2x2 grids",
+      "key_points": [
+        "flex-row flex-wrap causes overlap in React Native",
+        "Use explicit row containers for grid layouts"
+      ]
+    },
+    {
+      "id": "rn-dynamic-grid-sizing",
+      "category": "react-native",
+      "title": "Grid/heatmap with fixed cell sizes doesn't fill container",
+      "file": "learnings/react-native.md",
+      "line_start": 49,
+      "line_end": 67,
+      "tags": ["react-native", "grid", "heatmap", "onLayout", "responsive"],
+      "summary": "Calculate grid cell size dynamically based on container width using onLayout",
+      "key_points": [
+        "Use onLayout to get container width",
+        "Calculate cell size with useMemo",
+        "Clamp to reasonable min/max range"
+      ]
+    },
+    {
+      "id": "rn-hermes-es2023",
+      "category": "react-native",
+      "title": "ES2023 Array methods not available in Hermes",
+      "file": "learnings/react-native.md",
+      "line_start": 69,
+      "line_end": 82,
+      "tags": ["react-native", "hermes", "es2023", "findLastIndex", "polyfill"],
+      "summary": "Avoid ES2023+ array methods in React Native - use manual implementations",
+      "key_points": [
+        "findLastIndex, toSorted, toReversed may not work in Hermes",
+        "Create polyfill helpers or use lodash equivalents"
+      ]
+    },
+    {
+      "id": "rn-native-module-require",
+      "category": "react-native",
+      "title": "Native modules crash with static imports in Expo Go",
+      "file": "learnings/react-native.md",
+      "line_start": 84,
+      "line_end": 112,
+      "tags": [
+        "react-native",
+        "expo",
+        "native-module",
+        "require",
+        "speech-recognition"
+      ],
+      "summary": "Use require() with try-catch for native modules to allow graceful fallback in Expo Go",
+      "key_points": [
+        "Static imports resolved at bundle time cause crashes",
+        "Use require() inside try-catch at module scope",
+        "Set moduleAvailable flag for conditional behavior"
+      ]
+    },
+    {
+      "id": "rn-nativewind-dark-mode",
+      "category": "react-native",
+      "title": "NativeWind 4.x Dark Mode Implementation",
+      "file": "learnings/react-native.md",
+      "line_start": 114,
+      "line_end": 168,
+      "tags": [
+        "react-native",
+        "nativewind",
+        "dark-mode",
+        "theme",
+        "react-navigation"
+      ],
+      "summary": "Combine NativeWind, React Navigation ThemeProvider, and AsyncStorage for dark mode",
+      "key_points": [
+        "Use useColorScheme().setColorScheme() from nativewind",
+        "Wrap with React Navigation ThemeProvider",
+        "Persist preference in AsyncStorage",
+        "Plan to update ALL screens and components"
+      ]
+    },
+    {
+      "id": "forms-zod-v4-enum",
+      "category": "forms",
+      "title": "Zod v4 enum API changed",
+      "file": "learnings/forms.md",
+      "line_start": 3,
+      "line_end": 15,
+      "tags": ["zod", "forms", "validation", "enum"],
+      "summary": "Zod v4 uses 'message' instead of 'errorMap' for enum options",
+      "key_points": [
+        "Use z.enum(VALUES, { message: 'Invalid' }) in Zod v4",
+        "Check Zod version for current docs"
+      ]
+    },
+    {
+      "id": "forms-zod-optional-null",
+      "category": "forms",
+      "title": "Zod optional fields require undefined, not null",
+      "file": "learnings/forms.md",
+      "line_start": 17,
+      "line_end": 26,
+      "tags": ["zod", "forms", "validation", "null", "undefined"],
+      "summary": "Convert null to undefined when loading DB data into Zod-validated forms",
+      "key_points": [
+        "Use ?? undefined for optional fields when loading from DB",
+        "Zod's .optional() expects undefined, not null"
+      ]
+    },
+    {
+      "id": "forms-datetime-refresh",
+      "category": "forms",
+      "title": "Form values don't refresh on tab navigation",
+      "file": "learnings/forms.md",
+      "line_start": 36,
+      "line_end": 49,
+      "tags": ["forms", "react-hook-form", "navigation", "useFocusEffect"],
+      "summary": "Use useFocusEffect to refresh time-sensitive form values on screen focus",
+      "key_points": [
+        "React Hook Form defaultValues only set on initial mount",
+        "Use useFocusEffect to update values when screen gains focus"
+      ]
+    },
+    {
+      "id": "setup-create-expo-app",
+      "category": "setup",
+      "title": "create-expo-app won't overwrite existing files",
+      "file": "learnings/setup.md",
+      "line_start": 3,
+      "line_end": 13,
+      "tags": ["expo", "setup", "create-expo-app"],
+      "summary": "Create in temp directory and copy files back for non-empty directories",
+      "key_points": [
+        "create-expo-app refuses to run in non-empty directories",
+        "Use temp directory workaround"
+      ]
+    },
+    {
+      "id": "setup-expo-router-dynamic",
+      "category": "setup",
+      "title": "Expo Router rejects dynamic routes that don't exist yet",
+      "file": "learnings/setup.md",
+      "line_start": 15,
+      "line_end": 24,
+      "tags": ["expo", "router", "typescript", "dynamic-routes"],
+      "summary": "Cast paths to Href type when referencing future routes",
+      "key_points": [
+        "Expo Router generates strict types based on existing route files",
+        "Cast to Href type: router.push(`/session/${id}` as Href)"
+      ]
+    },
+    {
+      "id": "ts-zod-inferred-types",
+      "category": "typescript",
+      "title": "Zod inferred types vs custom TypeScript types mismatch",
+      "file": "learnings/typescript.md",
+      "line_start": 3,
+      "line_end": 18,
+      "tags": ["typescript", "zod", "forms", "type-inference"],
+      "summary": "Use Zod-inferred types for forms and cast at boundaries",
+      "key_points": [
+        "Zod's z.number().min(1).max(5) infers to number, not literal union",
+        "Use Zod-inferred type for form state",
+        "Cast when passing to components or mutations"
+      ]
+    }
+  ],
+  "by_category": {
+    "auth": ["auth-google-oauth-redirect", "auth-infinite-render-loop"],
+    "testing": [
+      "testing-maestro-expo-go",
+      "testing-mobile-framework-comparison",
+      "testing-ios-network-dropout",
+      "testing-jest-asyncstorage"
+    ],
+    "common-mistakes": [
+      "common-multi-layer-validation",
+      "common-silent-clamping",
+      "common-uuid-polyfill",
+      "common-firebase-abortsignal",
+      "common-iso-date-mismatch",
+      "common-context-exhaustion",
+      "common-workflow-complete-task"
+    ],
+    "react-native": [
+      "rn-layout-thrashing",
+      "rn-flex-wrap-grid",
+      "rn-dynamic-grid-sizing",
+      "rn-hermes-es2023",
+      "rn-native-module-require",
+      "rn-nativewind-dark-mode"
+    ],
+    "forms": [
+      "forms-zod-v4-enum",
+      "forms-zod-optional-null",
+      "forms-datetime-refresh"
+    ],
+    "setup": ["setup-create-expo-app", "setup-expo-router-dynamic"],
+    "typescript": ["ts-zod-inferred-types"]
+  },
+  "by_tag": {
+    "oauth": ["auth-google-oauth-redirect"],
+    "expo": [
+      "auth-google-oauth-redirect",
+      "testing-maestro-expo-go",
+      "setup-create-expo-app",
+      "setup-expo-router-dynamic",
+      "rn-native-module-require"
+    ],
+    "google": ["auth-google-oauth-redirect"],
+    "redirect": ["auth-google-oauth-redirect", "auth-infinite-render-loop"],
+    "development-build": ["auth-google-oauth-redirect"],
+    "auth": ["auth-infinite-render-loop"],
+    "react": ["auth-infinite-render-loop"],
+    "useEffect": ["auth-infinite-render-loop"],
+    "maestro": [
+      "testing-maestro-expo-go",
+      "testing-mobile-framework-comparison"
+    ],
+    "e2e": ["testing-maestro-expo-go"],
+    "testing": [
+      "testing-maestro-expo-go",
+      "testing-mobile-framework-comparison",
+      "testing-ios-network-dropout",
+      "testing-jest-asyncstorage"
+    ],
+    "bundle-id": ["testing-maestro-expo-go"],
+    "detox": ["testing-mobile-framework-comparison"],
+    "appium": ["testing-mobile-framework-comparison"],
+    "ios": [
+      "testing-mobile-framework-comparison",
+      "testing-ios-network-dropout"
+    ],
+    "android": ["testing-mobile-framework-comparison"],
+    "simulator": ["testing-ios-network-dropout"],
+    "network": ["testing-ios-network-dropout"],
+    "jest": ["testing-jest-asyncstorage"],
+    "asyncstorage": ["testing-jest-asyncstorage"],
+    "supabase": ["testing-jest-asyncstorage"],
+    "mocking": ["testing-jest-asyncstorage"],
+    "validation": [
+      "common-multi-layer-validation",
+      "common-silent-clamping",
+      "forms-zod-v4-enum",
+      "forms-zod-optional-null"
+    ],
+    "zod": [
+      "common-multi-layer-validation",
+      "forms-zod-v4-enum",
+      "forms-zod-optional-null",
+      "ts-zod-inferred-types"
+    ],
+    "api": ["common-multi-layer-validation"],
+    "forms": [
+      "common-multi-layer-validation",
+      "common-silent-clamping",
+      "forms-zod-v4-enum",
+      "forms-zod-optional-null",
+      "forms-datetime-refresh",
+      "ts-zod-inferred-types"
+    ],
+    "ayah": ["common-multi-layer-validation"],
+    "ux": ["common-silent-clamping"],
+    "uuid": ["common-uuid-polyfill"],
+    "polyfill": [
+      "common-uuid-polyfill",
+      "common-firebase-abortsignal",
+      "rn-hermes-es2023"
+    ],
+    "react-native": [
+      "common-uuid-polyfill",
+      "rn-layout-thrashing",
+      "rn-flex-wrap-grid",
+      "rn-dynamic-grid-sizing",
+      "rn-hermes-es2023",
+      "rn-native-module-require",
+      "rn-nativewind-dark-mode"
+    ],
+    "crypto": ["common-uuid-polyfill"],
+    "firebase": ["common-firebase-abortsignal"],
+    "ai": ["common-firebase-abortsignal"],
+    "gemini": ["common-firebase-abortsignal"],
+    "abortsignal": ["common-firebase-abortsignal"],
+    "date": ["common-iso-date-mismatch"],
+    "timestamp": ["common-iso-date-mismatch"],
+    "iso": ["common-iso-date-mismatch"],
+    "comparison": ["common-iso-date-mismatch"],
+    "heatmap": ["common-iso-date-mismatch"],
+    "streak": ["common-iso-date-mismatch"],
+    "context": ["common-context-exhaustion"],
+    "bugs": ["common-context-exhaustion"],
+    "workflow": ["common-context-exhaustion", "common-workflow-complete-task"],
+    "complete-task": ["common-workflow-complete-task"],
+    "metrics": ["common-workflow-complete-task"],
+    "commit": ["common-workflow-complete-task"],
+    "layout": ["rn-layout-thrashing", "rn-flex-wrap-grid"],
+    "flex": ["rn-layout-thrashing"],
+    "scrollview": ["rn-layout-thrashing"],
+    "minHeight": ["rn-layout-thrashing"],
+    "nativewind": ["rn-flex-wrap-grid", "rn-nativewind-dark-mode"],
+    "grid": ["rn-flex-wrap-grid", "rn-dynamic-grid-sizing"],
+    "flex-wrap": ["rn-flex-wrap-grid"],
+    "onLayout": ["rn-dynamic-grid-sizing"],
+    "responsive": ["rn-dynamic-grid-sizing"],
+    "hermes": ["rn-hermes-es2023"],
+    "es2023": ["rn-hermes-es2023"],
+    "findLastIndex": ["rn-hermes-es2023"],
+    "native-module": ["rn-native-module-require"],
+    "require": ["rn-native-module-require"],
+    "speech-recognition": ["rn-native-module-require"],
+    "dark-mode": ["rn-nativewind-dark-mode"],
+    "theme": ["rn-nativewind-dark-mode"],
+    "react-navigation": ["rn-nativewind-dark-mode"],
+    "enum": ["forms-zod-v4-enum"],
+    "null": ["forms-zod-optional-null"],
+    "undefined": ["forms-zod-optional-null"],
+    "react-hook-form": ["forms-datetime-refresh"],
+    "navigation": ["forms-datetime-refresh"],
+    "useFocusEffect": ["forms-datetime-refresh"],
+    "setup": ["setup-create-expo-app"],
+    "create-expo-app": ["setup-create-expo-app"],
+    "router": ["setup-expo-router-dynamic"],
+    "typescript": ["setup-expo-router-dynamic", "ts-zod-inferred-types"],
+    "dynamic-routes": ["setup-expo-router-dynamic"],
+    "type-inference": ["ts-zod-inferred-types"]
+  }
+}

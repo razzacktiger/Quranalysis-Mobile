@@ -28,8 +28,9 @@
 | EPIC-1: Auth | ✅ Archived | [epics/archive/EPIC-1-AUTH/](./epics/archive/EPIC-1-AUTH/) |
 | EPIC-2: Sessions | ✅ Archived | [epics/archive/EPIC-2-SESSIONS/](./epics/archive/EPIC-2-SESSIONS/) |
 | EPIC-3: Dashboard | ✅ Archived | [epics/archive/EPIC-3-DASHBOARD/](./epics/archive/EPIC-3-DASHBOARD/) |
-| EPIC-4: AI Chat | ✅ Complete | [epics/active/EPIC-4-AI-CHAT/](./epics/active/EPIC-4-AI-CHAT/) |
-| EPIC-5: Profile | Not Started | [epics/active/EPIC-5-PROFILE/](./epics/active/EPIC-5-PROFILE/) |
+| EPIC-4: AI Chat | ✅ Archived | [epics/archive/EPIC-4-AI-CHAT/](./epics/archive/EPIC-4-AI-CHAT/) |
+| EPIC-5: Profile | ✅ Archived | [epics/archive/EPIC-5-PROFILE/](./epics/archive/EPIC-5-PROFILE/) |
+| EPIC-6: Mushaf | Active | [epics/active/EPIC-6-MUSHAF/](./epics/active/EPIC-6-MUSHAF/) |
 
 ---
 
@@ -129,6 +130,13 @@ User
 - User info display
 - Account statistics
 - Sign out
+
+### Mushaf Mistake Marking (EPIC-6)
+- Visual Quran word-by-word layout
+- Drag-to-select practice range
+- Tap words to mark mistakes with color-coded highlights
+- Historical mistakes overlay toggle
+- Session completion with auto-inferred data
 
 ---
 
@@ -328,7 +336,7 @@ npm test
 - Not starting fresh sessions per epic (+$20-40)
 - Many failed attempts / debugging (+$20-50)
 
-**Total tasks:** 63 across 6 epics
+**Total tasks:** 90 across 7 epics
 
 ---
 

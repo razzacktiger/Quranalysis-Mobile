@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:agent-dispatch",
+  "title": "agent-dispatch",
+  "description": "Dispatch a specialized agent for a task",
+  "type": "object",
+  "properties": {
+    "agent_type": {
+      "type": "string",
+      "enum": ["code-reviewer", "code-explorer", "code-architect", "frontend-design", "prompt-agent", "setup-agent", "test-agent"],
+      "description": "Type of agent to dispatch"
+    },
+    "task_description": {
+      "type": "string",
+      "description": "Description of the task for the agent"
+    },
+    "context_files": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Files to include as context for the agent"
+    }
+  },
+  "required": ["agent_type", "task_description"],
+  "x-workflow": {
+    "aliases": ["/agent-dispatch"],
+    "requires": {
+      "params": ["agent_type", "task_description"],
+      "optional_params": ["context_files"],
+      "state": []
+    },
+    "state_reads": [
+      "state/session.json"
+    ],
+    "state_writes": [
+      {
+        "file": "state/session.json",
+        "action": "append",
+        "fields": ["active_agents"]
+      }
+    ],
+    "agent_types": [
+      "code-reviewer",
+      "code-explorer",
+      "code-architect",
+      "frontend-design",
+      "prompt-agent",
+      "setup-agent",
+      "test-agent"
+    ],
+    "instructions": "../instructions/standard-loop/agent-dispatch.md"
+  }
+}

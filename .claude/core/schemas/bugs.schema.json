@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "bugs.schema.json",
+  "title": "Bugs Collection",
+  "description": "All bugs across all features",
+  "type": "object",
+  "required": ["bugs"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "bugs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/bug"
+      }
+    }
+  },
+  "definitions": {
+    "bug": {
+      "type": "object",
+      "required": ["id", "severity", "status", "title"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Bug identifier (e.g., BUG-5.1.1)"
+        },
+        "epic_id": {
+          "type": "string",
+          "description": "Parent epic"
+        },
+        "feature_id": {
+          "type": "string",
+          "description": "Parent feature"
+        },
+        "severity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4,
+          "description": "Severity: 1=Critical, 2=High, 3=Medium, 4=Low"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["open", "in_progress", "fixed", "wont_fix", "duplicate"],
+          "description": "Bug status"
+        },
+        "title": {
+          "type": "string",
+          "description": "Bug title/summary"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description"
+        },
+        "found_in": {
+          "type": "string",
+          "enum": ["implementation", "code_review", "human_qa", "production", "testing"],
+          "description": "Where the bug was discovered"
+        },
+        "found_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date discovered"
+        },
+        "fixed_date": {
+          "type": ["string", "null"],
+          "format": "date",
+          "description": "Date fixed"
+        },
+        "files": {
+          "type": "array",
+          "description": "Affected files",
+          "items": { "type": "string" }
+        },
+        "root_cause": {
+          "type": "string",
+          "description": "Root cause analysis"
+        },
+        "fix_summary": {
+          "type": "string",
+          "description": "How the bug was fixed"
+        },
+        "related_task": {
+          "type": ["string", "null"],
+          "description": "Related task ID if applicable"
+        }
+      }
+    }
+  }
+}

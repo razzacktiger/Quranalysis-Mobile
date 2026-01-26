@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:refactor-check",
+  "title": "refactor-check",
+  "description": "Scan for code quality issues and refactoring opportunities",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "Path to scan (file or directory)"
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["file", "feature", "epic", "project"],
+      "description": "Scope of the refactoring check"
+    }
+  },
+  "x-workflow": {
+    "aliases": ["/refactor-check"],
+    "requires": {
+      "params": [],
+      "optional_params": ["path", "scope"],
+      "state": []
+    },
+    "state_reads": [
+      "state/project.json"
+    ],
+    "state_writes": [],
+    "triggers_agent": "code-reviewer",
+    "output": "Report of quality issues and recommendations",
+    "instructions": "../instructions/standard-loop/refactor-check.md"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "metrics.schema.json",
+  "title": "Metrics Aggregates",
+  "description": "Aggregated metrics across sessions, tasks, and tools",
+  "type": "object",
+  "required": ["sessions", "by_task_type", "by_task_size", "tools", "quality", "signals"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "sessions": {
+      "type": "object",
+      "description": "Session-level metrics",
+      "properties": {
+        "recent": {
+          "type": "array",
+          "description": "Recent session summaries",
+          "items": {
+            "type": "object",
+            "required": ["date", "epic_id"],
+            "properties": {
+              "date": { "type": "string", "format": "date" },
+              "epic_id": { "type": "string" },
+              "tasks_completed": { "type": "integer", "minimum": 0 },
+              "tokens": { "type": "integer", "minimum": 0 },
+              "context_percent": { "type": "number", "minimum": 0, "maximum": 100 },
+              "turns": { "type": "integer", "minimum": 0 },
+              "duration_minutes": { "type": "integer", "minimum": 0 },
+              "notes": { "type": "string" }
+            }
+          }
+        },
+        "averages": {
+          "type": "object",
+          "description": "Calculated averages",
+          "properties": {
+            "tasks_per_session": { "type": "number" },
+            "tokens_per_session": { "type": "number" },
+            "tokens_per_task": { "type": "number" }
+          }
+        }
+      }
+    },
+    "by_task_type": {
+      "type": "object",
+      "description": "Metrics grouped by task type",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "count": { "type": "integer", "minimum": 0 },
+          "avg_tokens": { "type": "number" },
+          "avg_turns": { "type": "number" }
+        }
+      }
+    },
+    "by_task_size": {
+      "type": "object",
+      "description": "Metrics grouped by task size",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "count": { "type": "integer", "minimum": 0 },
+          "avg_tokens": { "type": "number" }
+        }
+      }
+    },
+    "tools": {
+      "type": "object",
+      "description": "Tool usage metrics",
+      "properties": {
+        "frequency": {
+          "type": "object",
+          "description": "Tool call counts",
+          "additionalProperties": { "type": "integer" }
+        },
+        "agents": {
+          "type": "object",
+          "description": "Agent usage and ROI",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "uses": { "type": "integer", "minimum": 0 },
+              "bugs_caught": { "type": "integer", "minimum": 0 },
+              "avg_tokens": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "description": "Quality metrics",
+      "properties": {
+        "bugs_by_stage": {
+          "type": "object",
+          "description": "Where bugs were caught",
+          "additionalProperties": { "type": "integer" }
+        },
+        "bugs_by_severity": {
+          "type": "object",
+          "description": "Bug counts by severity",
+          "additionalProperties": { "type": "integer" }
+        }
+      }
+    },
+    "signals": {
+      "type": "object",
+      "description": "Health signals",
+      "properties": {
+        "green": {
+          "type": "array",
+          "description": "What's working well",
+          "items": { "type": "string" }
+        },
+        "yellow": {
+          "type": "array",
+          "description": "Needs attention",
+          "items": { "type": "string" }
+        },
+        "red": {
+          "type": "array",
+          "description": "Action required",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

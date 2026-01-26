@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:spec-feature",
+  "title": "spec-feature",
+  "description": "Create feature specification document",
+  "type": "object",
+  "properties": {
+    "feature_name": {
+      "type": "string",
+      "description": "Name of the feature to specify"
+    },
+    "research_file": {
+      "type": "string",
+      "description": "Path to research file to base spec on"
+    }
+  },
+  "required": ["feature_name"],
+  "x-workflow": {
+    "aliases": ["/spec-feature"],
+    "requires": {
+      "params": ["feature_name"],
+      "optional_params": ["research_file"],
+      "state": []
+    },
+    "state_reads": [],
+    "state_writes": [],
+    "creates_files": [
+      "specs/SPEC-{feature_name}.md"
+    ],
+    "instructions": "../instructions/standard-loop/spec-feature.md"
+  }
+}

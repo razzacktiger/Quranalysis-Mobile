@@ -1,0 +1,29 @@
+{
+  "$schema": "../core/schemas/project.schema.json",
+  "version": "3.0.0",
+  "active": {
+    "epic_id": null,
+    "feature_id": null,
+    "task_id": null,
+    "branch": null,
+    "session_started": null
+  },
+  "blockers": [],
+  "progress": {
+    "EPIC-0-SETUP": { "status": "archived", "completed": 9, "total": 9 },
+    "EPIC-1-AUTH": { "status": "archived", "completed": 8, "total": 8 },
+    "EPIC-2-SESSIONS": { "status": "archived", "completed": 21, "total": 21 },
+    "EPIC-3-DASHBOARD": { "status": "archived", "completed": 10, "total": 10 },
+    "EPIC-4-AI-CHAT": { "status": "archived", "completed": 13, "total": 13 },
+    "EPIC-5-PROFILE": { "status": "archived", "completed": 5, "total": 5 },
+    "EPIC-6-MUSHAF": { "status": "active", "completed": 0, "total": 27 }
+  },
+  "notes": [
+    "Expo SDK 54 with React Native 0.81.5",
+    "NativeWind 4.x configured with Tailwind",
+    "Zod v4 (new API - uses `message` not `errorMap`)",
+    "Google OAuth requires development build (not Expo Go)",
+    "Custom scheme: quranalysis://google-auth",
+    "Agent orchestration system ready: /agent-dispatch, /agent-complete"
+  ]
+}

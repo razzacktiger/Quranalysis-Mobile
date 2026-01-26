@@ -1,0 +1,58 @@
+{
+  "$schema": "../core/schemas/bugs.schema.json",
+  "bugs": [
+    {
+      "id": "BUG-2.1",
+      "epic_id": "EPIC-2-SESSIONS",
+      "feature_id": "2.3",
+      "severity": 2,
+      "status": "fixed",
+      "title": "Invalid ayah range accepted when adding session portions",
+      "description": "When adding a session with a portion, the app accepts ayah ranges that exceed the actual number of ayahs in a surah. For example, Surah Maryam (19) has 98 ayahs, but the app allowed '30-100' as a valid range and saved it to the database.",
+      "found_in": "human_qa",
+      "found_date": "2026-01-22",
+      "fixed_date": "2026-01-22",
+      "files": [
+        "lib/validation/session.ts",
+        "lib/api/sessions.ts",
+        "components/forms/PortionForm.tsx",
+        "components/ai/PortionCard.tsx"
+      ],
+      "root_cause": "The Zod validation schema only checked that ayah_end >= ayah_start but did not validate against the surah's actual ayah count. The AI extraction flow bypassed form validation entirely and called the API directly. The PortionForm component silently clamped invalid values instead of showing errors.",
+      "fix_summary": "Multi-layer validation approach: Added superRefine to Zod schema, API layer validation function, removed silent clamping in PortionForm, and added inline validation for AI extraction edit modal."
+    },
+    {
+      "id": "BUG-3.1",
+      "epic_id": "EPIC-3-DASHBOARD",
+      "feature_id": "3.3",
+      "severity": 2,
+      "status": "fixed",
+      "title": "Activity heatmap and streak stats not displaying session data",
+      "description": "The Activity heatmap on the Dashboard shows all gray/empty squares despite having 23 sessions logged. The 'Current Streak' stat card shows '0 days' when sessions exist from recent dates (Jan 20-21). The data exists and is visible in the Sessions list, but the Dashboard visualizations are not reflecting it.",
+      "found_in": "human_qa",
+      "found_date": "2026-01-22",
+      "fixed_date": "2026-01-22",
+      "files": [
+        "components/analytics/ActivityHeatmap.tsx",
+        "lib/utils/stats.ts"
+      ],
+      "root_cause": "Date format mismatch - sessions were stored with full ISO timestamps (2025-01-21T00:00:00Z) but the heatmap and streak calculations compared against date-only strings (2025-01-21). String comparison failed, so all dates showed 0 activity.",
+      "fix_summary": "Normalized session_date to YYYY-MM-DD format using .split('T')[0] in ActivityHeatmap.tsx and stats.ts. Added regression test for ISO timestamp format handling."
+    },
+    {
+      "id": "BUG-5.1.1",
+      "epic_id": "EPIC-5-PROFILE",
+      "feature_id": "5.1",
+      "severity": 3,
+      "status": "fixed",
+      "title": "Most Practiced Surah stat was misleading",
+      "description": "The 'Most Practiced' stat showed Al-Fatiha, but user expected the stat to factor in repetition counts.",
+      "found_in": "human_qa",
+      "found_date": "2026-01-24",
+      "fixed_date": "2026-01-24",
+      "files": ["app/(tabs)/two.tsx"],
+      "root_cause": "The calculation counted portion occurrences (1 per entry) instead of weighting by repetition_count.",
+      "fix_summary": "Changed calculation to sum repetition_count instead of counting entries. Before: Al-Fatiha (12 entries), After: At-Tawbah (19 total repetitions)."
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:research-tech",
+  "title": "research-tech",
+  "description": "Research technology options and document findings",
+  "type": "object",
+  "properties": {
+    "topic": {
+      "type": "string",
+      "description": "Technology topic to research"
+    }
+  },
+  "required": ["topic"],
+  "x-workflow": {
+    "aliases": ["/research-tech"],
+    "requires": {
+      "params": ["topic"],
+      "optional_params": [],
+      "state": []
+    },
+    "state_reads": [],
+    "state_writes": [],
+    "creates_files": [
+      "specs/RESEARCH-{topic}.md"
+    ],
+    "instructions": "../instructions/standard-loop/research-tech.md"
+  }
+}

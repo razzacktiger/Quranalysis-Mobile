@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:sync-docs",
+  "title": "sync-docs",
+  "description": "Verify and update cross-references between documentation files",
+  "type": "object",
+  "properties": {
+    "scope": {
+      "type": "string",
+      "enum": ["tasks", "learnings", "all"],
+      "description": "Scope of documentation to sync"
+    }
+  },
+  "x-workflow": {
+    "aliases": ["/sync-docs"],
+    "requires": {
+      "params": [],
+      "optional_params": ["scope"],
+      "state": []
+    },
+    "state_reads": [
+      "state/project.json",
+      "state/tasks.json"
+    ],
+    "state_writes": [],
+    "checks": [
+      "Verify task IDs in tasks.json match epic structure",
+      "Check learnings index matches actual files",
+      "Validate cross-references in documentation"
+    ],
+    "instructions": "../instructions/workflows/sync-docs.md"
+  }
+}

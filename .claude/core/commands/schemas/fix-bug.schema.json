@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "command:fix-bug",
+  "title": "fix-bug",
+  "description": "Start fixing bugs for a feature",
+  "type": "object",
+  "properties": {
+    "bug_id": {
+      "type": "string",
+      "description": "ID of the bug to fix"
+    }
+  },
+  "required": ["bug_id"],
+  "x-workflow": {
+    "aliases": ["/fix-bug"],
+    "requires": {
+      "params": ["bug_id"],
+      "optional_params": [],
+      "state": []
+    },
+    "state_reads": [
+      "state/bugs.json",
+      "state/session.json"
+    ],
+    "state_writes": [
+      {
+        "file": "state/bugs.json",
+        "action": "update",
+        "fields": ["bugs[id].status"]
+      },
+      {
+        "file": "state/session.json",
+        "action": "update",
+        "fields": ["active_task"]
+      }
+    ],
+    "completion_writes": [
+      {
+        "file": "state/bugs.json",
+        "action": "update",
+        "fields": ["bugs[id].fixed_date", "bugs[id].fix_summary", "bugs[id].root_cause"]
+      }
+    ],
+    "instructions": "../instructions/standard-loop/fix-bug.md"
+  }
+}

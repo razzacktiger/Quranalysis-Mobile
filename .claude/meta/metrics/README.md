@@ -1,64 +1,73 @@
-# Metrics System
+# Metrics System (v3.0)
 
-## Recording Guide
+**IMPORTANT: Metrics are now stored in `state/metrics.json`**
 
-**During Task:** Update `meta/session/CURRENT.md`
-- Track tokens, turns, tools used
-- Note files read (avoid redundant reads)
-- Record bugs caught and by whom
+This directory structure is preserved for historical reference but all active metrics data is managed through the JSON state file.
 
-**At /complete-task:** Agent records to:
-- `tokens/recent-tasks.md` - Add row for task
+## Current System
 
-**At /end-session:** Agent aggregates to:
-- `tokens/by-size.md` - Update averages
-- `tokens/by-type.md` - Update by task type
-- `tools/frequency.md` - Update counts
-- `efficiency/sessions.md` - Add session summary
-- `signals/*.md` - Check for red flags
+All metrics are stored in: `.claude/state/metrics.json`
 
-## Metrics Navigation
+### Accessing Metrics
 
-| Question | File |
-|----------|------|
-| Why did this task cost so much? | tokens/recent-tasks.md, tokens/by-type.md |
-| What's our context budget? | tokens/context-breakdown.md |
-| Are agents worth the cost? | tools/agents.md |
-| Where are bugs from? | quality/bugs-by-stage.md |
-| What patterns are wasteful? | tools/waste.md |
-| What should we improve? | signals/recommendations.md |
+```typescript
+// Via state-manager (recommended)
+import {
+  getMetrics,
+  updateMetrics,
+  recordTaskMetrics,
+  addSignal,
+} from "../../core/lib/state-manager";
 
-## File Index
+// Get all metrics
+const metrics = getMetrics();
 
-### Tokens
-- `recent-tasks.md` - Last 20 tasks detailed
-- `by-size.md` - S/M/L/XL averages
-- `by-type.md` - UI/API/DB/Test averages
-- `context-breakdown.md` - Where context goes
+// Record task completion
+recordTaskMetrics("4.1.2", {
+  tokens: 10000,
+  turns: 5,
+  tools: 15,
+  agent: "prompt-agent",
+  overhead: 2000,
+});
 
-### Conversation
-- `turns.md` - Turn analysis
-- `revision-requests.md` - User corrections
-- `red-flags.md` - Problematic patterns
+// Add a signal
+addSignal("yellow", "Context >50% at session end");
+```
 
-### Tools
-- `frequency.md` - Tool call counts
-- `agents.md` - Agent usage + ROI
-- `sequences.md` - Common tool patterns
-- `waste.md` - Optimization opportunities
+### Schema Reference
 
-### Quality
-- `bugs-by-stage.md` - When bugs caught
-- `bug-categories.md` - Types of bugs
-- `rework.md` - Revision analysis
+See `.claude/schemas/metrics.schema.json` for the full schema definition.
 
-### Efficiency
-- `sessions.md` - Per-session metrics
-- `epics.md` - Per-epic summaries
-- `trends.md` - Historical trends
+### Key Data Points
 
-### Signals
-- `green.md` - What's working
-- `yellow.md` - Needs attention
-- `red.md` - Action required
-- `recommendations.md` - Prioritized improvements
+- **sessions.recent**: Last 20 session summaries
+- **sessions.averages**: Rolling averages for benchmarking
+- **by_task_type**: Performance by task type (UI, API, Test, Setup)
+- **by_task_size**: Performance by task size (S, M, L, XL)
+- **tools.agents**: Agent usage and effectiveness
+- **quality**: Bug tracking by stage and severity
+- **signals**: Red/yellow/green indicators
+
+## Legacy Structure (Archived)
+
+The original markdown-based metrics system used these directories:
+
+- `tokens/` - Token usage tracking
+- `efficiency/` - Session efficiency metrics
+- `tools/` - Tool usage patterns
+- `signals/` - Red/yellow/green flags
+- `quality/` - Bug and rework tracking
+- `conversation/` - Conversation metrics
+
+All this data has been migrated to `state/metrics.json`.
+
+## Migration Notes
+
+If you need to add new metrics:
+
+1. Update `core/schemas/metrics.schema.json` with new fields
+2. Update `core/lib/state-manager.ts` with accessor functions
+3. Update command instructions to use new metrics
+
+Do NOT create new markdown files in this directory.

@@ -1,0 +1,1003 @@
+{
+  "$schema": "../core/schemas/tasks.schema.json",
+  "tasks": [
+    {
+      "id": "0.1.1",
+      "epic_id": "EPIC-0-SETUP",
+      "feature_id": "0.1",
+      "name": "Initialize Expo Project",
+      "size": "M",
+      "type": "Setup",
+      "status": "complete",
+      "files": ["package.json", "app.json"],
+      "deps": [],
+      "acceptance_criteria": [
+        "Expo project created with TypeScript",
+        "Tab navigation template working",
+        "npx expo start runs without errors"
+      ],
+      "completed_at": "2026-01-20"
+    },
+    {
+      "id": "0.1.2",
+      "epic_id": "EPIC-0-SETUP",
+      "feature_id": "0.1",
+      "name": "Install Core Dependencies",
+      "size": "S",
+      "type": "Setup",
+      "status": "complete",
+      "files": ["package.json"],
+      "deps": ["0.1.1"],
+      "acceptance_criteria": [
+        "All packages installed without errors",
+        "No peer dependency conflicts"
+      ],
+      "completed_at": "2026-01-20"
+    },
+    {
+      "id": "0.1.3",
+      "epic_id": "EPIC-0-SETUP",
+      "feature_id": "0.1",
+      "name": "Configure NativeWind (Tailwind)",
+      "size": "S",
+      "type": "Setup",
+      "status": "complete",
+      "files": ["tailwind.config.js", "babel.config.js", "global.css", "app/_layout.tsx"],
+      "deps": ["0.1.2"],
+      "acceptance_criteria": [
+        "tailwind.config.js created with content paths",
+        "babel.config.js includes nativewind preset",
+        "global.css imports tailwind directives",
+        "Root layout imports global.css",
+        "Tailwind classes work in components"
+      ],
+      "completed_at": "2026-01-20"
+    },
+    {
+      "id": "1.1.1",
+      "epic_id": "EPIC-1-AUTH",
+      "feature_id": "1.1",
+      "name": "Create Auth Types",
+      "size": "S",
+      "type": "API",
+      "status": "complete",
+      "files": ["types/auth.ts"],
+      "deps": [],
+      "acceptance_criteria": [
+        "AuthUser type (id, email, name, avatar_url)",
+        "AuthState type (user, isLoading, isAuthenticated, error)",
+        "AuthContextValue type (state + signIn, signOut methods)",
+        "npm run typecheck passes"
+      ],
+      "completed_at": "2026-01-20"
+    },
+    {
+      "id": "1.1.2",
+      "epic_id": "EPIC-1-AUTH",
+      "feature_id": "1.1",
+      "name": "Create Auth Context",
+      "size": "M",
+      "type": "API",
+      "status": "complete",
+      "files": ["lib/auth/AuthContext.tsx", "lib/auth/index.ts"],
+      "deps": ["1.1.1"],
+      "acceptance_criteria": [
+        "AuthContext created with proper typing",
+        "AuthProvider component wraps children",
+        "useAuth hook exported",
+        "Handles auth state from Supabase",
+        "Listens to onAuthStateChange"
+      ],
+      "completed_at": "2026-01-20"
+    },
+    {
+      "id": "4.1.1",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.1",
+      "name": "Setup Firebase AI + Gemini",
+      "size": "M",
+      "type": "API",
+      "status": "complete",
+      "files": ["lib/firebase.ts", "lib/api/ai.ts"],
+      "deps": [],
+      "acceptance_criteria": [
+        "Firebase project configured with Vertex AI",
+        "Gemini model initialized with JSON response schema",
+        "Test prompt returns valid JSON",
+        "Free tier working for development"
+      ],
+      "completed_at": "2026-01-21",
+      "metrics": {
+        "tokens": 15000,
+        "turns": 12,
+        "tools": 35,
+        "agent": "code-reviewer",
+        "overhead": 2000
+      },
+      "notes": "Firebase AI setup, polyfill needed"
+    },
+    {
+      "id": "4.1.2",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.1",
+      "name": "Session Extraction Prompt",
+      "size": "L",
+      "type": "API",
+      "status": "complete",
+      "files": ["lib/api/prompts.ts", "lib/validation/ai.ts"],
+      "deps": ["4.1.1"],
+      "acceptance_criteria": [
+        "Zod schema created and exported",
+        "System prompt handles surah variations",
+        "Juz references resolved correctly",
+        "Performance inferred from context",
+        "Multiple portions extracted from one message"
+      ],
+      "completed_at": "2026-01-21",
+      "metrics": {
+        "tokens": 18000,
+        "turns": 15,
+        "tools": 25,
+        "agent": "prompt-agent",
+        "overhead": 1000
+      },
+      "notes": "Session extraction, parallel with 4.3.1"
+    },
+    {
+      "id": "4.1.3",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.1",
+      "name": "Mistake Extraction Prompt",
+      "size": "L",
+      "type": "API",
+      "status": "complete",
+      "files": ["lib/api/prompts.ts", "lib/validation/ai.ts"],
+      "deps": ["4.1.1"],
+      "acceptance_criteria": [
+        "Mistake schema created and exported",
+        "Terminology mapping accurate",
+        "Severity inferred from language",
+        "Multiple mistakes extracted from single message",
+        "Mistakes linked to surah from conversation context",
+        "Combined schema for chat responses"
+      ],
+      "completed_at": "2026-01-21",
+      "metrics": {
+        "tokens": 8000,
+        "turns": 6,
+        "tools": 10,
+        "agent": null,
+        "overhead": 1000
+      },
+      "notes": "Mistake extraction, combined schema, 7 tests pass"
+    },
+    {
+      "id": "4.1.4",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.1",
+      "name": "useAIChat Hook",
+      "size": "M",
+      "type": "API",
+      "status": "complete",
+      "files": ["lib/hooks/useAIChat.ts"],
+      "deps": ["4.1.2", "4.1.3"],
+      "acceptance_criteria": [
+        "Messages track full conversation",
+        "Extractions validated with Zod",
+        "Data accumulates across turns",
+        "isReadyToSave correctly computed",
+        "Error states handled gracefully"
+      ],
+      "completed_at": "2026-01-22",
+      "metrics": {
+        "tokens": 12000,
+        "turns": 8,
+        "tools": 15,
+        "agent": "prompt-agent",
+        "overhead": 1000
+      },
+      "notes": "useAIChat hook"
+    },
+    {
+      "id": "4.2.1",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.2",
+      "name": "Chat Message Component",
+      "size": "S",
+      "type": "UI",
+      "status": "complete",
+      "files": ["components/ai/ChatMessage.tsx", "components/ai/ExtractionPreview.tsx", "components/ai/LoadingMessage.tsx"],
+      "deps": ["4.1.4"],
+      "acceptance_criteria": [
+        "User bubbles right-aligned, blue",
+        "AI bubbles left-aligned, gray",
+        "ExtractionPreview shows data summary",
+        "LoadingMessage with spinner",
+        "Timestamps in relative format"
+      ],
+      "completed_at": "2026-01-22",
+      "metrics": {
+        "tokens": 6000,
+        "turns": 5,
+        "tools": 12,
+        "agent": null,
+        "overhead": 1000
+      },
+      "notes": "ExtractionSummary component"
+    },
+    {
+      "id": "4.2.2",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.2",
+      "name": "Chat Modal",
+      "size": "L",
+      "type": "UI",
+      "status": "complete",
+      "files": ["components/ai/ChatModal.tsx", "components/ai/ChatInput.tsx", "components/ai/QuickActionChips.tsx", "components/ai/ChatHeader.tsx", "components/ai/ExtractionSummary.tsx"],
+      "deps": ["4.2.1"],
+      "acceptance_criteria": [
+        "Modal opens with slide animation",
+        "Initial greeting displayed",
+        "Messages auto-scroll to bottom",
+        "Quick action chips work",
+        "Keyboard stays above input",
+        "ExtractionSummary updates on new extractions"
+      ],
+      "completed_at": "2026-01-22",
+      "metrics": {
+        "tokens": 15000,
+        "turns": 12,
+        "tools": 28,
+        "agent": "frontend-design",
+        "overhead": 2000
+      },
+      "notes": "ChatModal + FloatingButton (combined with 4.2.4)"
+    },
+    {
+      "id": "4.2.3",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.2",
+      "name": "Confirmation Screen",
+      "size": "XL",
+      "type": "UI",
+      "status": "complete",
+      "files": ["components/ai/SessionConfirmation.tsx", "components/ai/PortionCard.tsx", "components/ai/MistakeCard.tsx", "components/ai/EditableField.tsx"],
+      "deps": ["4.2.2"],
+      "acceptance_criteria": [
+        "All extracted data displayed",
+        "Fields editable with appropriate input type",
+        "Portions and mistakes can be removed",
+        "Add More returns to chat",
+        "Save creates session with all data",
+        "Loading/error states handled"
+      ],
+      "completed_at": "2026-01-22",
+      "metrics": {
+        "tokens": 20000,
+        "turns": 18,
+        "tools": 45,
+        "agent": "frontend-design",
+        "overhead": 3000
+      },
+      "notes": "Confirmation screen, 6 bugs caught"
+    },
+    {
+      "id": "4.2.4",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.2",
+      "name": "Floating Chat Button",
+      "size": "S",
+      "type": "UI",
+      "status": "complete",
+      "files": ["components/ai/FloatingChatButton.tsx", "app/(tabs)/_layout.tsx"],
+      "deps": ["4.2.2"],
+      "acceptance_criteria": [
+        "Button visible on all tab screens",
+        "Positioned above tab bar",
+        "Opens ChatModal on tap",
+        "Shadow and bounce animation work"
+      ],
+      "completed_at": "2026-01-22",
+      "notes": "Combined with 4.2.2"
+    },
+    {
+      "id": "4.2.5",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.2",
+      "name": "E2E Tests for Chat UI",
+      "size": "M",
+      "type": "Test",
+      "status": "complete",
+      "files": ["tests/e2e/ai/chat-modal.yaml", "tests/e2e/ai/session-extraction.yaml"],
+      "deps": ["4.2.3", "4.2.4"],
+      "acceptance_criteria": [
+        "chat-modal.yaml passes",
+        "session-extraction.yaml passes"
+      ],
+      "completed_at": "2026-01-22",
+      "metrics": {
+        "tokens": 8000,
+        "turns": 8,
+        "tools": 22,
+        "agent": null,
+        "overhead": 2000
+      },
+      "notes": "E2E tests for AI chat modal and extraction"
+    },
+    {
+      "id": "4.3.1",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.3",
+      "name": "Setup expo-speech-recognition",
+      "size": "M",
+      "type": "Setup",
+      "status": "complete",
+      "files": ["app.json"],
+      "deps": [],
+      "acceptance_criteria": [
+        "Package installed",
+        "Plugin configured in app.json"
+      ],
+      "completed_at": "2026-01-21",
+      "metrics": {
+        "tokens": 3000,
+        "turns": 5,
+        "tools": 12,
+        "agent": "setup-agent",
+        "overhead": 1000
+      },
+      "notes": "expo-speech-recognition, parallel with 4.1.2"
+    },
+    {
+      "id": "4.3.2",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.3",
+      "name": "Voice Input Hook",
+      "size": "M",
+      "type": "API",
+      "status": "complete",
+      "files": ["lib/hooks/useVoiceInput.ts"],
+      "deps": ["4.3.1"],
+      "acceptance_criteria": [
+        "Hook returns all interface properties",
+        "Permission requested on first startListening",
+        "Real-time transcript updates via interimResults",
+        "isSupported correctly detects capability",
+        "Errors surfaced with user-friendly messages",
+        "Clean stop/cancel behavior"
+      ],
+      "completed_at": "2026-01-22",
+      "metrics": {
+        "tokens": 12000,
+        "turns": 12,
+        "tools": 18,
+        "agent": null,
+        "overhead": 2000
+      },
+      "notes": "Voice hook, require() fallback for Expo Go"
+    },
+    {
+      "id": "4.3.3",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.3",
+      "name": "Voice Input Button",
+      "size": "S",
+      "type": "UI",
+      "status": "complete",
+      "files": ["components/ai/VoiceInputButton.tsx"],
+      "deps": ["4.3.2"],
+      "acceptance_criteria": [
+        "Button hidden when not supported",
+        "Pulse animation when listening",
+        "Red background when listening",
+        "Tapping toggles listening state",
+        "Final transcript passed to onTranscript",
+        "Error state shows alert icon"
+      ],
+      "completed_at": "2026-01-22",
+      "metrics": {
+        "tokens": 6000,
+        "turns": 6,
+        "tools": 12,
+        "agent": null,
+        "overhead": 1000
+      },
+      "notes": "Voice button with pulse animation"
+    },
+    {
+      "id": "4.3.4",
+      "epic_id": "EPIC-4-AI-CHAT",
+      "feature_id": "4.3",
+      "name": "E2E Test for Voice Input",
+      "size": "S",
+      "type": "Test",
+      "status": "complete",
+      "files": ["tests/e2e/ai/voice-input.yaml"],
+      "deps": ["4.3.3"],
+      "acceptance_criteria": [
+        "E2E test passes for UI states"
+      ],
+      "completed_at": "2026-01-24",
+      "metrics": {
+        "tokens": 5000,
+        "turns": 4,
+        "tools": 12,
+        "agent": null,
+        "overhead": 3000
+      },
+      "notes": "Voice E2E test (written, not verified)"
+    },
+    {
+      "id": "5.1.1",
+      "epic_id": "EPIC-5-PROFILE",
+      "feature_id": "5.1",
+      "name": "Create Profile Header Component",
+      "size": "S",
+      "type": "UI",
+      "status": "complete",
+      "files": ["components/profile/ProfileHeader.tsx"],
+      "deps": ["1.1.2"],
+      "acceptance_criteria": [
+        "Displays user avatar (from Google)",
+        "Displays user name",
+        "Displays user email",
+        "Styled with NativeWind",
+        "Handles missing avatar gracefully"
+      ],
+      "completed_at": "2026-01-24",
+      "metrics": {
+        "tokens": 3000,
+        "turns": 4,
+        "tools": 12,
+        "agent": null,
+        "overhead": 1000
+      },
+      "notes": "ProfileHeader component"
+    },
+    {
+      "id": "5.1.2",
+      "epic_id": "EPIC-5-PROFILE",
+      "feature_id": "5.1",
+      "name": "Create Account Stats Component",
+      "size": "S",
+      "type": "UI",
+      "status": "complete",
+      "files": ["components/profile/AccountStats.tsx"],
+      "deps": ["3.1.2"],
+      "acceptance_criteria": [
+        "Total sessions count",
+        "Member since date",
+        "Total practice time",
+        "Most practiced surah",
+        "Styled consistently"
+      ],
+      "completed_at": "2026-01-24",
+      "metrics": {
+        "tokens": 4000,
+        "turns": 3,
+        "tools": 8,
+        "agent": null,
+        "overhead": 1000
+      },
+      "notes": "AccountStats component"
+    },
+    {
+      "id": "5.1.3",
+      "epic_id": "EPIC-5-PROFILE",
+      "feature_id": "5.1",
+      "name": "Create Profile Screen",
+      "size": "M",
+      "type": "UI",
+      "status": "complete",
+      "files": ["app/(tabs)/profile.tsx"],
+      "deps": ["5.1.1", "5.1.2", "1.4.1"],
+      "acceptance_criteria": [
+        "Profile header at top",
+        "Account stats section",
+        "Settings section placeholder",
+        "Sign out button",
+        "About/Help links",
+        "App version display"
+      ],
+      "completed_at": "2026-01-24",
+      "metrics": {
+        "tokens": 6000,
+        "turns": 5,
+        "tools": 12,
+        "agent": "code-reviewer",
+        "overhead": 2000
+      },
+      "notes": "Profile screen, 1 bug caught"
+    },
+    {
+      "id": "5.1.4",
+      "epic_id": "EPIC-5-PROFILE",
+      "feature_id": "5.1",
+      "name": "E2E Test - Profile Screen",
+      "size": "S",
+      "type": "Test",
+      "status": "complete",
+      "files": ["tests/e2e/profile/main.yaml", "tests/e2e/profile/signout.yaml"],
+      "deps": ["5.1.3"],
+      "acceptance_criteria": [
+        "Profile elements visible",
+        "Sign out flow works"
+      ],
+      "completed_at": "2026-01-24",
+      "metrics": {
+        "tokens": 3000,
+        "turns": 3,
+        "tools": 6,
+        "agent": null,
+        "overhead": 1000
+      },
+      "notes": "Profile E2E tests"
+    },
+    {
+      "id": "5.2.1",
+      "epic_id": "EPIC-5-PROFILE",
+      "feature_id": "5.2",
+      "name": "Add Theme Toggle",
+      "size": "L",
+      "type": "UI",
+      "status": "complete",
+      "files": ["lib/hooks/useTheme.ts", "app/(tabs)/profile.tsx"],
+      "deps": ["5.1.3"],
+      "acceptance_criteria": [
+        "Theme state persisted in AsyncStorage",
+        "Toggle switch on profile",
+        "App respects theme setting",
+        "Default to system preference",
+        "Dark mode applied to all screens, components, and modals"
+      ],
+      "completed_at": "2026-01-24",
+      "metrics": {
+        "tokens": 15000,
+        "turns": 8,
+        "tools": 45,
+        "agent": null,
+        "overhead": 3000
+      },
+      "notes": "Theme toggle + app-wide dark mode (42 files)"
+    },
+    {
+      "id": "6.1.1",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.1",
+      "name": "Download and bundle QUL word-by-word JSON data",
+      "size": "M",
+      "type": "Setup",
+      "status": "pending",
+      "files": ["assets/quran/", "scripts/download-quran-data.ts"],
+      "deps": [],
+      "acceptance_criteria": [
+        "QUL Uthmani word-by-word JSON downloaded",
+        "Data bundled in assets/quran/ folder",
+        "All 114 surahs with word-level data",
+        "Page numbers included for each word"
+      ]
+    },
+    {
+      "id": "6.1.2",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.1",
+      "name": "Create QuranWord/QuranAyah/SelectionRange types",
+      "size": "S",
+      "type": "API",
+      "status": "pending",
+      "files": ["types/quran.ts"],
+      "deps": ["6.1.1"],
+      "acceptance_criteria": [
+        "QuranWord type with position, text, location, page",
+        "QuranAyah type with key, surah, ayah, words, page, juz",
+        "SelectionRange type for range selection",
+        "MushafMistake type extending MistakeFormData",
+        "npm run typecheck passes"
+      ]
+    },
+    {
+      "id": "6.1.3",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.1",
+      "name": "Build useQuranData hook with per-surah lazy loading",
+      "size": "M",
+      "type": "API",
+      "status": "pending",
+      "files": ["lib/hooks/useQuranData.ts"],
+      "deps": ["6.1.2"],
+      "acceptance_criteria": [
+        "Hook loads surah data on demand",
+        "React Query caching with staleTime: Infinity",
+        "Lazy loading for memory efficiency",
+        "Adjacent surah preloading"
+      ]
+    },
+    {
+      "id": "6.2.1",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.2",
+      "name": "Add Arabic font (Uthmani) with expo-font",
+      "size": "S",
+      "type": "Setup",
+      "status": "pending",
+      "files": ["assets/fonts/UthmanicHafs.ttf", "app/_layout.tsx"],
+      "deps": [],
+      "acceptance_criteria": [
+        "KFGQPC Uthmanic Script HAFS font added",
+        "Font loaded in app layout",
+        "Arabic text renders with proper diacritics"
+      ]
+    },
+    {
+      "id": "6.2.2",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.2",
+      "name": "Create MushafScreen with page-based FlashList layout",
+      "size": "L",
+      "type": "UI",
+      "status": "pending",
+      "files": ["app/(tabs)/mushaf.tsx", "components/mushaf/MushafScreen.tsx", "components/mushaf/MushafView.tsx"],
+      "deps": ["6.1.3", "6.2.1"],
+      "acceptance_criteria": [
+        "MushafScreen as new tab",
+        "FlashList virtualization at ayah level",
+        "Smooth scrolling for 6,236 ayahs",
+        "RTL layout for Arabic text"
+      ]
+    },
+    {
+      "id": "6.2.3",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.2",
+      "name": "Build AyahRow component (RTL word flow)",
+      "size": "M",
+      "type": "UI",
+      "status": "pending",
+      "files": ["components/mushaf/AyahRow.tsx"],
+      "deps": ["6.2.2"],
+      "acceptance_criteria": [
+        "Renders ayah with RTL word flow",
+        "Words wrap correctly",
+        "Ayah number displayed",
+        "Memoized with React.memo"
+      ]
+    },
+    {
+      "id": "6.2.4",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.2",
+      "name": "Create WordToken with color-coded mistake highlighting",
+      "size": "M",
+      "type": "UI",
+      "status": "pending",
+      "files": ["components/mushaf/WordToken.tsx", "constants/mistake-colors.ts"],
+      "deps": ["6.2.3"],
+      "acceptance_criteria": [
+        "Touchable word element",
+        "7 category-specific highlight colors",
+        "Selection state styling",
+        "Dark mode support"
+      ]
+    },
+    {
+      "id": "6.3.1",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.3",
+      "name": "Implement drag-to-select with react-native-gesture-handler",
+      "size": "L",
+      "type": "UI",
+      "status": "pending",
+      "files": ["lib/hooks/useMushafSelection.ts", "components/mushaf/MushafView.tsx"],
+      "deps": ["6.2.4"],
+      "acceptance_criteria": [
+        "Pan gesture detects word selection",
+        "Start and end words tracked",
+        "All words between highlighted",
+        "Smooth gesture handling"
+      ]
+    },
+    {
+      "id": "6.3.2",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.3",
+      "name": "Handle cross-page selection with smooth page transitions",
+      "size": "L",
+      "type": "UI",
+      "status": "pending",
+      "files": ["lib/hooks/useMushafSelection.ts", "components/mushaf/MushafView.tsx"],
+      "deps": ["6.3.1"],
+      "acceptance_criteria": [
+        "Selection continues across page boundaries",
+        "Auto-scroll when dragging to edge",
+        "Seamless transition animation",
+        "Word.page field used for tracking"
+      ]
+    },
+    {
+      "id": "6.3.3",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.3",
+      "name": "Build SelectionOverlay component (visual feedback during drag)",
+      "size": "M",
+      "type": "UI",
+      "status": "pending",
+      "files": ["components/mushaf/SelectionOverlay.tsx", "components/mushaf/RangeConfirmSheet.tsx"],
+      "deps": ["6.3.2"],
+      "acceptance_criteria": [
+        "Blue highlight during selection",
+        "Confirm Range bottom sheet on release",
+        "Shows surah name and ayah range",
+        "Confirm/Cancel buttons"
+      ]
+    },
+    {
+      "id": "6.3.4",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.3",
+      "name": "Add cancel/reset selection functionality",
+      "size": "S",
+      "type": "UI",
+      "status": "pending",
+      "files": ["components/mushaf/MushafScreen.tsx"],
+      "deps": ["6.3.3"],
+      "acceptance_criteria": [
+        "Cancel button clears selection",
+        "Easy to restart selection",
+        "Clear visual feedback"
+      ]
+    },
+    {
+      "id": "6.4.1",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.4",
+      "name": "Build MistakeBottomSheet with quick category buttons",
+      "size": "L",
+      "type": "UI",
+      "status": "pending",
+      "files": ["components/mushaf/MistakeBottomSheet.tsx"],
+      "deps": ["6.3.4"],
+      "acceptance_criteria": [
+        "@gorhom/bottom-sheet integration",
+        "6 category buttons with colors",
+        "Subcategory dropdown",
+        "Severity selector (1-5)",
+        "1-tap marking for quick save"
+      ]
+    },
+    {
+      "id": "6.4.2",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.4",
+      "name": "Create useMushafSession hook for session state",
+      "size": "M",
+      "type": "API",
+      "status": "pending",
+      "files": ["lib/hooks/useMushafSession.ts", "lib/stores/mushafStore.ts"],
+      "deps": ["6.4.1"],
+      "acceptance_criteria": [
+        "Zustand store for Mushaf state",
+        "Pending portions and mistakes",
+        "Session duration tracking",
+        "Multi-portion support"
+      ]
+    },
+    {
+      "id": "6.4.3",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.4",
+      "name": "Implement mistake edit/remove on marked words",
+      "size": "M",
+      "type": "UI",
+      "status": "pending",
+      "files": ["components/mushaf/WordToken.tsx", "components/mushaf/MistakeBottomSheet.tsx"],
+      "deps": ["6.4.2"],
+      "acceptance_criteria": [
+        "Tap marked word to edit mistake",
+        "Remove mistake option",
+        "Update highlight immediately",
+        "Edit modal with current values"
+      ]
+    },
+    {
+      "id": "6.4.4",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.4",
+      "name": "Add smart defaults tracking (increment usage_count)",
+      "size": "S",
+      "type": "API",
+      "status": "pending",
+      "files": ["lib/api/mistakes.ts", "lib/hooks/useMushafSession.ts"],
+      "deps": ["6.4.3"],
+      "acceptance_criteria": [
+        "Track category usage count",
+        "Most-used category highlighted as default",
+        "Persist to user_mistake_stats table"
+      ]
+    },
+    {
+      "id": "6.5.1",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.5",
+      "name": "Fetch user's past mistakes for current surah",
+      "size": "M",
+      "type": "API",
+      "status": "pending",
+      "files": ["lib/hooks/useHistoricalMistakes.ts"],
+      "deps": ["6.4.4"],
+      "acceptance_criteria": [
+        "Query mistakes by surah for current user",
+        "Include word_location for positioning",
+        "Cached with React Query"
+      ]
+    },
+    {
+      "id": "6.5.2",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.5",
+      "name": "Build HistoricalMistakeOverlay (dotted, lower opacity)",
+      "size": "M",
+      "type": "UI",
+      "status": "pending",
+      "files": ["components/mushaf/HistoricalMistakeOverlay.tsx", "components/mushaf/WordToken.tsx"],
+      "deps": ["6.5.1"],
+      "acceptance_criteria": [
+        "Historical mistakes shown with dotted border",
+        "Lower opacity to distinguish from current",
+        "Category colors maintained",
+        "Tap to view mistake details"
+      ]
+    },
+    {
+      "id": "6.5.3",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.5",
+      "name": "Add toggle switch in Mushaf header",
+      "size": "S",
+      "type": "UI",
+      "status": "pending",
+      "files": ["components/mushaf/MushafHeader.tsx"],
+      "deps": ["6.5.2"],
+      "acceptance_criteria": [
+        "Show Past Mistakes toggle",
+        "State persisted in AsyncStorage",
+        "Instant visual update"
+      ]
+    },
+    {
+      "id": "6.6.1",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.6",
+      "name": "Build MushafConfirmationScreen (like AI chat's SessionConfirmation)",
+      "size": "L",
+      "type": "UI",
+      "status": "pending",
+      "files": ["components/mushaf/MushafConfirmationScreen.tsx"],
+      "deps": ["6.5.3"],
+      "acceptance_criteria": [
+        "Shows all portions with ranges",
+        "Shows all marked mistakes",
+        "Editable fields for all data",
+        "Remove portion/mistake options"
+      ]
+    },
+    {
+      "id": "6.6.2",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.6",
+      "name": "Auto-infer session data (duration, type, performance)",
+      "size": "M",
+      "type": "API",
+      "status": "pending",
+      "files": ["lib/utils/session-inference.ts"],
+      "deps": ["6.6.1"],
+      "acceptance_criteria": [
+        "Duration from session start time",
+        "Session type inferred from mistakes (memorization vs tajweed)",
+        "Performance suggested based on mistake count",
+        "All values editable by user"
+      ]
+    },
+    {
+      "id": "6.6.3",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.6",
+      "name": "Save session with portions and mistakes to Supabase",
+      "size": "L",
+      "type": "API",
+      "status": "pending",
+      "files": ["lib/api/sessions.ts"],
+      "deps": ["6.6.2"],
+      "acceptance_criteria": [
+        "Session created with all portions",
+        "Mistakes linked to portions",
+        "word_position and word_text saved",
+        "Optimistic updates for instant feedback"
+      ]
+    },
+    {
+      "id": "6.7.1",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.7",
+      "name": "Add Mushaf settings to Profile screen",
+      "size": "M",
+      "type": "UI",
+      "status": "pending",
+      "files": ["app/(tabs)/profile.tsx", "types/settings.ts"],
+      "deps": ["6.6.3"],
+      "acceptance_criteria": [
+        "Default mistake type selector (Smart/Tajweed/Memorization/None)",
+        "Default severity selector",
+        "Font size selector",
+        "Show past mistakes toggle",
+        "Persisted in AsyncStorage"
+      ]
+    },
+    {
+      "id": "6.7.2",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.7",
+      "name": "Build MushafHeader with surah picker and ayah jump",
+      "size": "M",
+      "type": "UI",
+      "status": "pending",
+      "files": ["components/mushaf/MushafHeader.tsx", "components/mushaf/SurahPicker.tsx"],
+      "deps": ["6.7.1"],
+      "acceptance_criteria": [
+        "Current surah displayed",
+        "Surah picker modal",
+        "Jump to ayah input",
+        "Historical toggle integrated"
+      ]
+    },
+    {
+      "id": "6.7.3",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.7",
+      "name": "Add font size controls",
+      "size": "S",
+      "type": "UI",
+      "status": "pending",
+      "files": ["components/mushaf/MushafHeader.tsx", "components/mushaf/WordToken.tsx"],
+      "deps": ["6.7.2"],
+      "acceptance_criteria": [
+        "Small/Medium/Large font size options",
+        "Instant visual update",
+        "Persisted in settings"
+      ]
+    },
+    {
+      "id": "6.8.1",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.8",
+      "name": "Apply Supabase migration for new columns",
+      "size": "S",
+      "type": "Setup",
+      "status": "pending",
+      "files": ["supabase/migrations/"],
+      "deps": [],
+      "acceptance_criteria": [
+        "word_position column added to mistakes",
+        "word_text column added to mistakes",
+        "word_location column added to mistakes",
+        "user_mistake_stats table created"
+      ]
+    },
+    {
+      "id": "6.8.2",
+      "epic_id": "EPIC-6-MUSHAF",
+      "feature_id": "6.8",
+      "name": "E2E tests for selection, marking, and completion flow",
+      "size": "M",
+      "type": "Test",
+      "status": "pending",
+      "files": ["tests/e2e/mushaf/"],
+      "deps": ["6.7.3"],
+      "acceptance_criteria": [
+        "Mushaf navigation test",
+        "Range selection test",
+        "Mistake marking test",
+        "Session completion test"
+      ]
+    }
+  ]
+}

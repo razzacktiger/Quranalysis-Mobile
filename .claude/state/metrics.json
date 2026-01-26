@@ -1,0 +1,180 @@
+{
+  "$schema": "../core/schemas/metrics.schema.json",
+  "sessions": {
+    "recent": [
+      {
+        "date": "2026-01-24",
+        "epic_id": "EPIC-5-PROFILE",
+        "tasks_completed": 5,
+        "tokens": 31000,
+        "context_percent": 60,
+        "turns": 23,
+        "duration_minutes": 60,
+        "notes": "EPIC-5 complete (5.1.1-5.1.4, 5.2.1), dark mode (42 files)"
+      },
+      {
+        "date": "2026-01-24",
+        "epic_id": "EPIC-4-AI-CHAT",
+        "tasks_completed": 2,
+        "tokens": 8000,
+        "context_percent": 10,
+        "turns": 15,
+        "duration_minutes": 30,
+        "notes": "Task 4.3.4 + /start-session workflow, EPIC-4 complete, PR #7"
+      },
+      {
+        "date": "2026-01-22",
+        "epic_id": "EPIC-2-SESSIONS",
+        "tasks_completed": 1,
+        "tokens": 15000,
+        "context_percent": 25,
+        "turns": 12,
+        "duration_minutes": 30,
+        "notes": "BUG-2.1 ayah validation, +1 bug found (pages_read), PR #6"
+      },
+      {
+        "date": "2026-01-22",
+        "epic_id": "EPIC-4-AI-CHAT",
+        "tasks_completed": 12,
+        "tokens": 142000,
+        "context_percent": 85,
+        "turns": 95,
+        "duration_minutes": 240,
+        "notes": "Tasks 4.1.2-4.2.3, BUG-3.1, bug workflow, PR #5 merged"
+      },
+      {
+        "date": "2026-01-21",
+        "epic_id": "EPIC-4-AI-CHAT",
+        "tasks_completed": 2,
+        "tokens": 40000,
+        "context_percent": 50,
+        "turns": 20,
+        "duration_minutes": 90,
+        "notes": "Task 4.1.1 + agent orchestration system design"
+      },
+      {
+        "date": "2026-01-21",
+        "epic_id": "EPIC-4-AI-CHAT",
+        "tasks_completed": 1,
+        "tokens": 15000,
+        "context_percent": 25,
+        "turns": 12,
+        "duration_minutes": 45,
+        "notes": "Setup session, Firebase config + user account setup time"
+      }
+    ],
+    "averages": {
+      "tasks_per_session": 3.8,
+      "tokens_per_session": 41833,
+      "tokens_per_task": 11000
+    }
+  },
+  "by_task_type": {
+    "UI": {
+      "count": 10,
+      "avg_tokens": 9800,
+      "avg_turns": 8
+    },
+    "API": {
+      "count": 7,
+      "avg_tokens": 11000,
+      "avg_turns": 9
+    },
+    "Setup": {
+      "count": 3,
+      "avg_tokens": 3000,
+      "avg_turns": 5
+    },
+    "Test": {
+      "count": 5,
+      "avg_tokens": 5400,
+      "avg_turns": 5
+    },
+    "Bug": {
+      "count": 2,
+      "avg_tokens": 11500,
+      "avg_turns": 9
+    },
+    "Meta": {
+      "count": 1,
+      "avg_tokens": 12000,
+      "avg_turns": 8
+    }
+  },
+  "by_task_size": {
+    "S": {
+      "count": 10,
+      "avg_tokens": 4200
+    },
+    "M": {
+      "count": 8,
+      "avg_tokens": 9500
+    },
+    "L": {
+      "count": 5,
+      "avg_tokens": 15400
+    },
+    "XL": {
+      "count": 1,
+      "avg_tokens": 20000
+    }
+  },
+  "tools": {
+    "frequency": {
+      "Read": 450,
+      "Edit": 280,
+      "Shell": 120,
+      "Write": 85,
+      "Grep": 65,
+      "LS": 40
+    },
+    "agents": {
+      "code-reviewer": {
+        "uses": 3,
+        "bugs_caught": 5,
+        "avg_tokens": 2100
+      },
+      "prompt-agent": {
+        "uses": 2,
+        "bugs_caught": 0,
+        "avg_tokens": 15000
+      },
+      "setup-agent": {
+        "uses": 1,
+        "bugs_caught": 0,
+        "avg_tokens": 3000
+      },
+      "frontend-design": {
+        "uses": 2,
+        "bugs_caught": 6,
+        "avg_tokens": 17500
+      }
+    }
+  },
+  "quality": {
+    "bugs_by_stage": {
+      "implementation": 6,
+      "code_review": 5,
+      "human_qa": 3
+    },
+    "bugs_by_severity": {
+      "1": 0,
+      "2": 2,
+      "3": 1,
+      "4": 0
+    }
+  },
+  "signals": {
+    "green": [
+      "Modular docs reduces context",
+      "Epic hierarchy improves navigation",
+      "code-reviewer provides positive ROI"
+    ],
+    "yellow": [
+      "Meta work used significant context (agent system design ~25k tokens)"
+    ],
+    "red": [
+      "Context exhaustion during bug fixes - Task 4.2.3 had 6 bugs found during testing"
+    ]
+  }
+}

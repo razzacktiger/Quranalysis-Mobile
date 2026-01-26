@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "learnings.schema.json",
+  "title": "Learnings Index",
+  "description": "Searchable index of learnings from markdown files",
+  "type": "object",
+  "required": ["entries", "by_category", "by_tag"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "entries": {
+      "type": "array",
+      "description": "All learning entries",
+      "items": {
+        "$ref": "#/definitions/learning_entry"
+      }
+    },
+    "by_category": {
+      "type": "object",
+      "description": "Entry IDs grouped by category",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "by_tag": {
+      "type": "object",
+      "description": "Entry IDs grouped by tag",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    }
+  },
+  "definitions": {
+    "learning_entry": {
+      "type": "object",
+      "required": ["id", "category", "title", "file"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique entry identifier"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category (matches filename without .md)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Entry title/heading"
+        },
+        "file": {
+          "type": "string",
+          "description": "Source file path"
+        },
+        "line_start": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Starting line number in source file"
+        },
+        "line_end": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Ending line number in source file"
+        },
+        "tags": {
+          "type": "array",
+          "description": "Searchable tags",
+          "items": { "type": "string" }
+        },
+        "summary": {
+          "type": "string",
+          "description": "Brief summary of the learning"
+        },
+        "key_points": {
+          "type": "array",
+          "description": "Key takeaways",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}
